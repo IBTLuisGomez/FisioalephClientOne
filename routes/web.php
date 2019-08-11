@@ -12,8 +12,15 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+Route::resource('/tienda','ProductController');
+Route::post('/tienda/manage_cart','ProductController@AJAX_manageCart');
+Route::get('/checkout','ProductController@checkout');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 

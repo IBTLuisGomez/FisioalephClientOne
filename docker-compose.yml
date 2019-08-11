@@ -5,10 +5,10 @@ services:
     build:
       context: '.'
       args:
-        uid: ${UID}
-    container_name: laravel-app
+        uid: 123
+    container_name: rehabilitat
     ports:
-      - 8000:80
+      - 8001:80
     environment:
       - APACHE_RUN_USER=#1000
       - APACHE_RUN_GROUP=#1000
@@ -21,14 +21,14 @@ services:
 
   mysql-db:
     image: mysql:5.7
-    container_name: mysql-db
+    container_name: db_rehabilitat
     volumes:
       - ./run/var:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=securerootpassword
-      - MYSQL_DATABASE=${DB_DATABASE}
-      - MYSQL_USER=${DB_USERNAME}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=apprehabilitat
+      - MYSQL_USER=luis
+      - MYSQL_PASSWORD=123465
     networks:
       backend:
         aliases:

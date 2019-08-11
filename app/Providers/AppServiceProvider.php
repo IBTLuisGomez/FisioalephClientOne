@@ -23,6 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->share('SESSION_products', \Session::get("IDs_cart_products"));
     }
 }
