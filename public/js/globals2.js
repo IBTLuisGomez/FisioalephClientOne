@@ -1,9 +1,9 @@
-function manageCart(e, add){
+function manageCart(e, add, confirm=true){
 	J_e_target=$(e.target);
 	ID_product=J_e_target.attr("product-target");
-	if(add){
+	if(add && confirm){
 		B_answer=window.confirm("¿Deseas agregar este producto al carrito?");
-	}else{
+	}else if(!add && confirm){
 		B_answer=window.confirm("¿Deseas quitar este producto del carrito?");
 	}
 	if(B_answer){
@@ -30,15 +30,14 @@ function manageCart(e, add){
 				alert("error de conexión");		
 			}
 		});
+		return true;
 	}
+	return false;
 }
 //will render the buttons it they are in the cart, according to the json encode returned by the function in the controller
 function renderRemoveFromCartButtons(IDs_cart){
 	$("button.btn-warning").css("display","none");
 	$.each(IDs_cart,function(key, value){
-		console.log("value");
-		console.log(value);
-		console.log(value.product_info.id);
 		$("button.btn-warning[product-target="+value.product_info.id+"]").css("display","inline");
 	});
 }

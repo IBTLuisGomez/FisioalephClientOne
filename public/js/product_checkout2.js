@@ -23,6 +23,9 @@ function AJAX_change_product_quantity(){
 
 function remove_from_checkout(event){
 	J_e_target=$(event.target);
-	J_e_target.parents(".row-checkout").first().remove();
-	manageCart(event, false);
+
+	removed=manageCart(event, false);
+	if(removed){
+		J_e_target.parents(".row-checkout").first().remove();
+	}
 }

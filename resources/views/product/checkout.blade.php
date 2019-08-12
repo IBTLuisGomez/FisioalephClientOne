@@ -1,7 +1,7 @@
 @extends("layouts.basic")
 @section("partial_js")
-	<script type="text/javascript" src="/js/globals.js"></script>
-	<script type="text/javascript" src="/js/product_checkout2.js"></script>
+	<script type="text/javascript" src="/js/globals2.js"></script>
+	<script type="text/javascript" src="/js/product_checkout.js"></script>
 @endsection
 @section("content")
 	<input type="hidden" id="csrf_token" value="{{csrf_token()}}">
@@ -63,6 +63,9 @@
 				<div class="ml-auto w-25 mr-3">
 					$<text id="checkout_total"></text>
 				</div>
+			</div>
+			<div class="w-100 d-inline-flex">
+				<button class="mx-auto btn btn-primary">Pagar</button>
 			</div>
 		</div>
 	</div>

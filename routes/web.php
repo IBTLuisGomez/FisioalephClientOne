@@ -18,6 +18,10 @@ Route::resource('/tienda','ProductController');
 Route::post('/tienda/manage_cart','ProductController@AJAX_manageCart');
 Route::get('/checkout','ProductController@checkout');
 
+Route::get('/test',function(){
+	return view("test_paypal");
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
