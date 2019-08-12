@@ -15,6 +15,9 @@ class Product extends Model
     ];
 
     public static function getProductByIds($array){
+        if(!$array){
+            return [];
+        }
 		$Selector_products=[];
     	foreach($array as $key=>$value){
     	    if(!$Selector_products){
