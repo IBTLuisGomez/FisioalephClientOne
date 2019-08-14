@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "87ca1120a94df5945edc778a0d2dc3a5",
+    "content-hash": "76ff66af813e46f99c1cdd9cc00153ad",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1307,6 +1307,53 @@
                 "php"
             ],
             "time": "2019-02-16T20:54:15+00:00"
+        },
+        {
+            "name": "openpay/sdk",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/open-pay/openpay-php.git",
+                "reference": "7dd9b168efc823eb6ff38ef5db73551cac81e77c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/open-pay/openpay-php/zipball/7dd9b168efc823eb6ff38ef5db73551cac81e77c",
+                "reference": "7dd9b168efc823eb6ff38ef5db73551cac81e77c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-hash": "*",
+                "php": ">=5.2.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Openpay": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Openpay",
+                    "email": "soporte@openpay.mx",
+                    "homepage": "http://www.openpay.mx/docs/libraries.html"
+                },
+                {
+                    "name": "Federico Balderas",
+                    "email": "federico.balderas@foograde.com",
+                    "homepage": "http://foograde.com"
+                }
+            ],
+            "description": "This is a client implementing the payment services for Openpay at openpay.mx",
+            "time": "2019-02-14T19:31:06+00:00"
         },
         {
             "name": "opis/closure",
@@ -5136,7 +5183,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "openpay/sdk": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

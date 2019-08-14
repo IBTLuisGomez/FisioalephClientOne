@@ -1,6 +1,6 @@
 @extends("layouts.basic")
 @section("content")
-<div class="container" style="margin-top:56px">
+<div class="container">
 	<form action="/tienda" method="post" enctype="multipart/form-data">
 		@csrf
 		<label for="product_name">Nombre</label>

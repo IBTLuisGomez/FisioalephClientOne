@@ -16,16 +16,15 @@ Route::get('/', function () {
 });
 Route::resource('/tienda','ProductController');
 Route::post('/tienda/manage_cart','ProductController@AJAX_manageCart');
+Route::post('/quicklogin','LoginController@quickLogin');
 Route::get('/checkout','ProductController@checkout');
+Route::post('/payment_processing','OpenPayController@process');
 
 Route::get('/test',function(){
 	return view("test_paypal");
 });
 
-Auth::routes();
+    Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

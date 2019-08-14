@@ -4,7 +4,7 @@
 		@if(file_exists(public_path("images")."/".$product->img))
 			<img src="{{'images/'.$product->img}}" onclick="window.open({{'\''.action('ProductController@show',$product->id).'\''}})">
 			@else
-			<span style="height: 200px" onclick="window.open({{'\''.action('ProductController@show',$product->id).'\''}})" class="fas fa-tablets fa-10x"></span>
+			<span style="height: 200px" onclick="window.open({{'\''.action('ProductController@show',$product->id).'\''}})" class="fas fa-prescription-bottle fa-10x"></span>
 		@endif 
 	</div>
 	<div style="text-align: center">

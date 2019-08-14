@@ -7,7 +7,7 @@
 @endsection
 @section("content")
 	<input type="hidden" id="csrf_token" value="{{csrf_token()}}">
-	<div class="container" style="margin-top:56px">
+	<div class="container">
 		<div class="row">
 			<a href="/tienda/create"><button class="btn btn-light">Añadir</button></a>	
 		</div>

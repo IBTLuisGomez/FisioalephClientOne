@@ -9,13 +9,13 @@
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img class="d-block w-100" src="images/15651582085167007535d4a6b4023939.jpeg" alt="First slide">
+        <img class="d-block w-100" src="images/wallpaper1.jpg" alt="First slide">
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="images/156515640619201075545d4a643676a4c.jpeg" alt="Second slide">
+        <img class="d-block w-100" src="images/wallpaper2.jpg" alt="Second slide">
       </div>
       <div class="carousel-item">
-        <img class="d-block w-100" src="images/156515818011155854425d4a6b2445322.jpeg" alt="Third slide">
+        <img class="d-block w-100" src="images/wallpaper3.jpg" alt="Third slide">
       </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -36,7 +36,7 @@
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras rhoncus ex vel mauris tincidunt commodo. Quisque commodo sed felis in luctus. Mauris interdum gravida rhoncus. Quisque mollis mi at eros congue, sit amet convallis enim venenatis. Nullam eu hendrerit felis, mattis ullamcorper augue. Sed viverra dolor sed diam sollicitudin, sed ultrices nunc fermentum. Cras eget lacus ac massa cursus aliquam. Aenean rutrum velit ligula, quis tincidunt risus facilisis eget. Nullam quis pharetra est. Donec blandit interdum consequat. Nam et maximus ante. Donec convallis, neque vel luctus sodales, quam tortor consequat dui, ut ultrices ante neque in erat.
           <br/>
           <br/>
-          <img src="images/correct.png"/>
+          <img src="images/image1.jpg"/>
           Aliquam euismod justo velit, sit amet vehicula turpis lobortis id. Phasellus sollicitudin, nisi quis pulvinar viverra, mauris augue tempor lectus, suscipit ultrices est quam sed quam. Morbi eget risus odio. Praesent malesuada vitae lectus non varius. Integer consectetur, augue eget volutpat faucibus, dui tellus commodo nisl, ac fermentum dui eros sed nunc. Quisque varius ex id ante dapibus luctus. Mauris suscipit ultrices nisi at fermentum. Pellentesque laoreet accumsan ultricies.
           <br/>
           <br/>

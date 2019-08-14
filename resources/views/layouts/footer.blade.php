@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer class="page-footer font-small" style=" margin-top: 20vh">
+<footer class="page-footer font-small" style="margin-top: 20vh">
 
   <!-- Footer Links -->
   <div class="container text-center text-md-left">
