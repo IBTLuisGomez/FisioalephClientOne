@@ -8,13 +8,37 @@
 @section("content")
 	<input type="hidden" id="csrf_token" value="{{csrf_token()}}">
 	<div class="container">
+		@if(Auth::user())
+			@if(Auth::user()->rol->name=="admin")
+				<div class="row">
+					<div class="col-12">
+					<a href="{{route('store.create')}}"><button class="btn btn-light">Añadir</button></a>	
+					</div>
+				</div>
+			@endif
+		@endif
+		@if($product_category_name)
 		<div class="row">
-			<a href="/tienda/create"><button class="btn btn-light">Añadir</button></a>	
+			<div class="col-lg-4 offset-lg-4 col-10 offset-1">
+			<form action="{{route('store.index')}}" method="get">
+				<input type="hidden" name="product_category_id" class="form-control" value="{{$request->product_category_id?$request->product_category_id:false}}">
+				<input type="text" name="search_terms" class="form-control" placeholder="Búsqueda en {{$product_category_name}}">
+				<input type="submit" class="" class="btn btn-light" value="Buscar">
+			</form>
+			</div>
+		</div>
+		@endif
+		<div class="row">
+			<div class="col-12">
+				<h5>Producto</h5>	
+			</div>
 		</div>
 		<div class="row">
-			<h5>Producto</h5>
-		</div>
-		<div class="row">
+			@if($C_products->total()==0)
+			<div class="col-12">
+				No hay coincidencias en tu búsqueda
+			</div>
+			@endif
 			@foreach($C_products as $product)
 				@include("store.product_individual.product_individual",compact($product,$SESSION_products))
 			@endforeach		

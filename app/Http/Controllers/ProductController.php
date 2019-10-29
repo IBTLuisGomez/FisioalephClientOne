@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\ProductCategory;
+use App\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 class ProductController extends Controller
 {
     /**
@@ -12,10 +15,34 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    private $pagination_elements=4;
-    public function index()
-    {        
-        return view("product/index")->with("C_products",DB::table('products')->paginate($this->pagination_elements))->with('SESSION_products', session()->get("IDs_cart_products"));
+    private $pagination_elements=16;
+    public function __construct()
+    {
+        $this->middleware('is_admin')->except('index','checkout','AJAX_manageCart');
+    }
+    public function index(Request $request){
+        $products=Product::where("active",true)->where("product_category_id","!=",1);
+        if (Auth::user()) {
+            if(Auth::user()->rol->id==1)
+            {   
+                $products=Product::where("product_category_id","!=",1);
+            }
+        }
+        $product_category_name=false;
+        if (($product_category_id=$request->product_category_id)) {
+            $product_category_name=ProductCategory::find($product_category_id)->name;
+            $products=$products->where("product_category_id",$product_category_id);
+        } 
+        if(($search_terms=$request->search_terms)){
+            $products=$products->where("name","like","%".$search_terms."%");
+        }
+        return view("product/index")->with("C_products",$products->paginate($this->pagination_elements))->with('SESSION_products', session()->get("IDs_cart_products"))->with("request",$request)->with("product_category_name",$product_category_name);
+    }
+
+    public function nonCategorizedProducts()
+    {     
+        $products= Product::where("product_category_id","=",null);
+        return view("product/uncategorized_index")->with("C_products",$products->paginate(50));
     }
 
     /**
@@ -38,12 +65,21 @@ class ProductController extends Controller
     {
     	$A_product=$request->all();
     	unset($A_product["_token"]);
-    	$Img_product_image=$A_product["img"];
-    	$S_image_name=time().uniqid(rand()).".".$Img_product_image->getClientOriginalExtension();
-    	$A_product["img"]=$S_image_name;
-    	$res=$Img_product_image->move(public_path("images"),$S_image_name);
-    	$O_product=new Product($A_product);
-    	$O_product->save();
+        if(isset($A_product["img"])){
+            $Img_product_image=$A_product["img"];
+            $S_image_name=time().uniqid(rand()).".".$Img_product_image->getClientOriginalExtension();
+            $A_product["img"]=$S_image_name;
+            if($request->product_category_id==1){
+                $A_product["img"]="servicios/".$A_product["img"];
+            }
+            $images_path=public_path("images/");
+            $images_url_complement=($request->product_category_id==1)?"servicios/":"";
+            $res=$Img_product_image->move($images_path.$images_url_complement,$S_image_name);
+        }else{
+            $A_product==null;
+        }
+        $O_product=new Product($A_product);
+        $O_product->save();
         return redirect(action("ProductController@index"));
     }
 
@@ -64,9 +100,9 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($product)
     {
-        //
+        return view("product/create")->with("product",Product::find($product));
     }
 
     /**
@@ -76,9 +112,25 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $product)
     {
-        //
+        $product=Product::find($product);
+        $A_product=$request->all();
+        unset($A_product["_token"]);
+        unset($A_product["_method"]);
+        if(isset($A_product["img"])){
+            $Img_product_image=$A_product["img"];
+            $S_image_name=time().uniqid(rand()).".".$Img_product_image->getClientOriginalExtension();
+            $A_product["img"]=$S_image_name;
+            $images_path=public_path("images/");
+            $images_url_complement=($request->product_category_id==1)?"servicios/":"";
+            $res=$Img_product_image->move($images_path.$images_url_complement,$S_image_name);
+        }else{
+            $A_product['img']=null;
+        }
+        $A_product['active']=($request->active=="on")?true:false;
+        $product->update($A_product);
+        return redirect()->back()->with('message', 'Producto Modificado!');
     }
 
     /**
@@ -95,8 +147,10 @@ class ProductController extends Controller
     public function checkout(){
         $products_id=session()->get("IDs_cart_products");
         $products=Product::getProductByIds($products_id);
+        $states=State::all();
         return view("product/checkout")->with("C_products",$products)->
-            with('SESSION_products', session()->get("IDs_cart_products"));
+        with('SESSION_products', session()->get("IDs_cart_products"))->
+        with('states',$states);
     }
 
     public function AJAX_manageCart(Request $request){
@@ -123,11 +177,11 @@ class ProductController extends Controller
                 "IDs_cart_products"=>$session->get("IDs_cart_products"),
                 "text"=>($request->cart_method=="put")?"Producto agregado con éxito a tu carrito de compras":"Producto eliminado con éxito del carrito de compras",
             ]);
-        }
-        return json_encode([
-                "code"=>"400",
-                "IDs_cart_products"=>$session->get("IDs_cart_products"),
-                "text"=>"Error indefinido",
-            ]);
     }
+    return json_encode([
+        "code"=>"400",
+        "IDs_cart_products"=>$session->get("IDs_cart_products"),
+        "text"=>"Error indefinido",
+    ]);
+}
 }

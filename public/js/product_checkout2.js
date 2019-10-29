@@ -29,3 +29,14 @@ function remove_from_checkout(event){
 		J_e_target.parents(".row-checkout").first().remove();
 	}
 }
+function get_info_from_postal_code($code){
+ $.get(
+{ 	url:"https://api-codigos-postales.herokuapp.com/v2/codigo_postal/"+$code,
+ 	success:function(res){
+ 		console.log(res);
+ 	},
+ 	failure:function(res){
+ 		console.log(res);
+ 	}}
+ 	);
+}

@@ -1,3 +1,7 @@
+function getFirstParentWithClass(object, classname){
+	return object.parents("."+classname).first();
+}
+
 function manageCart(e, add, confirm=true){
 	J_e_target=$(e.target);
 	ID_product=J_e_target.attr("product-target");
@@ -20,8 +24,6 @@ function manageCart(e, add, confirm=true){
 			},
 			success:function(data){
 				data=JSON.parse(data);
-				console.log("data");
-				console.log(data);
 				modifyCartSize(Object.size(data.IDs_cart_products));
 				renderRemoveFromCartButtons(data.IDs_cart_products);
 				alert(data.text);
@@ -51,3 +53,20 @@ Object.size = function(obj) {
     }
     return size;
 };
+function gotoPage(event){
+	event.preventDefault();
+	event.stopPropagation();
+	object=$(event.target);
+	if(object.attr("type")=="checkbox"){
+		$(".delivery_pickup").attr("disabled",true);
+		$(object.attr("target")).removeAttr("disabled");
+	}
+	parent_page=getFirstParentWithClass(object, "modal_checkout_page");
+	parent_page.css("display","none");
+	div_next_page=$(object.attr("next_page"));
+	if((div_next_page.attr("no-show")!=0) && (div_next_page.attr("no-show")!=undefined)){
+		div_next_page=$(div_next_page.attr("no-show"));
+	}
+	div_next_page.css("display","block");
+
+}

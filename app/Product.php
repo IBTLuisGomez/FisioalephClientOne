@@ -12,8 +12,19 @@ class Product extends Model
     	'img',
     	'description',
         'price_mxn',
+        'product_category_id',
+        'active',
     ];
-
+    public function getImgAttribute($value){
+        return ($this->product_category_id==1)?("servicios/".$value):$this->$value;
+    }
+    public function setActiveAttribute($value)
+    {
+        $this->attributes['active'] = (int) $value;
+    }
+    public function product_category(){
+        return $this->belongsTo("App\ProductCategory","product_category_id");
+    }
     public static function getProductByIds($array){
         if(!$array){
             return [];
@@ -27,5 +38,24 @@ class Product extends Model
     	    $Selector_products->orWhere("id","=",$key);
     	}
     	return $Selector_products?$Selector_products->get():[];
+    }
+
+    public static function getFinalCheckoutReport($products=false){
+        $checkout_acceptance_report=[];
+        if($products){
+            $checkout_acceptance_report["total_price"]=0;
+            $checkout_acceptance_report["products"]=[];
+            foreach (session()->get("IDs_cart_products") as $key => $array) {
+                $product=self::find($key);
+                $checkout_acceptance_report["total_price"]+=$product->price_mxn*$products[$key]["qty"];
+                $checkout_acceptance_report["products"][]=[
+                    "name"=>$product->name, 
+                    "price"=>$product->price_mxn, 
+                    "description"=>$product->description, 
+                    "quantity"=>$products[$key]["qty"],
+                ];
+            }
+        }
+        return $checkout_acceptance_report;
     }
 }

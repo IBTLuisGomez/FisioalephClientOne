@@ -3,12 +3,12 @@ version: '3.5'
 services:
   laravel-app:
     build:
-      context: '.'
+      context: './Dockerfile'
       args:
         uid: 123
-    container_name: rehabilitat
+    container_name: recuperat
     ports:
-      - 8001:80
+      - 8006:80
     environment:
       - APACHE_RUN_USER=#1000
       - APACHE_RUN_GROUP=#1000
@@ -19,20 +19,20 @@ services:
         aliases:
           - app
 
-  mysql-db:
+  mysql-db-recuperat:
     image: mysql:5.7
-    container_name: db_rehabilitat
+    container_name: recuperat_db
     volumes:
       - ./run/var:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=123456
-      - MYSQL_DATABASE=apprehabilitat
+      - MYSQL_DATABASE=apprecuperat
       - MYSQL_USER=luis
       - MYSQL_PASSWORD=123465
     networks:
       backend:
         aliases:
-          - mysql-db
+          - mysql-db-recuperat
 
 networks:
   backend:

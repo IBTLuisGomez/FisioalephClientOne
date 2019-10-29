@@ -17,9 +17,10 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('img',255)->nullable();
             $table->string('name',255);
-            $table->integer('price_mxn');
+            $table->float('price_mxn',8,2)->nullable();
             $table->text('description')->nullable();
             $table->boolean('active')->default(false);
+            $table->integer('proxy_for')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
