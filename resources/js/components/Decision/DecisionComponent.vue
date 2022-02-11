@@ -1,0 +1,354 @@
+<template>
+    <div class="container">
+        <div class="row" v-if="!prepareToPrint">
+          <div class="col-md-12">
+            <button type="button" class="btn btn-primary sm" @click="createDivPrint">Imprimir</button>
+          </div>
+        </div>
+        <div class="row" id="print_view" v-if="prepareToPrint">
+          <div class="col-lg-12">
+          <div class="row" v-if="prepareToPrint">
+            <table class="table table-bordered ml-1 rubric_table">
+              <tr>
+                <td class="text-center"><img src="/medilab/assets/img/logo.png" style="height: auto; width: 300px;" alt="recuperaT"></td>
+                <td>Recupera-T fisioterapia, rehabilitación y nutrición</td>
+                <td>Código: {{hpp.code}}</td>
+              </tr>
+              <tr>
+                <td class="text-center" colspan="3">Versión {{hpp.version}}</td>
+              </tr>
+              <tr>
+                <td>{{hpp.updated_at}}</td>
+                <td>{{hpp.name}}</td>
+                <td>Páginas {{hpp.pages}}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>Elaboró: {{hpp.made_by}}</td>
+                <td>Revisó: {{hpp.revised_by}}</td>
+              </tr>
+            </table>
+          </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-lg-12">
+                <h3>Ejercicios</h3>
+              </div>
+            </div>
+            <div class="col-lg-12" v-for="exerciseKey in Object.keys(sortedExercises)">
+              <div class="row">
+                <div class="col-lg-12">
+                  <h4>{{exerciseKey}}</h4>
+                </div>
+              </div>
+              <div class="row" v-for="exercise in sortedExercises[exerciseKey]">
+                <div class="col-lg-12">
+                  <p>{{exercise.name}}</p>
+                  <p>{{exercise.description}}</p>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <img v-for="resource in exercise.image_resources" width="auto" height="200px" :src="`/storage/${resource.url}`"></img>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+              <div class="col-lg-12">
+                <h3>Masajes</h3>
+              </div>
+            </div>
+            <div class="row" v-for="massage in hpp.massage">
+              <div class="col-lg-12">
+                <p>{{massage.name}}</p>
+                  <div class="row" v-for="resource in massage.image_resources" >
+                    <div class="col-lg-12">
+                      <img width="auto" height="200px" :src="`/storage/${resource.url}`"></img>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+              <div class="col-lg-12">
+                <h3>Agentes físicos</h3>
+              </div>
+            </div>
+            <div class="row" v-for="physical_agent in hpp.physical_agent">
+              <div class="col-lg-12">
+                <p><strong>Descripción: </strong>{{physical_agent.description}}</p>
+                <p><strong>Indicación: </strong>{{physical_agent.pivot.indication}}</p>
+                <p><strong>Precauciones: </strong>{{physical_agent.pivot.precautions}}</p>
+              </div>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+              <div class="col-lg-12">
+                <h3>Medicamentos</h3>
+              </div>
+            </div>
+            <div class="row" v-for="prescription in hpp.prescription" :key="prescription.id">
+              <div class="col-lg-12">
+                <p><strong>Medicamento: </strong>{{prescription.description}}</p>
+                <p><strong>Indicación: </strong>{{prescription.pivot.indication}}</p>
+                <p><strong>Precauciones: </strong>{{prescription.pivot.precautions}}</p>
+              </div>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+              <div class="col-lg-12">
+                <h3>Contraindicaciones</h3>
+              </div>
+            </div>
+            <div class="row" v-for="contraindication in hpp.contraindication" :key="contraindication.id">
+              <div class="col-lg-12">
+                <p><li>{{contraindication.description}}</li></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row" v-if="!prepareToPrint">
+          <div class="col-md-12">
+              <div>
+                  <tabs :options="{ useUrlFragment: false }" @clicked="tabClicked" @changed="tabChanged">
+                      <tab name="Ejercicios" v-if = "hpp.exercise && hpp.exercise .length > 0">
+                          <exercise-tab-component :exercises = "hpp.exercise"></exercise-tab-component>
+                      </tab>
+                      <tab name="Masajes" v-if = "hpp.massage && hpp.massage.length > 0">
+                          <massage-tab-component :massages = "hpp.massage"></massage-tab-component>
+                      </tab>
+                      <tab name="Medios Físicos" v-if = "hpp.physical_agent && hpp.physical_agent.length > 0">
+                          <physical-method-tab-component :physical-methods = "hpp.physical_agent"></physical-method-tab-component>
+                      </tab>
+                      <tab name="Medicamentos" v-if = "hpp.prescription && hpp.prescription.length > 0">
+                          <medicament-tab-component :prescriptions = "hpp.prescription"></medicament-tab-component>
+                      </tab>
+                      <tab name="Contraindicaciones" v-if = "hpp.contraindication && hpp.contraindication.length > 0">
+                          <contraindication-tab-component :contraindications = "hpp.contraindication"></contraindication-tab-component>
+                      </tab>
+                  </tabs>
+              </div>
+          </div>
+        </div>
+    </div>
+</template>
+<script>
+    import ENV from '../../env'
+    import {Tabs, Tab} from 'vue-tabs-component';
+    Vue.component('exercise-tab-component', require('./ExerciseTabComponent.vue').default);
+    Vue.component('massage-tab-component', require('./MassageTabComponent.vue').default);
+    Vue.component('physical-method-tab-component', require('./PhysicalMethodTabComponent.vue').default);
+    Vue.component('medicament-tab-component', require('./MedicamentTabComponent.vue').default);
+    Vue.component('contraindication-tab-component', require('./ContraindicationTabComponent.vue').default);
+    export default {
+        components: {
+            Tabs, Tab
+        },
+        created: function () {
+            axios.get(ENV.urlApiHFPBase + '/' + this.hppId).then(this.setHpp);
+        },
+        methods : {
+            createDivPrint () { 
+              this.prepareToPrint = true
+              setTimeout(()=> {
+                window.print()
+                this.prepareToPrint = false
+              }, 500)
+              
+            },
+            setHpp : function (response) {
+                this.hpp = response.data;
+                let sortedExercises = {'Sin categoría': []}
+                this.hpp.exercise.map( exercise => {
+                  if (exercise.exercise_division && !sortedExercises[exercise.exercise_division['name']]) {
+                    sortedExercises[exercise.exercise_division['name']] = []
+                  } else {
+                    sortedExercises['Sin categoría'].push(exercise)
+                  }
+                  if(exercise.exercise_division) {
+                    sortedExercises[exercise.exercise_division['name']].push(exercise)
+                  }
+                })
+                this.sortedExercises = sortedExercises
+            },
+            tabClicked (selectedTab) {
+                console.log('Current tab re-clicked:' + selectedTab.tab.name);
+            },
+            tabChanged (selectedTab) {
+                console.log('Tab changed to:' + selectedTab.tab.name);
+            },
+        },
+        data : function () {
+            return {
+                prepareToPrint: false,
+                sortedExercises : {},
+                hpp : {}
+            }
+        },
+        props: ['hppId']
+    }
+</script>
+
+<style scoped>
+#printable h4,h5{
+  font-size: 12.5pt;
+  font-weight: bold;
+}
+#printable strong{
+  font-size: 12pt;
+}
+#printable p{
+  font-size: 11pt;
+}
+.tabs-component {
+  margin: 4em 0;
+}
+
+.tabs-component-tabs {
+  border: solid 1px #ddd;
+  border-radius: 6px;
+  margin-bottom: 5px;
+}
+@media print{
+  div {
+    overflow:hidden;
+  }
+  #print_view {
+      background-color: white;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 0;
+      padding: 15px;
+      font-size: 14px;
+      line-height: 18px;
+      z-index: 100000;
+      page-break-after: always;
+  }
+  img {
+    page-break-inside: avoid; /* or 'auto' */
+  }
+  #print_view h4,h5 {
+      font-size: 12.5pt;
+			font-weight: bold;
+  }
+  #print_view h3 {
+      font-size: 15pt;
+			font-weight: bold;
+  }
+  table {
+    border: 2px solid black;
+    margin-left: 20px;
+    table-layout: fixed;
+  }
+  td tr {
+    border: 2px solid black;
+  }
+}
+  div {
+    overflow:hidden;
+  }
+  #print_view {
+      background-color: white;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin: 0;
+      padding: 15px;
+      font-size: 14px;
+      line-height: 18px;
+      z-index: 100000;
+      page-break-after: always;
+  }
+  table {
+    border: 2px solid black;
+    margin-left: 20px;
+    table-layout: fixed;
+  }
+  td{
+    border: 2px solid black !important;
+  }
+@media (min-width: 700px) {
+
+  .tabs-component-tabs {
+    border: 0;
+    align-items: stretch;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: -1px;
+  }
+}
+
+.tabs-component-tab {
+  color: #999;
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 0;
+  list-style: none;
+}
+
+.tabs-component-tab:not(:last-child) {
+  border-bottom: dotted 1px #ddd;
+}
+
+.tabs-component-tab:hover {
+  color: #666;
+}
+
+.tabs-component-tab.is-active {
+  color: #000;
+}
+
+.tabs-component-tab.is-disabled * {
+  color: #cdcdcd;
+  cursor: not-allowed !important;
+}
+
+@media (min-width: 700px) {
+  .tabs-component-tab {
+    background-color: #fff;
+    border: solid 1px #ddd;
+    border-radius: 3px 3px 0 0;
+    margin-right: .5em;
+    transform: translateY(2px);
+    transition: transform .3s ease;
+  }
+
+  .tabs-component-tab.is-active {
+    border-bottom: solid 1px #fff;
+    z-index: 2;
+    transform: translateY(0);
+  }
+}
+
+.tabs-component-tab-a {
+  align-items: center;
+  color: inherit;
+  display: flex;
+  padding: .75em 1em;
+  text-decoration: none;
+}
+
+.tabs-component-panels {
+  padding: 4em 0;
+}
+
+@media (min-width: 700px) {
+  .tabs-component-panels {
+    border-top-left-radius: 0;
+    background-color: #fff;
+    border: solid 1px #ddd;
+    border-radius: 0 6px 6px 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .05);
+    padding: 4em 2em;
+  }
+}
+</style>

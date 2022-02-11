@@ -9,14 +9,19 @@
     "license": "MIT",
     "require": {
         "php": "^7.1.3",
+        "barryvdh/laravel-dompdf": "^0.8.6",
+        "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.0",
-        "illuminate/html": "^5.0",
-        "laravel/cashier": "^9.3",
-        "laravel/framework": "5.8.*",
+        "google/apiclient": "^2.0",
+        "laravel/cashier": "^12.15",
+        "laravel/framework": "^6.5",
         "laravel/tinker": "^1.0",
+        "laravelcollective/html": "^6.0",
+        "monolog/monolog": "^2.0",
+        "nao-pon/flysystem-google-drive": "~1.1",
         "openpay/sdk": "dev-master",
-        "paypal/rest-api-sdk-php": "*",
-        "srmklive/paypal": "~1.0"
+        "srmklive/paypal": "~1.0",
+        "summernote/summernote": "^0.8.8"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
@@ -42,7 +47,8 @@
         },
         "classmap": [
             "database/seeds",
-            "database/factories"
+            "database/factories",
+            "database/migrations"
         ]
     },
     "autoload-dev": {

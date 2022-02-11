@@ -18,13 +18,29 @@ src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
 			date=$("#date").val();
 			ajax_get_remaining_times_from_date(date);
 		});
+		$("#clinic_id").change(function(){
+			date=$("#date").val();
+			ajax_get_remaining_times_from_date(date);
+		});
 		$("#submit_agendar").click(function(){
 			console.log($("#address_visit").is(":checked"));
 			if($("#address_visit").is(":checked")){
-				console.log($("#checkoutModal"));
 				$("#checkoutModal").modal();
 			}else{
-				$("#payment-form").submit();
+				@if(Auth::user())
+				if(confirm('Usted es un usuario del staff de RecuperaT, ¿desea que esta cita se realice con descuento del 5% para el paciente?')){
+					$("#payment-form").append($('<input>',{
+						type:'hidden',
+						value:{{Auth::id()}},
+						name:'user_id'
+					}));
+					$("#payment-form").submit();
+				}else{
+					$("#payment-form").submit();
+				}
+				@else
+					$("#payment-form").submit();
+				@endif
 			}
 		});
 			OpenPay.setId('m2mgdlkwrobevetfttwx');
@@ -51,9 +67,10 @@ src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
 		              	alert("ERROR [" + response.status + "] " + desc);
 		              	$("#pay-button").prop("disabled", false);
 		              };
+		$("#date").trigger('change');
 	});
 	function ajax_get_remaining_times_from_date(date){
-		url='/ajax_get_remaining_times_from_date/'+date;
+		url='/ajax_get_remaining_times_from_date/'+date+'/'+$('#clinic_id').val();
 		$.get({
 			url:url,
 			success:function(answer){
@@ -86,15 +103,40 @@ src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
 </script>
 @endsection
 @section("content")
-		<form action="{{action('OpenPayController@store')}}" method="post" id="payment-form">
+		<form action="{{action('AppoinmentController@store')}}" method="post" id="payment-form">
 			@csrf
 <div class="d-flex" style="height: 80vh">
 	<div class="container" >
-			<h2>{{$product->name}}</h2>
-			<input type="hidden" id="appoinment" name="product_id" class="form-control" value="{{$product->id}}">
+		@if ($errors->any())
+		<div class="row">
+			<div class="col-lg-12">
+			    <div class="alert alert-danger">
+			        <ul>
+			            @foreach ($errors->all() as $error)
+			                <li>{{ $error }}</li>
+			            @endforeach
+			        </ul>
+			    </div>
+			</div>
+		</div>
+		@endif
+		@if (\Session::has('message'))
+		    <div class="row">
+			    <div class="col-lg-12">
+				    <div class="alert alert-success">
+						{!! \Session::get('message') !!}
+				    </div>
+			    </div>
+		    </div>
+		@endif
+			<h2><strong>Agendar Cita</strong></h2>
+			<select id="appoinment" name="product_id" class="form-control">
+				@foreach($product_therapies as $id=>$product_therapy)
+					<option value="{{$id}}">{{$product_therapy}}</option>
+				@endforeach
+			</select>
 			<div class="row">
 				<div class="col-lg-12">
-					
 					@csrf
 					<label for="patient">Nombre del paciente</label>
 					<input type="text" name="appoinment_patient_name" id="patient" class="form-control" placeholder="Nombre Completo">
@@ -102,9 +144,18 @@ src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
 			</div>
 			<div class="row">
 				<div class="col-lg-12">
-					
 					<label for="telephone">Teléfono de contacto</label>
 					<input type="tel" name="telephone" id="telephone" class="form-control" placeholder="ej. 3339554543">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<label for="clinic_id">Centro</label>
+					<select id='clinic_id' name="clinic_id" class="form-control">
+						@foreach($clinics as $clinic)
+							<option value = '{{$clinic->id}}'>{{$clinic->name}}</option>
+						@endforeach;
+					</select>
 				</div>
 			</div>
 			<div class="row">
@@ -124,18 +175,18 @@ src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
 			</div>
 
 
-			<div class="row">
+{{-- 			<div class="row">
 				<div class="col-lg-12">
 					<input type="checkbox" name="address_visit" id="address_visit" target="#address_visit_div">
 					<label for="address_visit">Deseo visita a domicilio</label>
 				</div>
-			</div>
+			</div> --}}
 			<div class="row" id="address_visit_div" style="display: none">
 				<div class="col-lg-12">
 					Advertencia: Este servicio solo está disponible en campo real y valle imperial, favor de verificar disponibilidad en el teléfono: (33)3333-3333, y deberá ser pagado con tarjeta de crédito o débito (dando click en el boton de agendar).
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" style="margin-top: 20px">
 				<div class="col-lg-12">
 					<a id="submit_agendar" style="color: white; cursor: pointer;" class="btn btn-primary">Agendar</a>
 				</div>

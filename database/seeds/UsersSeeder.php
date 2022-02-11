@@ -32,5 +32,12 @@ class UsersSeeder extends Seeder
             'created_at'=> date('Y-m-d', time()), 
             'user_rol_id'=> 1 
         ]);
+        DB::table('users')->insert([
+            'name' => 'Rehabilitador',
+            'email' => 'rehabilitador@recuperat.com',
+            'password' => Hash::make("123456"),
+            'created_at'=> date('Y-m-d', time()), 
+            'user_rol_id'=> 4 //fisioteapueta
+        ]);
     }
 }

@@ -16,7 +16,7 @@ class Product extends Model
         'active',
     ];
     public function getImgAttribute($value){
-        return ($this->product_category_id==1)?("servicios/".$value):$this->$value;
+        return ($this->product_category_id==1)?("servicios/".$value):$value;
     }
     public function setActiveAttribute($value)
     {
@@ -53,6 +53,7 @@ class Product extends Model
                     "price"=>$product->price_mxn, 
                     "description"=>$product->description, 
                     "quantity"=>$products[$key]["qty"],
+                    "id"=>$product->id,
                 ];
             }
         }

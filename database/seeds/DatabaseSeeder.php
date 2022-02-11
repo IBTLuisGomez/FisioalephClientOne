@@ -17,5 +17,11 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductSeeder::class);
         $this->call(GeographicSeeder::class);
         $this->call(AppointmentsSeeder::class);
+        $this->call(OfferTypeSeeder::class);
+        $this->call(OfferSeeder::class);
+        $this->call(PatientsSeeder::class);
+        $this->call(AntecedentsSeeder::class);
+        $this->call(CIE10Seeder::class);
+        $this->call(Cie9_mcSeeder::class);
     }
 }

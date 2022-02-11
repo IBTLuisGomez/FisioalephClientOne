@@ -2,11 +2,7 @@ version: '3.5'
 
 services:
   laravel-app:
-    build:
-      context: './Dockerfile'
-      args:
-        uid: 123
-    container_name: recuperat
+    image: recuperat-laravel-docker_laravel-app:latest
     ports:
       - 8006:80
     environment:
@@ -14,6 +10,7 @@ services:
       - APACHE_RUN_GROUP=#1000
     volumes:
       - .:/var/www/html
+    restart: always
     networks:
       backend:
         aliases:
@@ -22,8 +19,12 @@ services:
   mysql-db-recuperat:
     image: mysql:5.7
     container_name: recuperat_db
+    ports:
+    - 6969:3306
+    restart: always
     volumes:
       - ./run/var:/var/lib/mysql
+      - ./home_mysql:/home
     environment:
       - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_DATABASE=apprecuperat

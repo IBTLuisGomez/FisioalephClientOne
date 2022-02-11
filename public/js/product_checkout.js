@@ -40,8 +40,9 @@ function remove_from_checkout(event){
 }
 
 function get_set_municipalities_from_state($id, municipality_id){
-	$.get(
-	{ 	
+	$.ajax(
+	{
+		method: 'get',
 		url:"/helper/ajax_get_municipalities_from_state_id/"+$id,
 		success:function(data){
 			$(municipality_id).html("");
@@ -59,8 +60,9 @@ function get_set_municipalities_from_state($id, municipality_id){
 		},
 		failure:function(res){
 			console.log(res);
-		}}
-		);
+		}
+	}
+	);
 }
 
 function set_state_code_from_postal_code($code,select_state_id){

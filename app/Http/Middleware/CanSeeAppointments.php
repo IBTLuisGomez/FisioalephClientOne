@@ -16,7 +16,7 @@ class CanSeeAppointments
     public function handle($request, Closure $next)
     {
         if(Auth::user()){
-            if(Auth::user()->rol->name=="admin"){
+            if(Auth::user()->rol->id<=5){
                 return $next($request);
             }
         }

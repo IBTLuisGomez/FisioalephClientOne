@@ -15,16 +15,25 @@ class UsersRolesSeeder extends Seeder
             'name' => 'admin'
         ]);
         DB::table('user_rols')->insert([
-            'name' => 'medico'
+            'name' => 'traumatologo'
         ]);
         DB::table('user_rols')->insert([
             'name' => 'rehabilitador'
         ]);
         DB::table('user_rols')->insert([
+            'name' => 'fisioterapeuta'
+        ]);
+        DB::table('user_rols')->insert([
+            'name' => 'nutriologo'
+        ]);
+        DB::table('user_rols')->insert([
             'name' => 'administrativo'
         ]);
         DB::table('user_rols')->insert([
-            'name' => 'pacientes'
+            'name' => 'paciente'
+        ]);
+        DB::table('user_rols')->insert([
+            'name' => 'estudiantes'
         ]);
     }
 }

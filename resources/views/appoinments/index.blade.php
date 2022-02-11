@@ -25,7 +25,7 @@
 	</script>
 @endsection
 @section("content")
-	<div class="container">
+	<div class="container h-100" style="min-height:1000px;">
 		<div class="row">
 			<label>Filtrar por fecha</label>
 		</div>

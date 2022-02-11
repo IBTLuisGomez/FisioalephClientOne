@@ -8,6 +8,7 @@ class Appoinment extends Model
     protected $guarded=[
     	"id", "created_at","deleted_at"
     ];
+    protected $table="orders";
     public function category(){
     	return $this->belongsTo("App\AppoinmentCategory","appoinment_category","id");
     }

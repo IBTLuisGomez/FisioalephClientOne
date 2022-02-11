@@ -6,10 +6,21 @@
 src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
 <script type="text/javascript" src="https://resources.openpay.mx/lib/openpay-data.v1.min.js"></script>
 <script type="text/javascript">
+	var minimum_checkout={{!empty($minimum_checkout) ? $minimum_checkout: 0}};
 	$(document).ready(function() {
-
-		OpenPay.setId('m2mgdlkwrobevetfttwx');
-		OpenPay.setApiKey('pk_62308cf550584483a5147b0434d2d8e4');
+		$("#open_pay_modal").click(function(){
+			gotoPage();
+			pressumed_total=$("#checkout_total").html();
+			if(pressumed_total<(!empty($minimum_checkout) ? $minimum_checkout: 0)){
+				$(".delivery").attr("disabled",true);
+				$("#minimum-buy-warning").css("display","block");
+			}else{
+				$(".delivery").removeAttr("disabled");
+				$("#minimum-buy-warning").css("display","none");
+			}
+		});
+		OpenPay.setId('{{env('OPENPAY_ID','none')}}');
+		OpenPay.setApiKey('{{env('OPENPAY_PK','none')}}');
 		OpenPay.setSandboxMode(true);
 
 	              //Se genera el id de dispositivo
@@ -17,8 +28,18 @@ src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
 	              
 	              $('#pay-button').on('click', function(event) {
 	              	event.preventDefault();
-	              	$("#pay-button").prop( "disabled", true);
-	              	OpenPay.token.extractFormAndCreate('payment-form', sucess_callbak, error_callbak);                
+	              	$(this).attr("disabled",true);
+	              	accepted_terms=$(".acepto_terminos_y_condiciones").is(":checked");
+	              	accepted_policies=$(".acepto_politicas").is(":checked");
+	              	if(accepted_terms && accepted_policies){
+		              	setTimeout(function(){
+		              		$('#pay-button').removeAttr("disabled");
+		              	},20000);
+		              	OpenPay.token.extractFormAndCreate('payment-form', sucess_callbak, error_callbak);
+	              	}else{
+	              		alert("Primero debes aceptar los términos y condiciones y nuestra polítcia de privacidad");
+	              		$('#pay-button').removeAttr("disabled");
+	              	}                
 	              });
 
 	              var sucess_callbak = function(response) {
@@ -30,7 +51,7 @@ src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
 	              var error_callbak = function(response) {
 	              	var desc = response.data.description != undefined ? response.data.description : response.message;
 	              	alert("ERROR [" + response.status + "] " + desc);
-	              	$("#pay-button").prop("disabled", false);
+	              	$('#pay-button').removeAttr("disabled");
 	              };
 
 	          });
@@ -39,24 +60,7 @@ src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
 	      <style>
 	      	@charset "US-ASCII";
 	      	@import "http://fonts.googleapis.com/css?family=Lato:300,400,700";
-	      	* {
-	      		color: #444;
-	      		font-family: Lato;
-	      		font-size: 16px;
-	      		font-weight: 300;
-	      	}
-	      	::-webkit-input-placeholder {
-	      		font-style: italic;
-	      	}
-	      	:-moz-placeholder {
-	      		font-style: italic;
-	      	}
-	      	::-moz-placeholder {
-	      		font-style: italic;
-	      	}
-	      	:-ms-input-placeholder {  
-	      		font-style: italic;
-	      	}
+
 
 	      	body {
 	      		float: left;
@@ -98,204 +102,10 @@ src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
 	      		background: none repeat scroll 0 0 #ccc;
 	      		cursor: default;
 	      	}
-	      	.bkng-tb-cntnt {
-	      		float: left;
-	      		width: 800px;
-	      	}
-	      	.bkng-tb-cntnt a.button {
-	      		color: #fff;
-	      		float: right;
-	      		font-size: 18px;
-	      		padding: 5px 20px;
-	      		width: auto;
-	      	}
-	      	.bkng-tb-cntnt a.button.o {
-	      		background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
-	      		color: #e51f04;
-	      		border: 1px solid #e51f04;
-	      	}
-	      	.bkng-tb-cntnt a.button i {
-	      		color: #fff;
-	      	}
-	      	.bkng-tb-cntnt a.button.o i {
-	      		color: #e51f04;
-	      	}
-	      	.bkng-tb-cntnt a.button.right i {
-	      		float: right;
-	      		margin: 2px 0 0 10px;
-	      	}
-	      	.bkng-tb-cntnt a.button.left {
-	      		float: left;
-	      	}
-	      	.bkng-tb-cntnt a.button.disabled.o {
-	      		border-color: #ccc;
-	      		color: #ccc;
-	      	}
-	      	.bkng-tb-cntnt a.button.disabled.o i {
-	      		color: #ccc;
-	      	}
-	      	.pymnts {
-	      		float: left;
-	      		width: 800px;
-	      	}
-	      	.pymnts * {
-	      		float: left;
-	      	}
-
-	      	.sctn-row {
-	      		margin-bottom: 35px;
-	      		width: 800px;
-	      	}
-	      	.sctn-col {
-	      		width: 375px;
-	      	}
-	      	.sctn-col.l {
-	      		width: 425px;
-	      	}
-	      	.sctn-col input {
-	      		border: 1px solid #ccc;
-	      		font-size: 18px;
-	      		line-height: 24px;
-	      		padding: 10px 12px;
-	      		width: 333px;
-	      	}
-	      	.sctn-col label {
-	      		font-size: 24px;
-	      		line-height: 24px;
-	      		margin-bottom: 10px;
-	      		width: 100%;
-	      	}
-	      	.sctn-col.x3 {
-	      		width: 300px;
-	      	}
-	      	.sctn-col.x3.last {
-	      		width: 200px;
-	      	}
-	      	.sctn-col.x3 input {
-	      		width: 210px;
-	      	}
-	      	.sctn-col.x3 a {
-	      		float: right;
-	      	}
-	      	.pymnts-sctn {
-	      		width: 800px;
-	      	}
-	      	.pymnt-itm {
-	      		margin: 0 0 3px;
-	      		width: 800px;
-	      	}
-	      	.pymnt-itm h2 {
-	      		background-color: #e9e9e9;
-	      		font-size: 24px;
-	      		line-height: 24px;
-	      		margin: 0;
-	      		padding: 28px 0 28px 20px;
-	      		width: 780px;
-	      	}
-	      	.pymnt-itm.active h2 {
-	      		background-color: #e51f04;
-	      		color: #fff;
-	      		cursor: default;
-	      	}
-	      	.pymnt-itm div.pymnt-cntnt {
-	      		display: none;
-	      	}
-	      	.pymnt-itm.active div.pymnt-cntnt {
-	      		background-color: #f7f7f7;
-	      		display: block;
-	      		padding: 0 0 30px;
-	      		width: 100%;
-	      	}
-
-	      	.pymnt-cntnt div.sctn-row {
-	      		margin: 20px 30px 0;
-	      		width: 740px;
-	      	}
-	      	.pymnt-cntnt div.sctn-row div.sctn-col {
-	      		width: 345px;
-	      	}
-	      	.pymnt-cntnt div.sctn-row div.sctn-col.l {
-	      		width: 395px;
-	      	}
-	      	.pymnt-cntnt div.sctn-row div.sctn-col input {
-	      		width: 303px;
-	      	}
-	      	.pymnt-cntnt div.sctn-row div.sctn-col.half {
-	      		width: 155px;
-	      	}
-	      	.pymnt-cntnt div.sctn-row div.sctn-col.half.l {
-	      		float: left;
-	      		width: 190px;
-	      	}
-	      	.pymnt-cntnt div.sctn-row div.sctn-col.half input {
-	      		width: 113px;
-	      	}
-	      	.pymnt-cntnt div.sctn-row div.sctn-col.cvv {
-	      		background-image: url("./cvv.png");
-	      		background-position: 156px center;
-	      		background-repeat: no-repeat;
-	      		padding-bottom: 30px;
-	      	}
-	      	.pymnt-cntnt div.sctn-row div.sctn-col.cvv div.sctn-col.half input {
-	      		width: 110px;
-	      	}
-	      	.openpay {
-	      		float: right;
-	      		height: 60px;
-	      		margin: 10px 30px 0 0;
-	      		width: 435px;
-	      	}
-	      	.openpay div.logo {
-	      		background-image: url("./openpay.png");
-	      		background-position: left bottom;
-	      		background-repeat: no-repeat;
-	      		border-right: 1px solid #ccc;
-	      		font-size: 12px;
-	      		font-weight: 400;
-	      		height: 45px;
-	      		padding: 15px 20px 0 0;
-	      	}
-	      	.openpay div.shield {
-	      		background-image: url("./security.png");
-	      		background-position: left bottom;
-	      		background-repeat: no-repeat;
-	      		font-size: 12px;
-	      		font-weight: 400;
-	      		margin-left: 20px;
-	      		padding: 20px 0 0 40px;
-	      		width: 200px;
-	      	}
-	      	.card-expl {
-	      		float: left;
-	      		height: 80px;
-	      		margin: 20px 0;
-	      		width: 800px;
-	      	}
-	      	.card-expl div {
-	      		background-position: left 45px;
-	      		background-repeat: no-repeat;
-	      		height: 70px;
-	      		padding-top: 10px;
-	      	}
-	      	.card-expl div.debit {
-	      		background-image: url("./cards2.png");
-	      		margin-left: 20px;
-	      		width: 540px;
-	      	}
-	      	.card-expl div.credit {
-	      		background-image: url("./cards1.png");
-	      		border-right: 1px solid #ccc;
-	      		margin-left: 30px;
-	      		width: 209px;
-	      	}
-	      	.card-expl h4 {
-	      		font-weight: 400;
-	      		margin: 0;
-	      	}
 	      </style>
 	      @endsection
 	      @section("content")
-	                  <form action="{{ action('OpenPayController@store') }}" method="POST" id="payment-form">
+	                  <form action="https://www.recuperatfisioterapia.com/charge" method="POST" id="payment-form">
 	      <div class="container">
 	      	<div class="row">
 	      		<div class="col-lg-6">
@@ -303,7 +113,7 @@ src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
 	      		@foreach($C_products as $product)
 	      				<div class="w-100 d-inline-flex row-checkout">
 	      					<div class="p-2">
-	      						@if($product->img))
+	      						@if($product->img)
 	      						@if(file_exists(public_path("images")."/".$product->img))
 	      						<img style="float: left;" src="{{'images/'.$product->img}}">
 	      						@else
@@ -366,12 +176,51 @@ src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
 	      				</div>
 	      			</div>
 	      			<div class="w-100 d-inline-flex">
-	      				<button type="button" data-toggle="modal" data-target="#checkoutModal" class="mx-auto btn btn-primary">Pagar</button>
+	      				<button id="open_pay_modal" type="button" data-toggle="modal" data-target="#checkoutModal" class="mx-auto btn btn-primary">Pagar</button>
 	      			</div>	
 	      		</div>
 	      	</div>
 	      </div>
 
-	      @include('openpay.form')
+	      @include('openpay.form',["minimum_checkout",!empty($minimum_checkout) ? $minimum_checkout : 0, "disable_div_choose_envío"=>true])
 	      </form>
+	      <script type="text/javascript">
+	      	$("#payment-form").validate({
+	      		errorClass: 'alert alert-danger',
+	      		ignore: '*:not([name])',
+	      		lang: 'es'
+
+	      	});
+	      	$("#card_email").rules("add",{
+	      		required:true,
+	      		email:true,
+	      		messages:{
+	      			required:"Introduce un email",
+	      			email:"Debes escribir un email valido"
+	      		}
+	      	});
+	      	$("#card_number").rules("add",{
+	      		required:true,
+	      		messages:{
+	      			required:"El numero de tarjeta es requerido para compra en linea"
+	      		}
+	      	});
+	      	$("#telephone_card").rules("add",{
+	      		required:true,
+	      		messages:{
+	      			required:"Introduce un numero de telefono valido"
+	      		}	
+	     	})
+
+	     	function validatePhone(txtPhone) {
+	     	    var a = document.getElementById(txtPhone).value;
+	     	    var filter = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
+	     	    if (filter.test(a)) {
+	     	        return true;
+	     	    }
+	     	    else {
+	     	        return false;
+	     	    }
+	     	}
+	      </script>
 	      @endsection

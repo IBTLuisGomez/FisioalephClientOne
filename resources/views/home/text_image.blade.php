@@ -1,3 +1,35 @@
+@if(!empty($offers))
+	<div class="col-lg-12">
+		<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+		  <ol class="carousel-indicators">
+		  	@php $cont=0; $first=true; @endphp
+  	  	  	@foreach($offers as $offer)
+		    	<li data-target="#carouselExampleIndicators" data-slide-to="{{$cont++}}" class="{{($first)?'active':''}}"></li>
+  	  	    @endforeach
+		  </ol>
+		  <div class="carousel-inner">
+		  	  	@php $first=true; @endphp
+		  	  	@foreach($offers as $offer)
+			  	  	@if($offer->img)
+			  		    <div class="carousel-item {{($first)?'active':''}}">
+			  		    	@php $first=false; @endphp
+			  		      <img class="d-block w-100" style="max-height: 60vh;" src="/images/promociones/{{$offer->img}}" alt="First slide">
+			  		    </div>
+			  		@endif
+		  	    @endforeach
+		  </div>
+		  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" style="max-height: 50vh;" data-slide="prev">
+		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		    <span class="sr-only">Previous</span>
+		  </a>
+		  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		    <span class="sr-only">Next</span>
+		  </a>
+		</div>
+	</div>
+@endif
+	@if(empty($home_content))
 <div class="col-lg-10 offset-1">
 	<div style="overflow: hidden;">
 		<img style="float:right" class="home_image" src="images/mision.png"/>
@@ -28,14 +60,38 @@
 		</p>
 	</div>
 	<div style="overflow: hidden;">
-		<img style="float:right; margin-right: 20px; height: 20vw; width: 20vw;" class="home_image" src="images/contactanos.jpg"/>
+		<img style="float:right; margin: 50px 20px; height: 20vw; width: 20vw;" class="home_image" src="images/contactanos.jpg"/>
 		<h3 style="font-weight: bold">Contáctanos</h3>
+		<h4 style="font-weight: bold">Valle imperial</h4>
 		<p>
-			Blvd. Valle imperial # 260 -18, cruza con avenida antigua camino a copalita y calle las torres, planta alta, colonia la periquera, C.P 45134, Zapopan Jalisco.
+			Blvd. Valle imperial # 260 -18, cruza con Avenida Antiguo Camino a Copalita y Calle Las Torres, planta alta, Colonia La Periquera, C.P 45134, Zapopan Jalisco.
 		</p>
 		<p>
-			Juan Gil Preciado L4 Tesistan, CP: 8905, PLAZA T-Center
+					<strong>
+						Local:
+					</strong>
+					3396886699
+					<br/>
+					<strong>
+						Celular (Whatsapp):
+					</strong>
+					3323517843
+					<br/>
+				</p>
+		<img style="float:left; margin-right: 20px; height: 20vw; width: 20vw;" class="home_image" src="images/contactanos_t_center.jpeg"/>
+		<h4 style="font-weight: bold">Plaza T-Center</h4>
+		<p>
+			Juan Gil Preciado #8905, Local 4, Tesistán. CP: 45200, Plaza T-Center
 		</p>
+		<p>
+					<strong>
+						Celular (Whatsapp):
+					</strong>
+					3324074211
+					<br/>
+				</p>
 	</div>
-
 </div>
+	@else
+		{!! $home_content->value !!}
+	@endif

@@ -1,6 +1,13 @@
 FROM php:7.2-apache
 
-RUN apt-get update
+RUN apt-get update && apt-get install -y pkg-config patch
+ADD https://git.archlinux.org/svntogit/packages.git/plain/trunk/freetype.patch?h=packages/php /tmp/freetype.patch
+RUN docker-php-source extract; \
+  cd /usr/src/php; \
+  patch -p1 -i /tmp/freetype.patch; \
+  rm /tmp/freetype.patch
+RUN docker-php-ext-configure gd --with-freetype-dir --with-jpeg-dir=/usr/include/
+
 
 # 1. development packages
 RUN apt-get install -y \
