@@ -13,11 +13,11 @@ class AddAnatoPhysioProtocolTable extends Migration
      */
     public function up()
     {
-        Schema::table('protocolo_fisioterapias', function($table) {
-            $table->unsignedBigInteger('anato_physiology_glosary_item_id')->nullable();
+        // Schema::table('protocolo_fisioterapias', function($table) {
+        //     $table->unsignedBigInteger('anato_physiology_glosary_item_id')->nullable();
 
-            $table->foreign('anato_physiology_glosary_item_id')->references('id')->on('anato_physiology_glosary_items');
-        });
+        //     $table->foreign('anato_physiology_glosary_item_id')->references('id')->on('anato_physiology_glosary_items');
+        // });
     }
 
     /**
@@ -27,9 +27,9 @@ class AddAnatoPhysioProtocolTable extends Migration
      */
     public function down()
     {
-        Schema::table('protocolo_fisioterapias', function($table) {
-            $table->dropForeign(['anato_physiology_glosary_item_id']);
-            $table->dropColumn('anato_physiology_glosary_item_id');
-        });
+        // Schema::table('protocolo_fisioterapias', function($table) {
+        //     $table->dropForeign(['anato_physiology_glosary_item_id']);
+        //     $table->dropColumn('anato_physiology_glosary_item_id');
+        // });
     }
 }

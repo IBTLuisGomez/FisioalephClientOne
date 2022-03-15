@@ -108,8 +108,15 @@
 	<div class="container note_container">
 		@if(empty($stop_extend))
 			<div class="row">
-					@include('reports.row_print_report', ['hide_header' => true])
+					@include('reports.row_print_report', ['hide_header' => true, 'only_true_checkbox' => true])
 			</div>
+		@endif
+		@if (!empty($previous))
+			<a class="no_print" href="{{route('laboratory_order.edit', $previous->id)}}">< Anterior</a>
+		@endif
+		<span class="no_print"> | </span>
+		@if (!empty($next))
+			<a class="no_print" href="{{route('laboratory_order.edit', $next->id)}}">Próximo ></a>
 		@endif
 		@if(!empty($title))
 			<div class="row">
@@ -237,11 +244,13 @@
 				@endif
 		</div>
 			@endforeach
+		@if(empty($next))
 		<div class="row">
 			<div class="col-lg-12">
 				{{Form::submit('Guardar',['class'=>'btn btn-primary'])}}
 			</div>
 		</div>
+		@endif
 	</div>
 	{{Form::close()}}
 @endsection

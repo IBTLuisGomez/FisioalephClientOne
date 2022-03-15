@@ -48,9 +48,11 @@ class AnatoPhysiologyGlosaryItemsController extends CRUDController
     }
 
     public function ajaxGet($string = null){
-        $col=$this->model_name::where("name","like","%")->limit(20)->orderBy('name','asc')->get();
+        $col = [];
         if($string){
-            $col=$this->model_name::where("name","like","%".$string."%")->limit(40)->orderBy('name','asc')->get();
+            $col=$this->model_name::where("name","like",$string ? "%$string%" : "%")->limit(40)->orderBy('name','asc')->get();
+        } else {
+            $col=$this->model_name::where("name","like","%")->orderBy('name','asc')->get();
         }
         return $col->map(function ($cie10) {
             return [
@@ -58,7 +60,6 @@ class AnatoPhysiologyGlosaryItemsController extends CRUDController
                 'label' => $cie10->name
             ];
         });
-        return $col->pluck('name','id')->toArray();
     }
 
 }

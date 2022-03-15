@@ -62,7 +62,7 @@
 						}
 						setTimeout( () => {
 								$("#printable").find('.row.mb-3').each((key, row) => {
-									colsContent = $(row).children('.col-lg-12').children()
+									colsContent = $(row).children('.col-lg-12,.col-lg-6').find('p,input,checkbox,strong,label,h1,h2,h3,h4,h5,h6')
 									if (colsContent.length == 0) {
 											$(row).remove()
 										}
@@ -73,7 +73,6 @@
 										$(p).remove()
 									}
 								})
-								console.log($("#printable").find('iframe').length)
 								__printIFrame()
 								setTimeout(() => {
 									if($("#printable").find('iframe').length > 0) {
@@ -196,6 +195,9 @@
 									if (!tag.is(':checked')) {
 										tag.remove();
 										label.remove();
+									} else {
+										tag.parent().parent().parent().find('.no_print').removeClass('no_print');
+										tag.remove();
 									}
 									return;
 								}

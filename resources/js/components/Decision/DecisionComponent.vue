@@ -36,19 +36,19 @@
                 <h3>Ejercicios</h3>
               </div>
             </div>
-            <div class="col-lg-12" v-for="exerciseKey in Object.keys(sortedExercises)">
+            <div class="col-lg-12" v-for="exerciseKey in Object.keys(sortedExercises)" :key="exerciseKey.id">
               <div class="row">
                 <div class="col-lg-12">
                   <h4>{{exerciseKey}}</h4>
                 </div>
               </div>
-              <div class="row" v-for="exercise in sortedExercises[exerciseKey]">
+              <div class="row" v-for="exercise in sortedExercises[exerciseKey]" :key="exercise.id">
                 <div class="col-lg-12">
                   <p>{{exercise.name}}</p>
                   <p>{{exercise.description}}</p>
                   <div class="row">
                     <div class="col-lg-12">
-                      <img v-for="resource in exercise.image_resources" width="auto" height="200px" :src="`/storage/${resource.url}`"></img>
+                      <img v-for="resource in exercise.image_resources" width="auto" height="200px" :src="`/storage/${resource.url}`" :key="resource.id"/>
                     </div>
                   </div>
                 </div>
@@ -61,12 +61,12 @@
                 <h3>Masajes</h3>
               </div>
             </div>
-            <div class="row" v-for="massage in hpp.massage">
+            <div class="row" v-for="massage in hpp.massage" :key="massage.id">
               <div class="col-lg-12">
-                <p>{{massage.name}}</p>
-                  <div class="row" v-for="resource in massage.image_resources" >
+                <p>{{linkify(massage.name)}}</p>
+                  <div class="row" v-for="resource in massage.image_resources" :key="resource.id">
                     <div class="col-lg-12">
-                      <img width="auto" height="200px" :src="`/storage/${resource.url}`"></img>
+                      <img width="auto" height="200px" :src="`/storage/${resource.url}`"/>
                     </div>
                   </div>
               </div>
@@ -78,7 +78,7 @@
                 <h3>Agentes físicos</h3>
               </div>
             </div>
-            <div class="row" v-for="physical_agent in hpp.physical_agent">
+            <div class="row" v-for="physical_agent in hpp.physical_agent" :key="physical_agent.id">
               <div class="col-lg-12">
                 <p><strong>Descripción: </strong>{{physical_agent.description}}</p>
                 <p><strong>Indicación: </strong>{{physical_agent.pivot.indication}}</p>
@@ -106,9 +106,21 @@
                 <h3>Contraindicaciones</h3>
               </div>
             </div>
-            <div class="row" v-for="contraindication in hpp.contraindication" :key="contraindication.id">
+            <div class="row">
               <div class="col-lg-12">
-                <p><li>{{contraindication.description}}</li></p>
+                <div v-for="contraindication in hpp.contraindication" :key="contraindication.id">{{contraindication.description}}</div>
+              </div>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+              <div class="col-lg-12">
+                <h3>Bibliografía</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                {{hpp.bibliography}}
               </div>
             </div>
           </div>
@@ -154,6 +166,23 @@
             axios.get(ENV.urlApiHFPBase + '/' + this.hppId).then(this.setHpp);
         },
         methods : {
+            linkify(inputText) {
+                var replacedText, replacePattern1, replacePattern2, replacePattern3;
+
+                //URLs starting with http://, https://, or ftp://
+                replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+                replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+
+                //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+                replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+                replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+
+                //Change email addresses to mailto:: links.
+                replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+                replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
+
+                return replacedText;
+            },
             createDivPrint () { 
               this.prepareToPrint = true
               setTimeout(()=> {

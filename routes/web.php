@@ -12,10 +12,10 @@ use App\Product;
 |
 */
 
-
 Auth::routes();
 //mail
 Route::resource('users', 'UsersController')->middleware('logged_in');
+Route::get('/historia','HomeController@index');
 Route::post('/users/ajaxUpdate/{id?}','UsersController@ajaxUpdate')->name('users.ajaxUpdate');
 Route::post('/users/ajaxDelete','UsersController@ajaxDelete')->name('users.ajaxDelete');
 Route::get('/users/ajaxGet/{text}','UsersController@ajaxGet')->name('users.ajaxGet');
@@ -166,7 +166,7 @@ Route::resource('/keywords', 'KeywordController')->middleware('logged_in');
 Route::post('/keywords/ajaxUpdate/{id?}','KeywordController@ajaxUpdate')->name('keywords.ajaxUpdate');
 Route::post('/keywords/ajaxDelete','KeywordController@ajaxDelete')->name('keywords.ajaxDelete');
 
+Route::get('/anato_physiology_glosary_item/ajaxGet/{text?}','AnatoPhysiologyGlosaryItemsController@ajaxGet')->name('anato_physiology_glosary_item.ajaxGet');
 Route::resource('/anato_physiology_glosary_item', 'AnatoPhysiologyGlosaryItemsController')->middleware('logged_in');
 Route::post('/anato_physiology_glosary_item/ajaxUpdate/{id?}','AnatoPhysiologyGlosaryItemsController@ajaxUpdate')->name('anato_physiology_glosary_item.ajaxUpdate');
 Route::post('/anato_physiology_glosary_item/ajaxDelete','AnatoPhysiologyGlosaryItemsController@ajaxDelete')->name('anato_physiology_glosary_item.ajaxDelete');
-Route::get('/anato_physiology_glosary_item/ajaxGet/{text}','AnatoPhysiologyGlosaryItemsController@ajaxGet')->name('anato_physiology_glosary_item.ajaxGet');

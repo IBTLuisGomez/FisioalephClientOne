@@ -54,6 +54,7 @@
             },
             editContraindication : function (event) {
                 console.log(this.edditingContraindication);
+                delete this.edditingContraindication.pivot
                 this.$emit('onContraindicationEditted', event, this.edditingContraindication, this.editting);
                 this.enableEditting(false);
             },

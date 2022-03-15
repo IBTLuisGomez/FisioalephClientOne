@@ -103,7 +103,7 @@
                     })
                 }
             );
-            axios.get(ENV.urlBase + '/anato_physiology_glosary_item/ajaxGet/%25').then(
+            axios.get(ENV.urlBase + '/anato_physiology_glosary_item/ajaxGet/').then(
                 (res) => {
                     this.glosary_ap.label = res.data.name
                     this.glosary_ap = res.data

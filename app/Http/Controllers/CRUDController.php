@@ -72,6 +72,7 @@ class CRUDController extends Controller
     public function edit($id, $stop_extend = false)
     {
         $model = $this->model_name::where('id',$id)->first();
+        dd($this->relationships, $model->anato_physiology_glosary_item);
         if(!empty($this->relationships)){
             foreach ($this->relationships as $key => $relationship_name) {
                 if(!empty($this->keys['edit'])){

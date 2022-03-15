@@ -151,7 +151,10 @@ class LaboratoryOrderController extends CRUDController
         }
         $this->keys['create'][$key] = ['key'=>'Otros', 'label' => 'Otros', "type" => 'text', 'name' => 'others'];
         $this->patient_id = request()->patient_id;
+        $previous = LaboratoryOrder::where('patient_id', $this->patient_id)->orderBy('id', 'desc')->first();
+        
         return view('laboratory.add')->
+        with('previous', $previous)->
         with('title',!empty($this->title)?$this->title:null)->
         with('form_method','post')->
         with('form_url',route($this->route_path.'.store'))->
@@ -178,9 +181,14 @@ class LaboratoryOrderController extends CRUDController
             $this->keys['create'][$key] = ['key'=>strtolower(str_replace(' ', '_' , $key)), 'label' => $key, "type" => 'multiple_checkbox', 'options'=>$section, 'name' => strtolower(str_replace(' ', '_' , $key)), 'default'=> $arrayDefault, 'grid' => 'col-md-3'];
         }
         $this->keys['create'][$key] = ['key'=>'Otros', 'label' => 'Otros', "type" => 'text', 'name' => 'others', 'default' => $sections['Otros']];
-        $this->patient_id = request()->patient_id;
-
+        $laboratory = LaboratoryOrder::find($id);
+        $this->patient_id = $laboratory->patient_id;
+        $previous = LaboratoryOrder::where('id', '<', $id)->where('patient_id', $this->patient_id)->orderBy('id', 'desc')->first();
+        $next = LaboratoryOrder::where('id', '>', $id)->where('patient_id', $this->patient_id)->first();
         return view('laboratory.add')->
+        with('laboratory', $laboratory)->
+        with('previous', $previous)->
+        with('next', $next)->
         with('title',!empty($this->title)?$this->title:null)->
         with('form_method','post')->
         with('form_url',route($this->route_path.'.store'))->

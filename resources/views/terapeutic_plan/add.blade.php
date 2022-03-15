@@ -1,5 +1,25 @@
 @extends('layouts.basic')
 @push('javascript')
+@if(!empty($O_model))
+	<script>
+		@php
+		$jsonStr = "[]";
+		if ($O_model && $O_model->extras) {
+			$escapers =     array("\\",     "/",   "\"",  "\n",  "\r",  "\t", "\x08", "\x0c");
+			$replacements = array("\\\\", "\\/", "\\\"", "\\n", "\\r", "\\t",  "\\f",  "\\b");
+			$jsonStr = str_replace($escapers, $replacements, $O_model->extras);
+			// $str = str_replace('\r\n\u2022', '', $O_model->extras);
+			// $str = str_replace('\t', '', $str);
+			// $jsonStr = $str;
+		}
+		@endphp
+		let extras = JSON.parse('{!!$jsonStr!!}')
+	</script>
+@else
+	<script>
+			let extras = []
+	</script>
+@endif
 @if(!empty($stop_extend))
 <script type="text/javascript">
 	window.onload= hideStuff;
@@ -424,23 +444,6 @@
 					<div class="col-lg-12" id = "{{$value['key']}}">
 					</div>
         @elseif($value['type'] == 'extras')
-        @if(!empty($O_model))
-          <script>
-						@php
-						$jsonStr = "[]";
-						if ($O_model && $O_model->extras) {
-							$escapers =     array("\\",     "/",   "\"",  "\n",  "\r",  "\t", "\x08", "\x0c");
-							$replacements = array("\\\\", "\\/", "\\\"", "\\n", "\\r", "\\t",  "\\f",  "\\b");
-							$jsonStr = str_replace($escapers, $replacements, $O_model->extras);
-							// $str = str_replace('\r\n\u2022', '', $O_model->extras);
-							// $str = str_replace('\t', '', $str);
-							// $jsonStr = $str;
-						}
-						@endphp
-            let extras = JSON.parse('{!!$jsonStr!!}')
-						console.log('extras',extras)
-          </script>
-        @endif
           @foreach ($value['items'] as $item)
             <div class="col-lg-12">
               <h4>{{$item['label']}}</h4>

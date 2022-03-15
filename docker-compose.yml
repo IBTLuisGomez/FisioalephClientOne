@@ -3,11 +3,13 @@ version: '3.5'
 services:
   laravel-app:
     image: recuperat-laravel-docker_laravel-app:latest
+    container_name: recuperat
     ports:
       - 8006:80
     environment:
       - APACHE_RUN_USER=#1000
       - APACHE_RUN_GROUP=#1000
+      - APACHE_DOCUMENT_ROOT=/var/www/html/public
     volumes:
       - .:/var/www/html
     restart: always

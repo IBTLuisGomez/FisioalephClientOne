@@ -143,7 +143,7 @@ class ProtocoloFisioterapiaController extends CRUDController
                 ['label'=>'Bibliografía', 'link' => ['text' => 'APA ITEMS', 'class'=>"no_print", 'href' => 'https://www.cva.itesm.mx/biblioteca/pagina_con_formato_version_oct/apaweb.html'], 'type'=>'separator', 'tag'=>'h4'],
                 ['key'=>'bibliography', 'label'=>'', 'type'=>'textarea', 'rows'=>'4'],
                 ['key'=>'is_sealed', 'label'=>'Sellar versión', 'type'=>'checkbox', "print"=>false],
-            ]
+            ],
         ];
     }
 

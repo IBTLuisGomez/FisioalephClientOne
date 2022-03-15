@@ -1892,6 +1892,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 Vue.component('exercise-tab-component', __webpack_require__(/*! ./ExerciseTabComponent.vue */ "./resources/js/components/Decision/ExerciseTabComponent.vue")["default"]);
@@ -1908,6 +1920,19 @@ Vue.component('contraindication-tab-component', __webpack_require__(/*! ./Contra
     axios.get(_env__WEBPACK_IMPORTED_MODULE_0__["default"].urlApiHFPBase + '/' + this.hppId).then(this.setHpp);
   },
   methods: {
+    linkify: function linkify(inputText) {
+      var replacedText, replacePattern1, replacePattern2, replacePattern3; //URLs starting with http://, https://, or ftp://
+
+      replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+      replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>'); //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+
+      replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+      replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>'); //Change email addresses to mailto:: links.
+
+      replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+      replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
+      return replacedText;
+    },
     createDivPrint: function createDivPrint() {
       var _this = this;
 
@@ -2256,6 +2281,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     editContraindication: function editContraindication(event) {
       console.log(this.edditingContraindication);
+      delete this.edditingContraindication.pivot;
       this.$emit('onContraindicationEditted', event, this.edditingContraindication, this.editting);
       this.enableEditting(false);
     },
@@ -2727,7 +2753,7 @@ Vue.component('contraindication-form', __webpack_require__(/*! ./Contraindicatio
         return keyword;
       });
     });
-    axios.get(_env__WEBPACK_IMPORTED_MODULE_1__["default"].urlBase + '/anato_physiology_glosary_item/ajaxGet/%25').then(function (res) {
+    axios.get(_env__WEBPACK_IMPORTED_MODULE_1__["default"].urlBase + '/anato_physiology_glosary_item/ajaxGet/').then(function (res) {
       _this.glosary_ap.label = res.data.name;
       _this.glosary_ap = res.data;
     });
@@ -56144,7 +56170,7 @@ var render = function () {
               _vm._l(Object.keys(_vm.sortedExercises), function (exerciseKey) {
                 return _c(
                   "div",
-                  { staticClass: "col-lg-12" },
+                  { key: exerciseKey.id, staticClass: "col-lg-12" },
                   [
                     _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-lg-12" }, [
@@ -56155,33 +56181,38 @@ var render = function () {
                     _vm._l(
                       _vm.sortedExercises[exerciseKey],
                       function (exercise) {
-                        return _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-lg-12" }, [
-                            _c("p", [_vm._v(_vm._s(exercise.name))]),
-                            _vm._v(" "),
-                            _c("p", [_vm._v(_vm._s(exercise.description))]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "row" }, [
-                              _c(
-                                "div",
-                                { staticClass: "col-lg-12" },
-                                _vm._l(
-                                  exercise.image_resources,
-                                  function (resource) {
-                                    return _c("img", {
-                                      attrs: {
-                                        width: "auto",
-                                        height: "200px",
-                                        src: "/storage/" + resource.url,
-                                      },
-                                    })
-                                  }
+                        return _c(
+                          "div",
+                          { key: exercise.id, staticClass: "row" },
+                          [
+                            _c("div", { staticClass: "col-lg-12" }, [
+                              _c("p", [_vm._v(_vm._s(exercise.name))]),
+                              _vm._v(" "),
+                              _c("p", [_vm._v(_vm._s(exercise.description))]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "col-lg-12" },
+                                  _vm._l(
+                                    exercise.image_resources,
+                                    function (resource) {
+                                      return _c("img", {
+                                        key: resource.id,
+                                        attrs: {
+                                          width: "auto",
+                                          height: "200px",
+                                          src: "/storage/" + resource.url,
+                                        },
+                                      })
+                                    }
+                                  ),
+                                  0
                                 ),
-                                0
-                              ),
+                              ]),
                             ]),
-                          ]),
-                        ])
+                          ]
+                        )
                       }
                     ),
                   ],
@@ -56196,25 +56227,29 @@ var render = function () {
               _vm._m(2),
               _vm._v(" "),
               _vm._l(_vm.hpp.massage, function (massage) {
-                return _c("div", { staticClass: "row" }, [
+                return _c("div", { key: massage.id, staticClass: "row" }, [
                   _c(
                     "div",
                     { staticClass: "col-lg-12" },
                     [
-                      _c("p", [_vm._v(_vm._s(massage.name))]),
+                      _c("p", [_vm._v(_vm._s(_vm.linkify(massage.name)))]),
                       _vm._v(" "),
                       _vm._l(massage.image_resources, function (resource) {
-                        return _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-lg-12" }, [
-                            _c("img", {
-                              attrs: {
-                                width: "auto",
-                                height: "200px",
-                                src: "/storage/" + resource.url,
-                              },
-                            }),
-                          ]),
-                        ])
+                        return _c(
+                          "div",
+                          { key: resource.id, staticClass: "row" },
+                          [
+                            _c("div", { staticClass: "col-lg-12" }, [
+                              _c("img", {
+                                attrs: {
+                                  width: "auto",
+                                  height: "200px",
+                                  src: "/storage/" + resource.url,
+                                },
+                              }),
+                            ]),
+                          ]
+                        )
                       }),
                     ],
                     2
@@ -56229,24 +56264,28 @@ var render = function () {
               _vm._m(3),
               _vm._v(" "),
               _vm._l(_vm.hpp.physical_agent, function (physical_agent) {
-                return _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-lg-12" }, [
-                    _c("p", [
-                      _c("strong", [_vm._v("Descripción: ")]),
-                      _vm._v(_vm._s(physical_agent.description)),
+                return _c(
+                  "div",
+                  { key: physical_agent.id, staticClass: "row" },
+                  [
+                    _c("div", { staticClass: "col-lg-12" }, [
+                      _c("p", [
+                        _c("strong", [_vm._v("Descripción: ")]),
+                        _vm._v(_vm._s(physical_agent.description)),
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _c("strong", [_vm._v("Indicación: ")]),
+                        _vm._v(_vm._s(physical_agent.pivot.indication)),
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _c("strong", [_vm._v("Precauciones: ")]),
+                        _vm._v(_vm._s(physical_agent.pivot.precautions)),
+                      ]),
                     ]),
-                    _vm._v(" "),
-                    _c("p", [
-                      _c("strong", [_vm._v("Indicación: ")]),
-                      _vm._v(_vm._s(physical_agent.pivot.indication)),
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [
-                      _c("strong", [_vm._v("Precauciones: ")]),
-                      _vm._v(_vm._s(physical_agent.pivot.precautions)),
-                    ]),
-                  ]),
-                ])
+                  ]
+                )
               }),
               _vm._v(" "),
               _c("br"),
@@ -56282,19 +56321,34 @@ var render = function () {
               _vm._v(" "),
               _vm._m(5),
               _vm._v(" "),
-              _vm._l(_vm.hpp.contraindication, function (contraindication) {
-                return _c(
+              _c("div", { staticClass: "row" }, [
+                _c(
                   "div",
-                  { key: contraindication.id, staticClass: "row" },
-                  [
-                    _c("div", { staticClass: "col-lg-12" }, [
-                      _c("p"),
-                      _c("li", [_vm._v(_vm._s(contraindication.description))]),
-                      _c("p"),
-                    ]),
-                  ]
-                )
-              }),
+                  { staticClass: "col-lg-12" },
+                  _vm._l(_vm.hpp.contraindication, function (contraindication) {
+                    return _c("div", { key: contraindication.id }, [
+                      _vm._v(_vm._s(contraindication.description)),
+                    ])
+                  }),
+                  0
+                ),
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm._m(6),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-lg-12" }, [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.hpp.bibliography) +
+                      "\n          "
+                  ),
+                ]),
+              ]),
             ],
             2
           ),
@@ -56451,6 +56505,16 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-lg-12" }, [
         _c("h3", [_vm._v("Contraindicaciones")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-lg-12" }, [
+        _c("h3", [_vm._v("Bibliografía")]),
       ]),
     ])
   },
