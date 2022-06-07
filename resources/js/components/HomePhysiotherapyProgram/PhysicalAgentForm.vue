@@ -88,6 +88,7 @@
                                 :editUpload="'editImagesPhysicalAgent'+index"
                                 ></vue-upload-multiple-image>
                             <button type="button" v-if="editting !== index" class="btn btn-warning" @click="enableEditting(index)">Editar</button>
+                            <button type="button" v-if="editting !== index" class="btn btn-danger" @click="deletePhysicalAgent(physical_agent.id)">Eliminar</button>
                             <button type="button" v-else class="btn btn-primary" @click="editPhysicalAgent(false)">Aceptar</button>
                         </div>
                     </div>
@@ -114,6 +115,11 @@
                 console.log(this.edditingPhysicalAgent);
                 this.$emit('onPhysicalAgentEditted', event, this.edditingPhysicalAgent, this.editting);
                 this.enableEditting(false);
+            },
+            deletePhysicalAgent (index) {
+                if (confirm('¿Estás seguro que deseas eliminar este registro?')) {
+                    this.$emit('onPhysicalAgentDeleted', index);
+                }
             },
             addPhysicalAgent : function(event) {
                 this.$emit('onPhysicalAgentAdded', event, this.current_physical_agent);

@@ -3,6 +3,7 @@
 @push('javascript')
 	<script type="text/javascript">
 		$(function(){
+		@if(Auth::user() && Auth::user()->admin)
 				$(".a_clinical_history").click(function(event){
 					event.preventDefault();
 					$('#modal_select_history').modal('toggle');
@@ -12,6 +13,7 @@
 						element.attr("href",element.attr("href")+"&id_clinical_history="+element.attr("id_clinical_history"));
 					});
 				});
+		@endif
 				$(".a_laboral_valoration").click(function(event){
 					event.preventDefault();
 					$('#modal_select_valoration').modal('toggle');

@@ -6,11 +6,11 @@
           </div>
         </div>
         <div class="row" id="print_view" v-if="prepareToPrint">
-          <div class="col-lg-12">
-          <div class="row" v-if="prepareToPrint">
-            <table class="table table-bordered ml-1 rubric_table">
+          <div class="col-lg-12" style="display: block">
+          <div class="row" v-if="prepareToPrint" style="display: block">
+            <table class="table table-bordered ml-1 rubric_table" style="display:none">
               <tr>
-                <td class="text-center"><img src="/medilab/assets/img/logo.png" style="height: auto; width: 300px;" alt="recuperaT"></td>
+                <td class="text-center"></td>
                 <td>Recupera-T fisioterapia, rehabilitación y nutrición</td>
                 <td>Código: {{hpp.code}}</td>
               </tr>
@@ -29,6 +29,28 @@
               </tr>
             </table>
           </div>
+          <div class="row" style="flex: column;">
+            <div class="col-lg-12 text-center">
+              <img src="/medilab/assets/img/logo.png" style="height: auto; width: 300px;" alt="recuperaT">
+            </div>
+          </div>
+          <div class="row" style="flex: column;">
+            <table style="width: 100%;" class="noborder">
+              <td style="width:50%;" class="noborder" v-if="decision && decision.clinic">
+                <h4>Clínica</h4>
+                <p>{{`${decision.clinic.name}`}}</p>
+                <p>Dirección: {{`${decision.clinic.street} ${decision.clinic.number}, Col. ${decision.clinic.street}`}}</p>
+              </td>
+              <td style="width:50%;" class="noborder" v-if="decision && decision.patient">
+                <h4>Paciente</h4>
+                <p>{{`${decision.patient.name} ${decision.patient.surname} ${decision.patient.second_surname}`}}</p>
+                <p>Fecha de Nacimiento: {{decision.patient.birth_date}}</p>
+                <p>Ocupación: {{decision.patient.occupation}}</p>
+                <p>Sexo: {{decision.patient.sex == 0 ? 'Masculino' : 'Femenino'}}</p>
+                <p>Teléfono: {{decision.patient.telephone}}</p>
+              </td>
+            </table>
+          </div>
           </div>
           <div class="col-lg-12">
             <div class="row">
@@ -43,15 +65,15 @@
                 </div>
               </div>
               <div class="row" v-for="exercise in sortedExercises[exerciseKey]" :key="exercise.id">
-                <div class="col-lg-12">
-                  <p>{{exercise.name}}</p>
-                  <p>{{exercise.description}}</p>
-                  <div class="row">
-                    <div class="col-lg-12">
-                      <img v-for="resource in exercise.image_resources" width="auto" height="200px" :src="`/storage/${resource.url}`" :key="resource.id"/>
-                    </div>
-                  </div>
-                </div>
+                <table style="width: 90%" class="table">
+                  <td width="30%">
+                    <img v-for="resource in exercise.image_resources" width="100%" height="auto" :src="`/storage/${resource.url}`" :key="resource.id"/>
+                  </td>
+                  <td width="70%">
+                    <p><strong>{{exercise.name}}</strong></p>
+                    <p>{{exercise.description}}</p>
+                  </td>
+                </table>
               </div>
             </div>
             <br>
@@ -64,9 +86,9 @@
             <div class="row" v-for="massage in hpp.massage" :key="massage.id">
               <div class="col-lg-12">
                 <p>{{linkify(massage.name)}}</p>
-                  <div class="row" v-for="resource in massage.image_resources" :key="resource.id">
+                  <div class="row" v-if="massage && massage.url">
                     <div class="col-lg-12">
-                      <img width="auto" height="200px" :src="`/storage/${resource.url}`"/>
+                      <img width="auto" height="200px" :src="`/storage/${massage.url}`"/>
                     </div>
                   </div>
               </div>
@@ -197,10 +219,10 @@
                 this.hpp.exercise.map( exercise => {
                   if (exercise.exercise_division && !sortedExercises[exercise.exercise_division['name']]) {
                     sortedExercises[exercise.exercise_division['name']] = []
-                  } else {
+                  } 
+                  if (!exercise.exercise_division) {
                     sortedExercises['Sin categoría'].push(exercise)
-                  }
-                  if(exercise.exercise_division) {
+                  } else {
                     sortedExercises[exercise.exercise_division['name']].push(exercise)
                   }
                 })
@@ -220,7 +242,7 @@
                 hpp : {}
             }
         },
-        props: ['hppId']
+        props: ['hppId', 'decision']
     }
 </script>
 
@@ -244,7 +266,12 @@
   border-radius: 6px;
   margin-bottom: 5px;
 }
+
 @media print{
+  .col-lg-12,.col-md-12,.row,.container {
+    display:block;
+    float:none;
+  }
   div {
     overflow:hidden;
   }
@@ -296,6 +323,12 @@
       line-height: 18px;
       z-index: 100000;
       page-break-after: always;
+  }
+  .noborder {
+    border: 0px !important;
+    border-collapse: collapse !important;
+    border:none !important;
+    outline:none !important;
   }
   table {
     border: 2px solid black;

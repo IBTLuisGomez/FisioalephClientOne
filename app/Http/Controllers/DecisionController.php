@@ -16,11 +16,21 @@ class DecisionController extends Controller
             ->with('physical_agent.image_resources')
             ->with('prescription.image_resources')
             ->with('contraindication')
+            ->with('contraindication')
             ->find($hpfId->id);
         return response($homePhysiotherapyProgram, 200);
     }
 
     public function show (Request $request, $password) {
+        $decisionId = $request->input('decisionId', false);
+        $clinic = null;
+        $patient = null;
+        $decision = json_encode('');
+        if ($decisionId){
+            $decision = Decision::find($decisionId);
+            $decision->patient = $decision->patient;
+            $decision->clinic = $decision->clinic;
+        }
         if (is_numeric($password)) {
             $hpf = HomePhysiotherapyProgram::find($password);
         } else {
@@ -28,6 +38,7 @@ class DecisionController extends Controller
         }
         return view('decision.show')
             ->with('useVue', true)
-            ->with('hppId', $hpf->id);
+            ->with('hppId', $hpf->id)
+            ->with('decision', $decision);
     }
 }

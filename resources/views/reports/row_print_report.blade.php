@@ -12,7 +12,12 @@
 					a[href]:after {
 						content: none !important;
 					}
+					table tr,
+					table tr th {
+						page-break-inside: avoid;
+					}
 				}
+				* {-webkit-print-color-adjust:exact;}
 				.print_only {
 					display: inline-block
 				}
@@ -264,14 +269,14 @@
 						}
 				});
 			</script>
-			<button type="button" class="btn btn-primary btn_print">Imprimir</button>
+			<button type="button" class="btn btn-primary btn_print" id="print-button">Imprimir</button>
 		</div>
 	</div>
 	<div class="row printable_header mt-5 mr-1 w-100">
 		<div class="col text-center">
 			<div>
-				@if(empty($printTableHeader))
-					<img class="img_print img" src="/images/logo.png" style="height: auto; width: 100%; display: none;">
+				@if(!empty($hideImage))
+					<img class="img_print img" src="/images/logo.png" style="height: auto; width: 50%; display: none;">
 				@endif
 			</div>
 			@if(empty($hide_header) || $hide_header == false)

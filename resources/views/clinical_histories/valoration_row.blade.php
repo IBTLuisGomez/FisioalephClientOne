@@ -18,7 +18,6 @@
 {{Form::hidden($name."[$S_order][name]",$S_label,['id'=>''])}}
 {{Form::hidden($name."[$S_order][cie10_id]",isset($ID_cie10)?$ID_cie10:null,['id'=>''])}}
 {{Form::hidden($name."[$S_order][section]",isset($name)?$name:null,['id'=>''])}}
-
 @if(isset($default))
 	@if($default==null || !$default->count())
 		{{Form::$textarea($name."[$S_order][json_values]",null,['class'=>'form-control', 'rows'=>!empty($rows)?$rows:''])}}

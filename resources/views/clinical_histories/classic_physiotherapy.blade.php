@@ -16,11 +16,15 @@
             </div>
             <div class="col-lg-12">
                 @include('valorations/modal_valoraciones_previas', [
+                    'patient_id' => $patient->id,
                     'default'=>(($valorations)?$valorations:null),
                      //'default'=>(($valorations)?$valorations:null), // filter by user
                     'clinical_history'=>(($clinical_history)?$clinical_history:null),
                     'parameters' => [
                         [
+                            'section'=>'physiotherapy_classic_objective',
+                            'name'=>'Objetivo'
+                        ],[
                             'section'=>'physiotherapy_classic_numero_de_sesion',
                             'name'=>'Numero de sesión'
                         ],[
@@ -37,10 +41,32 @@
                     ]
                     ])
             </div>
+            @php
+                $hasPermission =(Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_treatment_sessions')->count());
+                $hasLastObjective = !empty($lastObjective);
+                $enableObjectiveWrite = $hasPermission && !$hasLastObjective;
+            @endphp
+            <div class="col-lg-12">
+                @if(!$enableObjectiveWrite && $lastObjective)
+                    <input type="hidden" name="physiotherapy_classic_objective[{{$count + 1}}][json_values]" value="{{$lastObjective->json_values}}">
+                @endif
+                @include('clinical_histories.valoration_row',[
+                    'name'=>'physiotherapy_classic_objective',
+                    'disabled' => !$enableObjectiveWrite,
+                    'S_label'=>'Objetivo',
+                    'rows'=>'3',
+                    'textarea'=>true,
+                    'S_order'=>(++$count),
+                    'default'=>(!empty($lastObjective)?collect([$lastObjective]):null),
+                    ])
+            </div>
+            <div class="col-lg-12">
+                <a href="{{route('historia.create', ['patient_id'=>$patient->id, 'id_clinical_history'=>'26', 'new_objective'=>1])}}" class="btn btn-primary">Nuevo objetivo</a>
+            </div>
             <div class="col-lg-6">
                     @include('clinical_histories.valoration_row',[
                     'name'=>'physiotherapy_classic_numero_de_sesion',
-                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_notas')->count()) ? false : true,
+                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_treatment_sessions')->count()) ? false : true,
                     'S_label'=>'Numero de sesión',
                     'rows'=>'3',
                     // 'textarea'=>true,
@@ -50,7 +76,7 @@
             </div>
             <div class="col-lg-6">
                     @include('clinical_histories.valoration_row',[
-                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_notas')->count()) ? false : true,
+                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_treatment_sessions')->count()) ? false : true,
                     'name'=>'physiotherapy_classic_actividades',
                     'S_label'=>'Actividades',
                     'rows'=>'3',
@@ -61,7 +87,7 @@
             </div>  
             <div class="col-lg-6">
                     @include('clinical_histories.valoration_row',[
-                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_notas')->count()) ? false : true,
+                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_treatment_sessions')->count()) ? false : true,
                     'name'=>'physiotherapy_classic_observaciones',
                     'S_label'=>'Observaciones',
                     'rows'=>'3',
@@ -72,7 +98,7 @@
             </div>  
             <div class="col-lg-6">
                     @include('clinical_histories.valoration_row',[
-                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_notas')->count()) ? false : true,
+                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_treatment_sessions')->count()) ? false : true,
                     'name'=>'physiotherapy_classic_fisioterapeuta',
                     'S_label'=>'Fisioterapeuta',
                     'rows'=>'3',
@@ -82,7 +108,7 @@
                     ])
             </div>
             <div class="col-lg-12">
-                {{Form::submit('Agregar Valoración', ['class'=>'btn btn-info', 'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_notas')->count()) ? null : true,                ])}}
+                {{Form::submit('Agregar Valoración', ['class'=>'btn btn-info', 'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_treatment_sessions')->count()) ? null : true,                ])}}
             </div>
     	</div>
     </div>

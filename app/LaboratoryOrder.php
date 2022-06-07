@@ -7,10 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class LaboratoryOrder extends Model
 {
     protected $protected = ['id'];
+
     public function user() {
-        return $this->belongsTo('user');
+        return $this->belongsTo('App\User');
     }
+
     public function patient() {
-        return $this->belongsTo('patient');
+        return $this->belongsTo('App\Patient');
     }
 }

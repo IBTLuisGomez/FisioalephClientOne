@@ -19,7 +19,7 @@
   		</div>
   		<div class="col-md-4 p-4">
   			<h3></h3>
-  			<a target="_blank" href="https://www.facebook.com/recuperate.fisioterapia/">
+  			<a target="_blank" href="https://www.facebook.com/profile.php?id=100079561466852">
   			  <span>
   			    <i class="fab fa-facebook-square fa-2x"></i>
   			  </span>

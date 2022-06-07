@@ -16,10 +16,11 @@
 		window.active_decision = array_decision.length - 1;
 		$("#decision_text").html(last_element.text);
 		$("#responsible_text").html(last_element.user.name);
+		$("#license_text").html(last_element.user.license);
 		$("#responsible_text").html(last_element.user.name);
-		$("#sign_text").html(last_element.user.name);
+		$("#sign_text").html(`${last_element.user.name} CP: ${last_element.user.license}`);
 		const aHpp = last_element.home_physiotherapy_programs;
-		let domUl = mapToLi(aHpp, $("<ul></ul>"));
+		let domUl = mapToLi(aHpp, $("<ul></ul>"), last_element);
 		if (aHpp && !aHpp.length > 0) {
 			$("#hpp").hide()
 			$("label[for='hpp']").hide()
@@ -43,7 +44,7 @@
 		var decision = window.array_decision[active_decision];
 
 		const aHpp = decision.home_physiotherapy_programs;
-		let domUl = aHpp ? mapToLi(aHpp, $("<ul></ul>")) : [];
+		let domUl = aHpp ? mapToLi(aHpp, $("<ul></ul>"), decision) : [];
 		$("#show_decision_text").html(decision.text);
 		$("#responsible_text").html(decision.user.name);
 		$("#sign_text").html(decision.user.name);
@@ -59,7 +60,9 @@
 			$("#hpp").append(domUl);
 		}
 	}
-	function mapToLi (array, domUl) {
+	function mapToLi (array, domUl, decision) {
+		console.log(decision)
+
 			array.forEach(function (element) {
 				const domA = $("<a></a>", {
 					html: element.name,
@@ -73,16 +76,16 @@
 					password: element.pivot.password,
 				}).click(function (event) {
 					const a = $(event.target);
-					sendHomePhysiotherapeuticProgramWhatsapp(a.attr("password"));
+					sendHomePhysiotherapeuticProgramWhatsapp(a.attr("password"), decision);
 				});
 				const domLi = $("<li></li>").append(domA).append(sendByWhatsapp);
 				domUl.append(domLi);
 			});
 			return domUl;
 		}
-	function sendHomePhysiotherapeuticProgramWhatsapp(password) {
+	function sendHomePhysiotherapeuticProgramWhatsapp(password, decision) {
 		const phone = prompt('Ingresa el numero de telefono a 10 dígitos');
-		const text = "Consulta tu programa fisioterapéutico en www.recuperatfisioterapia.com/decision/" + password;
+		const text = "Consulta tu programa fisioterapéutico en www.recuperatfisioterapia.com/decision/" + password + "?decisionId=" + decision.id;
 		window.open("https://web.whatsapp.com/send?phone=52" + phone + "&text=" + text);
 
 	}
@@ -114,9 +117,13 @@
 	      </div>
 	      <div class="modal-body note_container">
 			  @include('reports.row_print_report', ['hide_header' => true])
-			  <label for="responsible_text" class="no_print"><strong>Responsable:</strong></label>
-			  <p id="responsible_text" class="no_print"></p>
-	      	<label for="decision_text"><strong>Contenido:</strong></label>
+			  <label for="responsible_text" class="d-inline"><strong>Responsable: </strong></label>
+			  <p id="responsible_text" class="d-inline"></p>
+				<br>
+			  {{-- <label for="license_text" class="d-inline"><strong>Cédula profesional:</strong></label>
+			  <p id="license_text" class="d-inline"></p>
+				<br> --}}
+	      <label for="decision_text"><strong>Contenido:</strong></label>
 			  <p id="decision_text"></p>
 	      	<label for="hpp"><strong>Programa fisioterapéutico en casa:</strong></label>
 			  <div id="hpp"></div>
@@ -144,6 +151,15 @@
 		<div class="col-md-12">
 				<label for="decision">Contenido de la Receta</label>
 				{{Form::textarea('text', '', ['class'=>'form-control'])}}
+		</div>
+	</div>
+	<div class="row" class="no_print">
+		<div class="col-lg-12">
+			<select name="clinic_id" id="" class="form-control">
+				@foreach($clinics as $clinic)
+				<option value="{{$clinic->id}}">{{$clinic->name}}</option>
+				@endforeach
+			</select>
 		</div>
 	</div>
 	<div class="row no_print">

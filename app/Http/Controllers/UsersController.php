@@ -8,6 +8,7 @@ use App\UserRol;
 use Illuminate\Support\Facades\Validator;
 use Hash;
 use App\Permission;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends CRUDController
 {
@@ -64,6 +65,7 @@ class UsersController extends CRUDController
                     ['key'=>'name', 'label'=>'Nombre', 'type'=>'text'],
                     ['key'=>'email', 'label'=>'Email', 'type'=>'email'],
                     ['key'=>'password', 'label'=>'Contraseña', 'type'=>'password'],
+                    ['key'=>'license', 'label'=>'Cédula', 'type'=>'text'],
 
                     'rol'=>['key'=>'user_rol_id', 'label'=>'Rol', 'type'=>'select', 'options'=>UserRol::all()->pluck('name', 'id')->toArray(), 'name'=>'rol'],
                     'permission'=>['key'=>'permission', 'label'=>'Permisos', 'type'=>'multiple_checkbox', 'options'=>Permission::all()->toArray(), 'name'=>'permission', 'default' => []],
@@ -73,11 +75,16 @@ class UsersController extends CRUDController
                     ['key'=>'name', 'label'=>'Nombre', 'type'=>'text'],
                     ['key'=>'email', 'label'=>'Email', 'type'=>'email'],
                     ['key'=>'reset_password', 'label'=>'Cambiar Contraseña', 'type'=>'password'],
+                    ['key'=>'license', 'label'=>'Cédula', 'type'=>'text'],
                     'rol'=>['key'=>'rol', 'label'=>'Rol', 'type'=>'select', 'options'=>UserRol::all()->pluck('name', 'id')->toArray(), 'name'=>'rol'],
                     'image_resources'=>['key'=>'image_resources', 'label'=>'Fotografías', 'type' => 'multiple_images'],                ],
             ];
         }
 
+    public function loginAsUser ($id) {
+        Auth::loginUsingId($id);
+        return redirect('/');
+    }
 
     public function update(Request $request, $id = false){
     	if($request->reset_password){

@@ -92,6 +92,12 @@
 				{{Form::label('address','Calle y número:')}}
 				{{Form::text('address',null,['class'=>'form-control'])}}
 			</div>
+			<div class="col-lg-12">
+				{{Form::label('responsible_id','Responsable')}}
+				{{Form::select('responsible_id',$responsibleIdOptions, 
+					!empty($model) ? $model->responsible_id : Auth::user()->id
+				,['class'=>'form-control'])}}
+			</div>
 		</div>
 		<br/>
 		<div class="row">

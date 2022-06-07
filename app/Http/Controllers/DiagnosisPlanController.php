@@ -39,7 +39,7 @@ class DiagnosisPlanController extends CRUDController
         $this->file_relationships = [
             'ImageResource'=>'image_resources'
         ];
-        $this->permissions = ['edit' => 'physiotherapyTests.see'];
+        $this->permissions = ['edit' => 'physiotherapyOffice.edit_diagnosis_plan'];
         $this->keys = [
             'index' => [
                 'name'=>'Nombre',

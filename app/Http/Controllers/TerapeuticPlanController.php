@@ -270,10 +270,6 @@ class TerapeuticPlanController extends CRUDController
                 'description'=>'Descripción',
             ],
             'create' => [
-                ['label'=>'Nombre', 'type'=>'separator', 'class' => "no_print", 'tag'=>'h4', 'no_count' => true],
-                ['key'=>'name', 'label'=>'', 'class' => "no_print", 'type'=>'text'],
-                ['label'=>'Description', 'type'=>'separator', 'class' => "no_print", 'tag'=>'h4', 'no_count' => true],
-                ['key' => 'description' , 'label' => '', 'type' => 'text'],
                 'anato_physiology_glosary_item'=>[
                     'single' => true,
                     'addRoute' => 'anato_physiology_glosary_item.create',
@@ -285,6 +281,10 @@ class TerapeuticPlanController extends CRUDController
                     'name'=>'anato_physiology_glosary_item',
                     'url'=>'anato_physiology_glosary_item/ajaxGet'
                 ],
+                ['label'=>'Nombre', 'type'=>'separator', 'class' => "no_print", 'tag'=>'h4', 'no_count' => true],
+                ['key'=>'name', 'label'=>'', 'class' => "no_print", 'type'=>'text'],
+                ['label'=>'Description', 'type'=>'separator', 'tag'=>'h4', 'no_count' => true],
+                ['key' => 'description' , 'label' => '', 'type' => 'text'],
                 'keywords'=>[
                     'single' => false,
                     'addRoute' => 'keywords.create',
@@ -305,10 +305,6 @@ class TerapeuticPlanController extends CRUDController
                 ['key'=>'revised_by', 'label'=>'', 'class' => "no_print", 'type'=>'text'],
                 ['label'=>'Elaborado por', 'type'=>'separator', 'class' => "no_print", 'tag'=>'h4', 'no_count' => true],
                 ['key'=>'made_by', 'label'=>'', 'class' => "no_print", 'type'=>'text'],
-                ['label'=>'Enlaces externos', 'type'=>'separator', 'class' => "no_print", 'tag'=>'h4', 'no_count' => true],
-                'outside_resources'=>['key'=>'outside_resources', 'label'=>'', 'type' => 'multiple_urls'],
-                ['label'=>'Imágenes', 'type'=>'separator', 'class' => "no_print", 'tag'=>'h4', 'no_count' => true],
-                'image_resources'=>['key'=>'image_resources', 'label'=>'Imágenes', 'type' => 'multiple_images'],
                 ['type'=>'extras', 'items'=> [
                     ['label' => 'Fases',
                     'type' => 'text',

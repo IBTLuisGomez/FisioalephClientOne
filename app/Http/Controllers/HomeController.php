@@ -24,11 +24,17 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('layouts.medilab_parts.content')
-        ->with('offers',Offer::all())
-        ->with('home_content',Parametrization::where('parameter', 'home_content')->first());
+        $clientView = $request->input('client_view', false);
+        if ($clientView) {
+            return view('client.login');
+        }
+        else {
+            return view('layouts.medilab_parts.content')
+            ->with('offers',Offer::all())
+            ->with('home_content',Parametrization::where('parameter', 'home_content')->first());
+        }
     }
 
     public function index2()

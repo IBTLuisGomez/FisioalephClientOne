@@ -114,6 +114,12 @@ Route::get('/historia/createDecision/{patient_id?}','ClinicalHistoryController@c
 Route::post('/historia/storeDecision','ClinicalHistoryController@storeDecision')->name('history.decision.store')->middleware('can_see_apoinments');
 Route::resource('/historia','ClinicalHistoryController')->middleware('can_see_apoinments')->middleware('logged_in');
 Route::get('/historia/create/{stop_extend?}','ClinicalHistoryController@create')->middleware('can_see_apoinments')->name('historia.create.choose');
+Route::post('/historia/print','ClinicalHistoryController@printValoration')->name('historia.print')->middleware('can_see_apoinments')->middleware('logged_in');
+Route::delete('/historia/valoration_delete/{id}','ClinicalHistoryController@valorationDelete')->name('historia.valoration_delete')->middleware('can_see_apoinments')->middleware('logged_in');
+Route::post('/historia/add_file','ClinicalHistoryController@addFile');
+Route::get('/historia/{patientId}/all_files','ClinicalHistoryController@allFiles');
+Route::get('/historia/download_file/{fileId}','ClinicalHistoryController@downloadFile');
+Route::delete('/historia/remove_file/{path}','ClinicalHistoryController@removeFile');
 
 Route::get('/admin/non_categorized_products','ProductController@nonCategorizedProducts');
 
@@ -170,3 +176,8 @@ Route::get('/anato_physiology_glosary_item/ajaxGet/{text?}','AnatoPhysiologyGlos
 Route::resource('/anato_physiology_glosary_item', 'AnatoPhysiologyGlosaryItemsController')->middleware('logged_in');
 Route::post('/anato_physiology_glosary_item/ajaxUpdate/{id?}','AnatoPhysiologyGlosaryItemsController@ajaxUpdate')->name('anato_physiology_glosary_item.ajaxUpdate');
 Route::post('/anato_physiology_glosary_item/ajaxDelete','AnatoPhysiologyGlosaryItemsController@ajaxDelete')->name('anato_physiology_glosary_item.ajaxDelete');
+
+Route::resource('/dspace_metadata', 'DSpaceMetadataController');
+Route::get('/loginAsUser/{id}', 'UsersController@loginAsUser');
+
+Route::resource('phisioaleph/documental_search', 'DocumentalSearchController');

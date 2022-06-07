@@ -110,11 +110,20 @@
         class:'col-lg-4'
       })
       textPhasesName = phase.name
-      textPhasesGoals = phase.goals
-      textPhasesProgression = phase.progression
-      textPhasesModalities = phase.modalities
-      textPhasesEjercicios = phase.exercises
-      textPhasesActivities = phase.activities
+      textPhasesGoals = phase.goals || ''
+      textPhasesProgression = phase.progession || ''
+      textPhasesRestriction = phase.restrictions || ''
+      textPhasesAlarmSigns = phase.alarm_signs || ''
+      textPhasesInmovilization = phase.inmovilization || ''
+      textPhasesPainControl = phase.pain_control || ''
+			textPhasesRestrictions = phase.restrictions || ''
+      textPhasesMobility = phase.mobility || ''
+      textPhasesPhysicalModalities = phase.physical_modalities || ''
+      textPhasesModalities = phase.modalities || ''
+      textPhasesEjercicios = phase.exercises || ''
+      textPhasesActivities = phase.activities || ''
+      textPhasesExternalLinks = phase.external_links || ''
+      jsonPhasesImages = JSON.parse(phase.images || '[]')
         h4Name = $('<h4></h4>', {
 				class:"no_print",
         html: textPhasesName
@@ -128,55 +137,128 @@
 				type:'button',
 				html: 'X'
 			})
+			images = $('<div></div>', {
+				class: "no_print"
+			})
+			Object.keys(jsonPhasesImages).forEach( (key) => {
+				if(isNaN(key)) return
+				image = jsonPhasesImages[key]
+				styleString =  JSON.stringify({
+					'background-image': image,
+					width: '200px',
+					height: '200px',
+					display: 'inline-block', 
+					'background-repeat': 'no-repeat',
+					'background-size': '100%',
+				})
+				divImage = $('<div></div>', {
+					width: '200px',
+					height: '200px',
+				})
+				images.append(divImage)
+				divImage.attr('style', `width:200px;height:200px;background-image:${image};`)
+			})
 			closeBtn.click(removePhase)
 			div.append(closeBtn)
     	div.append($('<br/>'))
       div.append(h4Name)
       div.append(pGoals)
+			div.append(images)
 
       //hidden fields
-      hiddenPhasesName = $('<input></input>', {
-        value: textPhasesName,
-        type: 'hidden',
-        name: 'name'
-      })
-      hiddenPhasesGoals = $('<input></input>', {
-        value: textPhasesGoals,
-        type: 'hidden',
-        name: 'goals'
-      })
-      hiddenPhasesProgression = $('<input></input>', {
-        value: textPhasesProgression,
-        type: 'hidden',
-        name: 'progression'
-      })
-      hiddenPhasesModalities = $('<input></input>', {
-        value: textPhasesModalities,
-        type: 'hidden',
-        name: 'modalities'
-      })
-      hiddenPhasesExercises = $('<input></input>', {
-        value: textPhasesEjercicios,
-        type: 'hidden',
-        name: 'exercises'
-      })
-			hiddenPhasesActivities = $('<input></input>', {
-        value: textPhasesActivities,
-        type: 'hidden',
-        name: 'activities'
-      })
+		hiddenPhasesImages = $('<input></input>', {
+      value: phase.images,
+      type: 'hidden',
+      name: 'images'
+    })
+		hiddenPhasesName = $('<input></input>', {
+      value: textPhasesName,
+      type: 'hidden',
+      name: 'name'
+    })
+    hiddenPhasesGoals = $('<input></input>', {
+      value: textPhasesGoals,
+      type: 'hidden',
+      name: 'goals'
+    })
+		hiddenPhasesRestrictions = $('<input></input>', {
+      value: textPhasesRestrictions,
+      type: 'hidden',
+      name: 'restrictions'
+    })
+		hiddenPhasesAlarmSigns = $('<input></input>', {
+      value: textPhasesAlarmSigns,
+      type: 'hidden',
+      name: 'alarm_signs'
+    })
+		hiddenPhasesInmovilization = $('<input></input>', {
+      value: textPhasesInmovilization,
+      type: 'hidden',
+      name: 'inmovilization'
+    })
+		hiddenPhasesPhysicalModalities = $('<input></input>', {
+      value: textPhasesPhysicalModalities,
+      type: 'hidden',
+      name: 'phases_physical_modalities'
+    })
+		hiddenPhasesPainControl = $('<input></input>', {
+      value: textPhasesPainControl,
+      type: 'hidden',
+      name: 'pain_control'
+    })
+		hiddenPhasesMobility = $('<input></input>', {
+      value: textPhasesMobility,
+      type: 'hidden',
+      name: 'mobility'
+    })
+    hiddenPhasesProgression = $('<input></input>', {
+      value: textPhasesProgression,
+      type: 'hidden',
+      name: 'progression'
+    })
+    hiddenPhasesExercises = $('<input></input>', {
+      value: textPhasesEjercicios,
+      type: 'hidden',
+      name: 'exercises'
+    })
+		hiddenPhasesActivities = $('<input></input>', {
+      value: textPhasesActivities,
+      type: 'hidden',
+      name: 'activities'
+    })
+		hiddenPhasesExternalLinks = $('<input></input>', {
+      value: textPhasesExternalLinks,
+      type: 'hidden',
+      name: 'external_links'
+    })
       names = ['name',
-      'goals',
-      'progression',
-      'modalities',
-      'exercises',
-      'activities',]
-      div.append(hiddenPhasesName)
-      div.append(hiddenPhasesGoals)
-      div.append(hiddenPhasesProgression)
-      div.append(hiddenPhasesModalities)
-      div.append(hiddenPhasesExercises)
-      div.append(hiddenPhasesActivities)
+			'goals',
+			'restrictions',
+			'alarm_signs',
+			'inmovilization',
+			'pain_control',
+			'mobility',
+			'progression',
+			'physical_modalities',
+			'exercises',
+			'activities',
+			'images',
+			'external_links']
+
+			div.append(hiddenPhasesName)
+			div.append(hiddenPhasesGoals)
+			div.append(hiddenPhasesRestrictions)
+			div.append(hiddenPhasesAlarmSigns)
+			div.append(hiddenPhasesInmovilization)
+			div.append(hiddenPhasesPainControl)
+			div.append(hiddenPhasesMobility)
+			div.append(hiddenPhasesProgression)
+			div.append(hiddenPhasesPhysicalModalities)
+			div.append(hiddenPhasesExercises)
+			div.append(hiddenPhasesActivities)
+			div.append(hiddenPhasesImages)
+			div.append(hiddenPhasesExternalLinks)
+			
       targetDiv.append(div)
       hiddenPhasesName
       orderExtras(targetDiv, names)
@@ -191,12 +273,25 @@
     div = $('<div></div>', {
       class:'col-lg-4'
     })
+
     textPhasesName = button.parent().find('#phases_name').val()
-    textPhasesGoals = button.parent().find('#phases_goals').val()
+    textPhasesGoals = button.parent().find('#phases_goals').val() || ''
+    textPhasesRestrictions = button.parent().find('#restrictions').val() || ''
+    textPhasesAlarmSigns = button.parent().find('#alarm_signs').val() || ''
+    textPhasesInmovilization = button.parent().find('#inmovilization').val() || ''
+    textPhasesPainControl = button.parent().find('#pain_control').val() || ''
+    textPhasesMobility = button.parent().find('#mobility').val() || ''
     textPhasesProgression = button.parent().find('#phases_progresion').val()
-    textPhasesModalities = button.parent().find('#phases_physical_modalities').val()
+    textPhasesPhysicalModalities = button.parent().find('#phases_physical_modalities').val()
     textPhasesEjercicios = button.parent().find('#phases_exercises').val()
     textPhasesActivities = button.parent().find('#phases_functional_activities').val()
+    textPhasesExternalLinks = button.parent().find('#external_links').val()
+		images = $("#div_images_preview_image_resources > div")
+		base64Images = images.map( (index, divImage) => {
+			style = $(divImage).attr("style")
+			return style.substring(style.indexOf('url('))
+		} )
+		jsonTextImages = JSON.stringify(base64Images)
     h4Name = $('<h4></h4>', {
       html: textPhasesName
     })
@@ -212,9 +307,15 @@
 		div.append(closeBtn)
     div.append(h4Name)
     div.append(pGoals)
-
+    div.append(images)
+			
     //hidden fields
-    hiddenPhasesName = $('<input></input>', {
+    hiddenPhasesImages = $('<input></input>', {
+      value: jsonTextImages,
+      type: 'hidden',
+      name: 'images'
+    })
+		hiddenPhasesName = $('<input></input>', {
       value: textPhasesName,
       type: 'hidden',
       name: 'name'
@@ -224,15 +325,40 @@
       type: 'hidden',
       name: 'goals'
     })
+		hiddenPhasesRestrictions = $('<input></input>', {
+      value: textPhasesRestrictions,
+      type: 'hidden',
+      name: 'restrictions'
+    })
+		hiddenPhasesAlarmSigns = $('<input></input>', {
+      value: textPhasesAlarmSigns,
+      type: 'hidden',
+      name: 'alarm_signs'
+    })
+		hiddenPhasesInmovilization = $('<input></input>', {
+      value: textPhasesInmovilization,
+      type: 'hidden',
+      name: 'inmovilization'
+    })
+		hiddenPhasesPhysicalModalities = $('<input></input>', {
+      value: textPhasesPhysicalModalities,
+      type: 'hidden',
+      name: 'phases_physical_modalities'
+    })
+		hiddenPhasesPainControl = $('<input></input>', {
+      value: textPhasesPainControl,
+      type: 'hidden',
+      name: 'pain_control'
+    })
+		hiddenPhasesMobility = $('<input></input>', {
+      value: textPhasesMobility,
+      type: 'hidden',
+      name: 'mobility'
+    })
     hiddenPhasesProgression = $('<input></input>', {
       value: textPhasesProgression,
       type: 'hidden',
       name: 'progression'
-    })
-    hiddenPhasesModalities = $('<input></input>', {
-      value: textPhasesModalities,
-      type: 'hidden',
-      name: 'modalities'
     })
     hiddenPhasesExercises = $('<input></input>', {
       value: textPhasesEjercicios,
@@ -244,23 +370,43 @@
       type: 'hidden',
       name: 'activities'
     })
+		hiddenPhasesExternalLinks = $('<input></input>', {
+      value: textPhasesExternalLinks,
+      type: 'hidden',
+      name: 'external_links'
+    })
     names = ['name',
     'goals',
+		'restrictions',
+		'alarm_signs',
+		'inmovilization',
+		'pain_control',
+		'mobility',
     'progression',
-    'modalities',
+    'physical_modalities',
 		'exercises',
-    'activities',]
+    'activities',
+		'images',
+		'external_links']
     div.append(hiddenPhasesName)
     div.append(hiddenPhasesGoals)
+    div.append(hiddenPhasesRestrictions)
+    div.append(hiddenPhasesAlarmSigns)
+    div.append(hiddenPhasesInmovilization)
+    div.append(hiddenPhasesPainControl)
+    div.append(hiddenPhasesMobility)
     div.append(hiddenPhasesProgression)
-    div.append(hiddenPhasesModalities)
+    div.append(hiddenPhasesPhysicalModalities)
     div.append(hiddenPhasesExercises)
     div.append(hiddenPhasesActivities)
+    div.append(hiddenPhasesImages)
+    div.append(hiddenPhasesExternalLinks)
     targetDiv.append(div)
     hiddenPhasesName
     orderExtras(targetDiv, names)
   }
   function orderExtras (target, names) {
+		console.log(names);
     target.children('div').each( (order, div) => {
       div = $(div)
       div.find('input').each( (key, input) => {
@@ -451,9 +597,16 @@
             <div class="col-lg-12">
               <input id="phases_name" class="form-control" placeholder="Nombre"></textarea>
               <textarea rows="3" id="phases_goals" placeholder="Objetivos" class="form-control"></textarea>
-              <textarea rows="3" id="phases_progresion" placeholder="Criterios de progresión" class="form-control"></textarea>
-              <textarea rows="3" id="phases_physical_modalities" placeholder="Modalidades físicas" class="form-control"></textarea>
+              <textarea rows="3" id="restrictions" placeholder="Restricciones" class="form-control"></textarea>
+              <textarea rows="3" id="alarm_signs" placeholder="Signos de alarma (complicaciones)" class="form-control"></textarea>
+              <textarea rows="3" id="inmovilization" placeholder="Inmovilización" class="form-control"></textarea>
+              <textarea rows="3" id="pain_control" placeholder="Control de dolor" class="form-control"></textarea>
+              <textarea rows="3" id="mobility" placeholder="Movilidad" class="form-control"></textarea>
+              <textarea rows="3" id="phases_physical_modalities" placeholder="Agentes físicos" class="form-control"></textarea>
               <textarea rows="3" id="phases_exercises" placeholder="Ejercicios" class="form-control"></textarea>
+							@include('inputs.multiple_images', ['value' => ['no_print_header'=>true, 'key'=>'image_resources', 'label'=>'Imágenes', 'type' => 'multiple_images']])
+              <textarea rows="3" id="external_links" placeholder="Enlaces externos" class="form-control"></textarea>
+              <textarea rows="3" id="phases_progresion" placeholder="Criterios de progresión" class="form-control"></textarea>
               <textarea rows="3" id="phases_functional_activities" placeholder="Actividades funcionales" class="form-control"></textarea>
               <button class="btn btn-primary" type="button" onclick="addExtra(event)" target="#add_phases"><span><i class="fa fa-plus"></i></span> Añadir</button>
             </div>
@@ -483,11 +636,34 @@
 					@foreach(json_decode($O_model->extras)->fases as $extra)
 						<h4>{{$extra->name}}</h4>
 						<p><strong>Objetivos:</strong> {{!empty($extra->goals) ? $extra->goals : ''}}</p>
-						<p><strong>Criterios de progresión:</strong> {{!empty($extra->progression) ? $extra->progression : ''}}</p>
-						<p><strong>Modalidaes físicas:</strong> {{!empty($extra->modalities) ? $extra->modalities : ''}}</p>
+						<p><strong>Restricciones:</strong> {{!empty($extra->restrictions) ? $extra->restrictions : ''}}</p>
+						<p><strong>Signos de alarma:</strong> {{!empty($extra->alarm_signs) ? $extra->alarm_signs : ''}}</p>
+						<p><strong>Inmovilización:</strong> {{!empty($extra->inmovilization) ? $extra->inmovilization : ''}}</p>
+						<p><strong>Control del dolor:</strong> {{!empty($extra->pain_control) ? $extra->pain_control : ''}}</p>
+						<p><strong>Mobilidad</strong>:</strong> {{!empty($extra->mobility) ? $extra->mobility : ''}}</p>
+						<p><strong>Modalidaes físicas:</strong> {{!empty($extra->physical_modalities) ? $extra->physical_modalities : ''}}</p>
 						<p><strong>Ejercicios:</strong> {{!empty($extra->exercises) ? $extra->exercises : ''}}</p>
-						<p><strong>Actividades:</strong> {{!empty($extra->activities) ? $extra->activities : ''}}</p>
-						@endforeach
+						<p><strong>Criterios de progresión:</strong> {{!empty($extra->progression) ? $extra->progression : ''}}</p>
+						<p><strong>Imágenes:</strong></p>
+						@php
+								$images = !empty($extra->images) ? (array)json_decode($extra->images) : false;
+							@endphp
+							@if($images)
+							@foreach ($images as $image)
+								@if(!is_string($image))
+									@continue
+								@endif
+									<div style='background-image:{{$image}} display:inline-block; height:200px; width:200px; background-repeat:no-repeat; background-size:100%'></div>
+								@endforeach
+						@endif
+							{{-- 'background-image': image,
+							width: '200px',
+							height: '200px',
+							, 
+							'background-repeat': 'no-repeat',
+							'background-size': '100%', --}}
+						<p><strong>Enlaces externos:</strong> {{!empty($extra->external_links) ? $extra->external_links : ''}}</p>
+					@endforeach
 					@endif
 				@endif
 			</div>

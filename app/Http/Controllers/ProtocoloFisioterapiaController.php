@@ -22,6 +22,7 @@ class ProtocoloFisioterapiaController extends CRUDController
         );
         $this->printTableHeader = true;
         $this->route_path = 'protocolos_fisioterapia';
+        $this->route_show = 'protocolos_fisioterapia.show';
         $this->class_name = '\App\ProtocoloFisioterapiaController';
         $this->model_name = '\App\ProtocoloFisioterapia';
         $this->short_model_name = 'ProtocoloFisioterapia';
@@ -157,6 +158,35 @@ class ProtocoloFisioterapiaController extends CRUDController
         $newProtocol->is_sealed = false;
         $newProtocol->name = $newProtocol->name . "($newProtocol->id)";
         $newProtocol->save();
+        $this->replicateRelationships($protocol, $newProtocol);
         return redirect(route('protocolos_fisioterapia.edit', $newProtocol->id));
+    }
+
+    public function replicateRelationships ($olModel, $newModel) {
+        $A_relationships = [];
+        if(!empty($this->relationships)){
+            foreach ($this->relationships as $key => $relationship_name) {
+                if(!empty($A_request[$relationship_name])){
+                    $A_relationships[$relationship_name]['value']=$A_request[$relationship_name];
+                    $A_relationships[$relationship_name]['model']='\App\\'.$key;
+                    $A_relationships[$relationship_name]['type']='normal';
+                }
+                else{
+                    $A_relationships[$relationship_name]['model']='\App\\'.$key;
+                    $A_relationships[$relationship_name]['value']=[];
+                    $A_relationships[$relationship_name]['type']='normal';
+                }
+            }
+        }
+        foreach ($A_relationships as $relationship_name => $relationship) {
+            $class = explode('\\', get_class($olModel->$relationship_name()));
+            $rel_model = $class [sizeof($class)-1];
+            if($rel_model == 'BelongsToMany') {
+                $newIds = $olModel->$relationship_name->map( function ($model) {
+                    return $model->id;
+                });
+                $newModel->$relationship_name()->sync($newIds);
+            }
+        }
     }
 }

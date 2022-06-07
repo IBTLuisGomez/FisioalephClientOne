@@ -58,6 +58,73 @@
 	@include('clinical_histories.phisiotherapy_sections.valoration_gineco_obstetric')
 	@include('clinical_histories.phisiotherapy_sections.valoration_diagnosis')
 	@include('clinical_histories.phisiotherapy_sections.specific_tests')
+
+	<div class="row no_print">
+		<div class="col-lg-12">
+			<h4><strong>Imágenes/Documentos</strong></h4>
+			<input type="file" class="form-controller" name="file" id="file">
+			<button id="addFile" type="button" class="btn btn-primary">Agregar</button>
+			<ul>
+			@foreach($files as $file)
+				<li>
+					<a href="/historia/download_file/{{$file['path']}}">{{$file['name']}}</a>
+					<button class="btn btn-danger delete_file" type="button" file_path="{{$file['path']}}">Eliminar</button>
+				</li>
+				@endforeach
+			</ul>
+			<script>
+				$(() => {
+					$(".delete_file").click((event) => {
+						if (!confirm('Al eliminar un archivo, la página se va a refrescar, ¿desea continuar?')) return
+						const btn = $(event.target)
+						btn.attr('disabled', true)
+						file_path = btn.attr('file_path')
+						$.ajax({
+								url : `/historia/remove_file/${file_path}`,
+								type : 'DELETE',
+								processData: false,  // tell jQuery not to process the data
+								contentType: false,  // tell jQuery not to set contentType
+								success : function(data) {
+										alert('Elminado con éxito!');
+										location.reload()
+								},
+								failure : function(data) {
+										btn.attr('disabled', false)
+										alert('Elminado con éxito!');
+										location.reload()
+								}
+							});
+					})
+					$("#addFile").click((event) => {
+						file = $("#file").prop('files')[0];
+						if (file){
+							if (!confirm('Al agregar un archivo, la página se va a refrescar, ¿desea continuar?')) return
+							$(event.target).attr("disabled", true)
+							console.log(file)
+							var formData = new FormData();
+							formData.append('file', file);
+							formData.append('patient_id', {{$patient_id}});
+							$.ajax({
+								url : '/historia/add_file',
+								type : 'POST',
+								data : formData,
+								processData: false,  // tell jQuery not to process the data
+								contentType: false,  // tell jQuery not to set contentType
+								success : function(data) {
+										alert('Guardado con éxito!');
+										location.reload()
+								},
+								failure: function () {
+									$(event.target).attr("disabled", false)
+								}
+							});
+
+						}
+					})
+				})
+			</script>
+		</div>
+	</div>
 	<div class="row">
 		<script type="text/javascript">
 			$(function(){

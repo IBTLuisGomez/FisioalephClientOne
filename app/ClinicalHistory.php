@@ -137,8 +137,12 @@ class ClinicalHistory extends Model
             $array_to_save['_token'],
             $array_to_save['clinicalHistoryType'],
             $array_to_save['patient_id'],
-            $array_to_save[1]
+            $array_to_save[1],
+            $array_to_save['printObjectives']
         );
+        $array_to_save = array_filter($array_to_save, function ($element) {
+            return $element != null;
+        });
         foreach ($array_to_save as $keyBigArray => $A_valoration) {
             //cada sección puede tener multiples valoracionse
             if(!is_array($A_valoration)) continue;

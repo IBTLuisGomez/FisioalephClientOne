@@ -118,9 +118,21 @@
 		@if (!empty($next))
 			<a class="no_print" href="{{route('laboratory_order.edit', $next->id)}}">Próximo ></a>
 		@endif
+		@if(!empty($laboratory))
+			<div class="row">
+				{{-- <div class="col-lg-12">
+					<label><strong>Responsable: </strong></label> {{$laboratory->user->name}}
+				</div> --}}
+				{{-- <div class="col-lg-12">
+					<label><strong>Cédula profesional: </strong></label> {{$laboratory->user->license}}
+				</div> --}}
+			</div>
+		@endif
 		@if(!empty($title))
 			<div class="row">
-				<h3>{{$title}}</h3>
+				<div class="col-lg-12">
+					<h3>{{$title}}</h3>
+				</div>
 			</div>
 		@endif
 		@if (!empty($errors))
@@ -243,13 +255,25 @@
 					</div>
 				@endif
 		</div>
-			@endforeach
-		@if(empty($next))
+		@endforeach
+		@if (!empty($laboratory))
+			<div class="col-lg-12 text-right print_only">
+				______________________________________________ <br>
+				{{$laboratory->user->name}} (CP: {{$laboratory->user->license}})
+			</div>
+		@endif
+		@if(empty($laboratory))
 		<div class="row">
 			<div class="col-lg-12">
 				{{Form::submit('Guardar',['class'=>'btn btn-primary'])}}
 			</div>
 		</div>
+		@else
+			<div class="row">
+				<div class="col-lg-12">
+					<a href="{{route('laboratory_order.create', ['patient_id'=>$laboratory->patient_id])}}" class="btn btn-primary no_print">Crear Nuevo</a>
+				</div>
+			</div>
 		@endif
 	</div>
 	{{Form::close()}}

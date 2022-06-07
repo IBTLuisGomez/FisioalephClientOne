@@ -12,9 +12,19 @@ class UserPermissionsSeed extends Seeder
     public function run()
     {
         DB::table('permissions')->insert([
-            'name' => 'physiotherapyHomePhysitherapyProgram.edit',
-            'description' => '(F) Editar programa fisioterapéutico en casa',
+            'name' => 'physiotherapyOffice.edit_diagnosis_plan',
+            'description' => '(F Consulta) Editar pruebas y medidas',
         ]);
+
+        // DB::table('permissions')->insert([
+        //     'name' => 'physiotherapyOffice.edit_treatment_sessions',
+        //     'description' => '(F Consulta) Editar sesiones de tratamiento',
+        // ]);
+
+        // DB::table('permissions')->insert([
+        //     'name' => 'physiotherapyHomePhysitherapyProgram.edit',
+        //     'description' => '(F) Editar programa fisioterapéutico en casa',
+        // ]);
 
         // DB::table('permissions')->insert([
         //     'name' => 'physiotherapyOffice.edit_valorations',

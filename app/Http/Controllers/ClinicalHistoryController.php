@@ -12,6 +12,7 @@ use App\ClinicalHistoryDiagnosis;
 use Illuminate\Http\Request;
 use Auth;
 use Str;
+use Illuminate\Support\Facades\Cache;
 
 class ClinicalHistoryController extends Controller
 {
@@ -42,11 +43,27 @@ class ClinicalHistoryController extends Controller
         // dd($valorations->where('name','Características')->where('section','pain'));
         $abstract_24=$this->_getParameterFromClinicalHistory($patient_id,'valorations','abstract_24_hours_nutriology');
         $clinicalHistory=Patient::find($patient_id)->clinicalHistory;
+        if (!$clinicalHistory) {
+            $patient->clinicalHistory()->create([
+                'user_id' => Auth::user()->id
+            ]);
+            $clinicalHistory = $patient->clinicalHistory();
+        }
+        $allFiles = $this->_allFiles($patient_id);
         // dd(Auth::user()->rol->name);
         // dd($request->id_clinical_history);
         $requested_valoration_id = $request->id_clinical_history;
         if((Auth::user()->rol->name=="fisioterapeuta" && ($request->id_clinical_history == 1 || !$request->id_clinical_history)) || ($request->id_clinical_history==1 && Auth::user()->rol->name=='admin')){
             return view('clinical_histories.create_fisiotherapy_clinical_history')->with('patient_id',!empty($patient_id)?$patient_id:false)->
+                with('patient', $patient)->
+                with('antecedents',$antecedents)->
+                with('clinicalHistory',$clinicalHistory)->
+                with('abstract_24',$abstract_24)->
+                with('valorations',$valorations)->
+                with('files', $allFiles);
+        }
+        if((Auth::user()->rol->name=="rehabilitador" && ($request->id_clinical_history == 1 || !$request->id_clinical_history)) || ($request->id_clinical_history==1 && Auth::user()->rol->name=='admin')){
+            return view('clinical_histories.create_clinical_history_rehabilitation')->with('patient_id',!empty($patient_id)?$patient_id:false)->
                 with('patient', $patient)->
                 with('antecedents',$antecedents)->
                 with('clinicalHistory',$clinicalHistory)->
@@ -182,7 +199,7 @@ class ClinicalHistoryController extends Controller
                 with('antecedents',$antecedents)->
                 with('valorations',$valorations);
         }
-                //HC de rehabilitación
+        //HC de rehabilitación
         elseif ($request->id_clinical_history==20 && (Auth::user()->rol->name=='admin' || Auth::user()->rol->name=='rehabilitador')) {
             return view('clinical_histories.create_clinical_history_rehabilitation')->with('patient_id',!empty($patient_id)?$patient_id:false)->
                 with('patient', $patient)->
@@ -220,11 +237,16 @@ class ClinicalHistoryController extends Controller
                 with('valorations',$valorations);
         }
         elseif ($request->id_clinical_history==26) {
+            $newObjective = $request->input('new_objective', false);
+            $lastObjective = !$newObjective ? ($clinicalHistory->valorations->where('section', 'physiotherapy_classic_objective')->last()) : null;
+            $allObjectives = !$newObjective ? ($clinicalHistory->valorations->where('section', 'physiotherapy_classic_objective')) : null;
             return view('clinical_histories.classic_physiotherapy')->with('patient_id',!empty($patient_id)?$patient_id:false)->
                 with('patient', $patient)->
                 with('clinical_history',$clinicalHistory)->
                 with('antecedents',$antecedents)->
-                with('valorations',$valorations);
+                with('valorations',$valorations)->
+                with('lastObjective',$lastObjective)->
+                with('allObjectives',$allObjectives);
         }
         else{
             return view('clinical_histories.create_fisiotherapy_clinical_history')->
@@ -236,6 +258,55 @@ class ClinicalHistoryController extends Controller
                 with('valorations',$valorations);
         }
     }
+
+    public function printValoration(Request $request) {
+        $data = $request->input('data');
+        $objectivesNames = array_map( function ($objective) {
+            return $objective['name'];
+        }, $data);
+        $objectivesNames = array_filter($objectivesNames, function ($objective) {
+            return !!$objective;
+        });
+        $patientId = $request->input('patient_id');
+        $clinicalHistoryId = Patient::find($patientId)->clinicalHistory->id;
+        $valorations = \DB::table('valorations')
+            ->where('clinical_history_id', $clinicalHistoryId)
+            ->where('section', 'physiotherapy_classic_objective')
+            ->orWhere('section', 'physiotherapy_classic_numero_de_sesion')
+            ->orWhere('section', 'physiotherapy_classic_actividades')
+            ->orWhere('section', 'physiotherapy_classic_observaciones')
+            ->orWhere('section', 'physiotherapy_classic_fisioterapeuta')
+            ->orderBy('updated_at')
+            ->get();
+
+        $workingUpdatedAt = '';
+        $sessionsArray = [];
+        foreach ($valorations->where('section', 'physiotherapy_classic_objective') as $valorationObjective) {
+            if ($objectivesNames){
+                if(!in_array($valorationObjective->json_values, $objectivesNames)) continue;
+            }
+            $valoration = $valorations->where('updated_at', $valorationObjective->updated_at);
+            $array = [];
+            $objective = $valoration->where('name', "Objetivo")->first() ? $valoration->where('name', "Objetivo")->first()->json_values : '';
+            $array['Objetivo'] = $valoration->where('name', "Objetivo")->first() ? $valoration->where('name', "Objetivo")->first()->json_values : '';
+            $array['Numero de sesión'] = $valoration->where('name', "Numero de sesión")->first() ? $valoration->where('name', "Numero de sesión")->first()->json_values : '';
+            $array['updated_at'] = $valoration->where('name', "Numero de sesión")->first() ? $valoration->where('name', "Numero de sesión")->first()->updated_at : '';
+            $array['Actividades'] = $valoration->where('name', "Actividades")->first() ?$valoration->where('name', "Actividades")->first()->json_values : '';
+            $array['Observaciones'] = $valoration->where('name', "Observaciones")->first() ?$valoration->where('name', "Observaciones")->first()->json_values : '';
+            $array['Fisioterapeuta'] = $valoration->where('name', "Fisioterapeuta")->first() ?$valoration->where('name', "Fisioterapeuta")->first()->json_values : '';
+            $sessionsArray[$objective][] = $array;
+        }
+        $orderedSessionArray = [];
+        array_walk($sessionsArray, function ($sessionDate, $key) use (&$orderedSessionArray) {
+            uasort($sessionDate, function ($sessionA, $sessionB) use (&$orderedSessionArray) {
+                return $sessionA['Numero de sesión'] > $sessionB['Numero de sesión'];
+            });
+            $orderedSessionArray[$key] = $sessionDate;
+        });
+        return ($sessionsArray);
+
+    }
+
     public function _getParameterFromClinicalHistory($patient_id,$parameter,$name=false){
         if(!empty($patient_id)){
             if(($patient=Patient::find($patient_id))){
@@ -331,9 +402,11 @@ class ClinicalHistoryController extends Controller
             $element['patient'] = \App\Patient::find($element['patient_id']); 
             return $element;
         }, $decisions);
+        $clinics = \App\Clinic::all();
         return view('clinical_histories.clinical_decision')
         ->with('patient', $patient)
         ->with('user', Auth::user())
+        ->with('clinics', $clinics)
         ->with('json_decisions', json_encode($decisions));
     }
 
@@ -390,5 +463,70 @@ class ClinicalHistoryController extends Controller
         $decision->fill($A_request);
         $decision->save();
         return redirect(route('history.decision.create', $request->patient_id));
+    }
+
+    public function valorationDelete (Request $request, $updated_at) {
+        $parsedUpdatedAt = str_replace('T', ' ', $updated_at);
+        $valorations = \DB::table('valorations')
+            ->where('updated_at', str_replace('T', ' ', $parsedUpdatedAt))
+            ->delete();
+        return $valorations;
+    }
+
+    public function allFiles(Request $request, $patientId) {
+        return $this->_allFiles($patientId);
+    }
+
+    private function _allFiles($patientId) {
+        return [];
+        $files = $this->_findMetadataByName("${patientId}_clinical_history_", true);
+        return $files;
+    }
+
+    public function addFile(Request $request) {
+        $ext = $request->file->extension();
+        $name = $request->file->getClientOriginalName();
+        $patientId = $request->patient_id;
+        $randomString = Str::random(5);
+        $title = "${patientId}_clinical_history_${randomString}_${name}";
+        \Storage::disk('google')->put($title, $request->file->get());
+        Cache::store('redis')->forget('google_files');
+        return response('success');
+    }
+    
+    public function removeFile(Request $request, $path) {
+        \Storage::disk('google')->delete($path);
+        return response('success');
+    }
+
+    public function downloadFile(Request $request, $fileId) {
+        return \Storage::disk('google')->download($fileId);
+    }
+
+    public function _findMetadataByName ($name, $isFile = true) {
+        $files = Cache::store('redis')->remember('google_files', 43200, function () {
+            return \Storage::disk('google')->files();
+        });
+        $directories = Cache::store('redis')->remember('google_files', 43200, function () {
+            return \Storage::disk('google')->directories();
+        });
+        $filesAdapter = Cache::store('redis')->remember('google_files_adapter', 43200, function () {
+            \Storage::disk('google')->files();
+            return \Storage::disk('google')->getAdapter(); 
+        });
+        $directoriesAdapter = Cache::store('redis')->remember('google_directories_adapter', 43200, function () {
+            \Storage::disk('google')->directories();
+            return \Storage::disk('google')->getAdapter();
+        });
+        $files = $isFile ? $files : $directories;
+        $gDriveAdapter = $isFile ? $filesAdapter : $directoriesAdapter;
+        $folderMetadata = [];
+        foreach ($files as $file) {
+            $metadata = $gDriveAdapter->getMetadata($file);
+            if ( strpos($metadata['name'], $name) !== false) {
+                $folderMetadata[] = $metadata;
+            }
+        }
+        return $folderMetadata;
     }
 }

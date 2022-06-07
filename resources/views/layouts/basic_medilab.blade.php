@@ -48,7 +48,7 @@
       </div>
       <div class="social-links">
         <a href="https://www.youtube.com/channel/UCeAc7ypqE35wJ-vQgO9M-tQ/" class="twitter"><i class="icofont-twitter"></i></a>
-        <a href="https://www.facebook.com/recuperate.fisioterapia/" class="facebook"><i class="icofont-facebook"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=100079561466852" class="facebook"><i class="icofont-facebook"></i></a>
         <a href="https://www.instagram.com/explore/locations/2231465163776299/recupera-t-fisioterapia-rehabilitacion/" class="instagram"><i class="icofont-instagram"></i></a>
         {{-- <a href="#" class="skype"><i class="icofont-skype"></i></a> --}}
         {{-- <a href="#" class="linkedin"><i class="icofont-linkedin"></i></i></a> --}}

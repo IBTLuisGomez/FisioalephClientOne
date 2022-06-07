@@ -1904,6 +1904,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 Vue.component('exercise-tab-component', __webpack_require__(/*! ./ExerciseTabComponent.vue */ "./resources/js/components/Decision/ExerciseTabComponent.vue")["default"]);
@@ -1950,11 +1972,11 @@ Vue.component('contraindication-tab-component', __webpack_require__(/*! ./Contra
       this.hpp.exercise.map(function (exercise) {
         if (exercise.exercise_division && !sortedExercises[exercise.exercise_division['name']]) {
           sortedExercises[exercise.exercise_division['name']] = [];
-        } else {
-          sortedExercises['Sin categoría'].push(exercise);
         }
 
-        if (exercise.exercise_division) {
+        if (!exercise.exercise_division) {
+          sortedExercises['Sin categoría'].push(exercise);
+        } else {
           sortedExercises[exercise.exercise_division['name']].push(exercise);
         }
       });
@@ -1974,7 +1996,7 @@ Vue.component('contraindication-tab-component', __webpack_require__(/*! ./Contra
       hpp: {}
     };
   },
-  props: ['hppId']
+  props: ['hppId', 'decision']
 });
 
 /***/ }),
@@ -3344,6 +3366,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -3360,6 +3383,11 @@ __webpack_require__.r(__webpack_exports__);
       console.log(this.edditingPhysicalAgent);
       this.$emit('onPhysicalAgentEditted', event, this.edditingPhysicalAgent, this.editting);
       this.enableEditting(false);
+    },
+    deletePhysicalAgent: function deletePhysicalAgent(index) {
+      if (confirm('¿Estás seguro que deseas eliminar este registro?')) {
+        this.$emit('onPhysicalAgentDeleted', index);
+      }
     },
     addPhysicalAgent: function addPhysicalAgent(event) {
       this.$emit('onPhysicalAgentAdded', event, this.current_physical_agent);
@@ -8560,7 +8588,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#printable h4[data-v-1d2d5899],h5[data-v-1d2d5899]{\n  font-size: 12.5pt;\n  font-weight: bold;\n}\n#printable strong[data-v-1d2d5899]{\n  font-size: 12pt;\n}\n#printable p[data-v-1d2d5899]{\n  font-size: 11pt;\n}\n.tabs-component[data-v-1d2d5899] {\n  margin: 4em 0;\n}\n.tabs-component-tabs[data-v-1d2d5899] {\n  border: solid 1px #ddd;\n  border-radius: 6px;\n  margin-bottom: 5px;\n}\n@media print{\ndiv[data-v-1d2d5899] {\n    overflow:hidden;\n}\n#print_view[data-v-1d2d5899] {\n      background-color: white;\n      width: 100%;\n      position: absolute;\n      top: 0;\n      left: 0;\n      margin: 0;\n      padding: 15px;\n      font-size: 14px;\n      line-height: 18px;\n      z-index: 100000;\n      page-break-after: always;\n}\nimg[data-v-1d2d5899] {\n    page-break-inside: avoid; /* or 'auto' */\n}\n#print_view h4[data-v-1d2d5899],h5[data-v-1d2d5899] {\n      font-size: 12.5pt;\n\t\t\tfont-weight: bold;\n}\n#print_view h3[data-v-1d2d5899] {\n      font-size: 15pt;\n\t\t\tfont-weight: bold;\n}\ntable[data-v-1d2d5899] {\n    border: 2px solid black;\n    margin-left: 20px;\n    table-layout: fixed;\n}\ntd tr[data-v-1d2d5899] {\n    border: 2px solid black;\n}\n}\ndiv[data-v-1d2d5899] {\n    overflow:hidden;\n}\n#print_view[data-v-1d2d5899] {\n      background-color: white;\n      width: 100%;\n      position: absolute;\n      top: 0;\n      left: 0;\n      margin: 0;\n      padding: 15px;\n      font-size: 14px;\n      line-height: 18px;\n      z-index: 100000;\n      page-break-after: always;\n}\ntable[data-v-1d2d5899] {\n    border: 2px solid black;\n    margin-left: 20px;\n    table-layout: fixed;\n}\ntd[data-v-1d2d5899]{\n    border: 2px solid black !important;\n}\n@media (min-width: 700px) {\n.tabs-component-tabs[data-v-1d2d5899] {\n    border: 0;\n    align-items: stretch;\n    display: flex;\n    justify-content: flex-start;\n    margin-bottom: -1px;\n}\n}\n.tabs-component-tab[data-v-1d2d5899] {\n  color: #999;\n  font-size: 14px;\n  font-weight: 600;\n  margin-right: 0;\n  list-style: none;\n}\n.tabs-component-tab[data-v-1d2d5899]:not(:last-child) {\n  border-bottom: dotted 1px #ddd;\n}\n.tabs-component-tab[data-v-1d2d5899]:hover {\n  color: #666;\n}\n.tabs-component-tab.is-active[data-v-1d2d5899] {\n  color: #000;\n}\n.tabs-component-tab.is-disabled *[data-v-1d2d5899] {\n  color: #cdcdcd;\n  cursor: not-allowed !important;\n}\n@media (min-width: 700px) {\n.tabs-component-tab[data-v-1d2d5899] {\n    background-color: #fff;\n    border: solid 1px #ddd;\n    border-radius: 3px 3px 0 0;\n    margin-right: .5em;\n    transform: translateY(2px);\n    transition: transform .3s ease;\n}\n.tabs-component-tab.is-active[data-v-1d2d5899] {\n    border-bottom: solid 1px #fff;\n    z-index: 2;\n    transform: translateY(0);\n}\n}\n.tabs-component-tab-a[data-v-1d2d5899] {\n  align-items: center;\n  color: inherit;\n  display: flex;\n  padding: .75em 1em;\n  text-decoration: none;\n}\n.tabs-component-panels[data-v-1d2d5899] {\n  padding: 4em 0;\n}\n@media (min-width: 700px) {\n.tabs-component-panels[data-v-1d2d5899] {\n    border-top-left-radius: 0;\n    background-color: #fff;\n    border: solid 1px #ddd;\n    border-radius: 0 6px 6px 6px;\n    box-shadow: 0 0 10px rgba(0, 0, 0, .05);\n    padding: 4em 2em;\n}\n}\n", ""]);
+exports.push([module.i, "\n#printable h4[data-v-1d2d5899],h5[data-v-1d2d5899]{\n  font-size: 12.5pt;\n  font-weight: bold;\n}\n#printable strong[data-v-1d2d5899]{\n  font-size: 12pt;\n}\n#printable p[data-v-1d2d5899]{\n  font-size: 11pt;\n}\n.tabs-component[data-v-1d2d5899] {\n  margin: 4em 0;\n}\n.tabs-component-tabs[data-v-1d2d5899] {\n  border: solid 1px #ddd;\n  border-radius: 6px;\n  margin-bottom: 5px;\n}\n@media print{\n.col-lg-12[data-v-1d2d5899],.col-md-12[data-v-1d2d5899],.row[data-v-1d2d5899],.container[data-v-1d2d5899] {\n    display:block;\n    float:none;\n}\ndiv[data-v-1d2d5899] {\n    overflow:hidden;\n}\n#print_view[data-v-1d2d5899] {\n      background-color: white;\n      width: 100%;\n      position: absolute;\n      top: 0;\n      left: 0;\n      margin: 0;\n      padding: 15px;\n      font-size: 14px;\n      line-height: 18px;\n      z-index: 100000;\n      page-break-after: always;\n}\nimg[data-v-1d2d5899] {\n    page-break-inside: avoid; /* or 'auto' */\n}\n#print_view h4[data-v-1d2d5899],h5[data-v-1d2d5899] {\n      font-size: 12.5pt;\n\t\t\tfont-weight: bold;\n}\n#print_view h3[data-v-1d2d5899] {\n      font-size: 15pt;\n\t\t\tfont-weight: bold;\n}\ntable[data-v-1d2d5899] {\n    border: 2px solid black;\n    margin-left: 20px;\n    table-layout: fixed;\n}\ntd tr[data-v-1d2d5899] {\n    border: 2px solid black;\n}\n}\ndiv[data-v-1d2d5899] {\n    overflow:hidden;\n}\n#print_view[data-v-1d2d5899] {\n      background-color: white;\n      width: 100%;\n      position: absolute;\n      top: 0;\n      left: 0;\n      margin: 0;\n      padding: 15px;\n      font-size: 14px;\n      line-height: 18px;\n      z-index: 100000;\n      page-break-after: always;\n}\n.noborder[data-v-1d2d5899] {\n    border: 0px !important;\n    border-collapse: collapse !important;\n    border:none !important;\n    outline:none !important;\n}\ntable[data-v-1d2d5899] {\n    border: 2px solid black;\n    margin-left: 20px;\n    table-layout: fixed;\n}\ntd[data-v-1d2d5899]{\n    border: 2px solid black !important;\n}\n@media (min-width: 700px) {\n.tabs-component-tabs[data-v-1d2d5899] {\n    border: 0;\n    align-items: stretch;\n    display: flex;\n    justify-content: flex-start;\n    margin-bottom: -1px;\n}\n}\n.tabs-component-tab[data-v-1d2d5899] {\n  color: #999;\n  font-size: 14px;\n  font-weight: 600;\n  margin-right: 0;\n  list-style: none;\n}\n.tabs-component-tab[data-v-1d2d5899]:not(:last-child) {\n  border-bottom: dotted 1px #ddd;\n}\n.tabs-component-tab[data-v-1d2d5899]:hover {\n  color: #666;\n}\n.tabs-component-tab.is-active[data-v-1d2d5899] {\n  color: #000;\n}\n.tabs-component-tab.is-disabled *[data-v-1d2d5899] {\n  color: #cdcdcd;\n  cursor: not-allowed !important;\n}\n@media (min-width: 700px) {\n.tabs-component-tab[data-v-1d2d5899] {\n    background-color: #fff;\n    border: solid 1px #ddd;\n    border-radius: 3px 3px 0 0;\n    margin-right: .5em;\n    transform: translateY(2px);\n    transition: transform .3s ease;\n}\n.tabs-component-tab.is-active[data-v-1d2d5899] {\n    border-bottom: solid 1px #fff;\n    z-index: 2;\n    transform: translateY(0);\n}\n}\n.tabs-component-tab-a[data-v-1d2d5899] {\n  align-items: center;\n  color: inherit;\n  display: flex;\n  padding: .75em 1em;\n  text-decoration: none;\n}\n.tabs-component-panels[data-v-1d2d5899] {\n  padding: 4em 0;\n}\n@media (min-width: 700px) {\n.tabs-component-panels[data-v-1d2d5899] {\n    border-top-left-radius: 0;\n    background-color: #fff;\n    border: solid 1px #ddd;\n    border-radius: 0 6px 6px 6px;\n    box-shadow: 0 0 10px rgba(0, 0, 0, .05);\n    padding: 4em 2em;\n}\n}\n", ""]);
 
 // exports
 
@@ -56106,60 +56134,176 @@ var render = function () {
     _vm._v(" "),
     _vm.prepareToPrint
       ? _c("div", { staticClass: "row", attrs: { id: "print_view" } }, [
-          _c("div", { staticClass: "col-lg-12" }, [
-            _vm.prepareToPrint
-              ? _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col-lg-12", staticStyle: { display: "block" } },
+            [
+              _vm.prepareToPrint
+                ? _c(
+                    "div",
+                    { staticClass: "row", staticStyle: { display: "block" } },
+                    [
+                      _c(
+                        "table",
+                        {
+                          staticClass: "table table-bordered ml-1 rubric_table",
+                          staticStyle: { display: "none" },
+                        },
+                        [
+                          _c("tr", [
+                            _c("td", { staticClass: "text-center" }),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(
+                                "Recupera-T fisioterapia, rehabilitación y nutrición"
+                              ),
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v("Código: " + _vm._s(_vm.hpp.code)),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("tr", [
+                            _c(
+                              "td",
+                              {
+                                staticClass: "text-center",
+                                attrs: { colspan: "3" },
+                              },
+                              [_vm._v("Versión " + _vm._s(_vm.hpp.version))]
+                            ),
+                          ]),
+                          _vm._v(" "),
+                          _c("tr", [
+                            _c("td", [_vm._v(_vm._s(_vm.hpp.updated_at))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(_vm.hpp.name))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v("Páginas " + _vm._s(_vm.hpp.pages)),
+                            ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("tr", [
+                            _c("td"),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v("Elaboró: " + _vm._s(_vm.hpp.made_by)),
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v("Revisó: " + _vm._s(_vm.hpp.revised_by)),
+                            ]),
+                          ]),
+                        ]
+                      ),
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row", staticStyle: { flex: "column" } },
+                [
                   _c(
                     "table",
-                    { staticClass: "table table-bordered ml-1 rubric_table" },
+                    { staticClass: "noborder", staticStyle: { width: "100%" } },
                     [
-                      _c("tr", [
-                        _vm._m(0),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            "Recupera-T fisioterapia, rehabilitación y nutrición"
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Código: " + _vm._s(_vm.hpp.code))]),
-                      ]),
+                      _vm.decision && _vm.decision.clinic
+                        ? _c(
+                            "td",
+                            {
+                              staticClass: "noborder",
+                              staticStyle: { width: "50%" },
+                            },
+                            [
+                              _c("h4", [_vm._v("Clínica")]),
+                              _vm._v(" "),
+                              _c("p", [
+                                _vm._v(_vm._s("" + _vm.decision.clinic.name)),
+                              ]),
+                              _vm._v(" "),
+                              _c("p", [
+                                _vm._v(
+                                  "Dirección: " +
+                                    _vm._s(
+                                      _vm.decision.clinic.street +
+                                        " " +
+                                        _vm.decision.clinic.number +
+                                        ", Col. " +
+                                        _vm.decision.clinic.street
+                                    )
+                                ),
+                              ]),
+                            ]
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
-                      _c("tr", [
-                        _c(
-                          "td",
-                          {
-                            staticClass: "text-center",
-                            attrs: { colspan: "3" },
-                          },
-                          [_vm._v("Versión " + _vm._s(_vm.hpp.version))]
-                        ),
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [_vm._v(_vm._s(_vm.hpp.updated_at))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(_vm.hpp.name))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("Páginas " + _vm._s(_vm.hpp.pages))]),
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v("Elaboró: " + _vm._s(_vm.hpp.made_by)),
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v("Revisó: " + _vm._s(_vm.hpp.revised_by)),
-                        ]),
-                      ]),
+                      _vm.decision && _vm.decision.patient
+                        ? _c(
+                            "td",
+                            {
+                              staticClass: "noborder",
+                              staticStyle: { width: "50%" },
+                            },
+                            [
+                              _c("h4", [_vm._v("Paciente")]),
+                              _vm._v(" "),
+                              _c("p", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.decision.patient.name +
+                                      " " +
+                                      _vm.decision.patient.surname +
+                                      " " +
+                                      _vm.decision.patient.second_surname
+                                  )
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("p", [
+                                _vm._v(
+                                  "Fecha de Nacimiento: " +
+                                    _vm._s(_vm.decision.patient.birth_date)
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("p", [
+                                _vm._v(
+                                  "Ocupación: " +
+                                    _vm._s(_vm.decision.patient.occupation)
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("p", [
+                                _vm._v(
+                                  "Sexo: " +
+                                    _vm._s(
+                                      _vm.decision.patient.sex == 0
+                                        ? "Masculino"
+                                        : "Femenino"
+                                    )
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("p", [
+                                _vm._v(
+                                  "Teléfono: " +
+                                    _vm._s(_vm.decision.patient.telephone)
+                                ),
+                              ]),
+                            ]
+                          )
+                        : _vm._e(),
                     ]
                   ),
-                ])
-              : _vm._e(),
-          ]),
+                ]
+              ),
+            ]
+          ),
           _vm._v(" "),
           _c(
             "div",
@@ -56185,23 +56329,24 @@ var render = function () {
                           "div",
                           { key: exercise.id, staticClass: "row" },
                           [
-                            _c("div", { staticClass: "col-lg-12" }, [
-                              _c("p", [_vm._v(_vm._s(exercise.name))]),
-                              _vm._v(" "),
-                              _c("p", [_vm._v(_vm._s(exercise.description))]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "row" }, [
+                            _c(
+                              "table",
+                              {
+                                staticClass: "table",
+                                staticStyle: { width: "90%" },
+                              },
+                              [
                                 _c(
-                                  "div",
-                                  { staticClass: "col-lg-12" },
+                                  "td",
+                                  { attrs: { width: "30%" } },
                                   _vm._l(
                                     exercise.image_resources,
                                     function (resource) {
                                       return _c("img", {
                                         key: resource.id,
                                         attrs: {
-                                          width: "auto",
-                                          height: "200px",
+                                          width: "100%",
+                                          height: "auto",
                                           src: "/storage/" + resource.url,
                                         },
                                       })
@@ -56209,8 +56354,20 @@ var render = function () {
                                   ),
                                   0
                                 ),
-                              ]),
-                            ]),
+                                _vm._v(" "),
+                                _c("td", { attrs: { width: "70%" } }, [
+                                  _c("p", [
+                                    _c("strong", [
+                                      _vm._v(_vm._s(exercise.name)),
+                                    ]),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("p", [
+                                    _vm._v(_vm._s(exercise.description)),
+                                  ]),
+                                ]),
+                              ]
+                            ),
                           ]
                         )
                       }
@@ -56228,32 +56385,23 @@ var render = function () {
               _vm._v(" "),
               _vm._l(_vm.hpp.massage, function (massage) {
                 return _c("div", { key: massage.id, staticClass: "row" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col-lg-12" },
-                    [
-                      _c("p", [_vm._v(_vm._s(_vm.linkify(massage.name)))]),
-                      _vm._v(" "),
-                      _vm._l(massage.image_resources, function (resource) {
-                        return _c(
-                          "div",
-                          { key: resource.id, staticClass: "row" },
-                          [
-                            _c("div", { staticClass: "col-lg-12" }, [
-                              _c("img", {
-                                attrs: {
-                                  width: "auto",
-                                  height: "200px",
-                                  src: "/storage/" + resource.url,
-                                },
-                              }),
-                            ]),
-                          ]
-                        )
-                      }),
-                    ],
-                    2
-                  ),
+                  _c("div", { staticClass: "col-lg-12" }, [
+                    _c("p", [_vm._v(_vm._s(_vm.linkify(massage.name)))]),
+                    _vm._v(" "),
+                    massage && massage.url
+                      ? _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-lg-12" }, [
+                            _c("img", {
+                              attrs: {
+                                width: "auto",
+                                height: "200px",
+                                src: "/storage/" + massage.url,
+                              },
+                            }),
+                          ]),
+                        ])
+                      : _vm._e(),
+                  ]),
                 ])
               }),
               _vm._v(" "),
@@ -56453,11 +56601,13 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "text-center" }, [
-      _c("img", {
-        staticStyle: { height: "auto", width: "300px" },
-        attrs: { src: "/medilab/assets/img/logo.png", alt: "recuperaT" },
-      }),
+    return _c("div", { staticClass: "row", staticStyle: { flex: "column" } }, [
+      _c("div", { staticClass: "col-lg-12 text-center" }, [
+        _c("img", {
+          staticStyle: { height: "auto", width: "300px" },
+          attrs: { src: "/medilab/assets/img/logo.png", alt: "recuperaT" },
+        }),
+      ]),
     ])
   },
   function () {
@@ -59068,6 +59218,24 @@ var render = function () {
                               },
                             },
                             [_vm._v("Editar")]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.editting !== index
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function ($event) {
+                                  return _vm.deletePhysicalAgent(
+                                    physical_agent.id
+                                  )
+                                },
+                              },
+                            },
+                            [_vm._v("Eliminar")]
                           )
                         : _c(
                             "button",

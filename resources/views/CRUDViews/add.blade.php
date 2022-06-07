@@ -118,7 +118,7 @@
 	<div class="container note_container">
 		@if(empty($stop_extend))
 			<div class="row">
-					@include('reports.row_print_report', ['hide_header' => true, 'protocol' => !empty($protocol) ? $protocol : null])
+					@include('reports.row_print_report', ['printTableHeader' => !empty($printTableHeader) ? $printTableHeader : false, 'hide_header' => true, 'protocol' => !empty($protocol) ? $protocol : null])
 			</div>
 		@endif
 		@if(!empty($title))

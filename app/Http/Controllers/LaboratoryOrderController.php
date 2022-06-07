@@ -131,6 +131,35 @@ class LaboratoryOrderController extends CRUDController
                 'Hepatitis B AG de superficie',
                 'Hepatitis C'
             ],
+            'Tomografía' => [
+                'TC Abdominopélvico simple y contrastada',
+                'TC de cadera simple y contrastada',
+                'TC de columna cervical',
+                'TC de columna lumbosacara',
+                'TC de cráneo simple y contrastada',
+                'TC de pelvis simple y contrastada',
+                'TC de senos paranasales simple',
+                'TC de tórax simple',
+                'TC de urotac simple y contrastada',
+            ],
+            'Ultrasonido' => [
+                'US. tiroideo/cuello',
+                'US. mamario',
+                'US. hídago y vías biliares',
+                'US. hídago renal y de vías urinarias',
+                'US. abdominal general hombre',
+                'US. abdominal general mujer',
+                'US. abdominal inferior mujer',
+                'US. abdominal obstetrico trim I',
+                'US. abdominal obstetrico trim II y III',
+            ],
+            'Gabinete/Imagen' => [
+                'Papanicolau',
+                'Ultrasonido',
+                'Densitometría',
+                'Mastografía',
+                'Electrocardiograma',
+            ],
         ];
         $this->title = "Orden de Laboratorio/Imagen";
         $this->keys = [
@@ -149,7 +178,8 @@ class LaboratoryOrderController extends CRUDController
             }, $section);
             $this->keys['create'][$key] = ['key'=>strtolower(str_replace(' ', '_' , $key)), 'label' => $key, "type" => 'multiple_checkbox', 'options'=>$section, 'name' => strtolower(str_replace(' ', '_' , $key)), 'default'=> [], 'grid' => 'col-md-3'];
         }
-        $this->keys['create'][$key] = ['key'=>'Otros', 'label' => 'Otros', "type" => 'text', 'name' => 'others'];
+        $this->keys['create']['Radiografía'] = ['key'=>'Radiografía', 'label' => 'Radiografía', "type" => 'text', 'name' => 'radiografia'];
+        $this->keys['create']['Otros'] = ['key'=>'Otros', 'label' => 'Otros', "type" => 'text', 'name' => 'others'];
         $this->patient_id = request()->patient_id;
         $previous = LaboratoryOrder::where('patient_id', $this->patient_id)->orderBy('id', 'desc')->first();
         
@@ -180,7 +210,8 @@ class LaboratoryOrderController extends CRUDController
             }, $section);
             $this->keys['create'][$key] = ['key'=>strtolower(str_replace(' ', '_' , $key)), 'label' => $key, "type" => 'multiple_checkbox', 'options'=>$section, 'name' => strtolower(str_replace(' ', '_' , $key)), 'default'=> $arrayDefault, 'grid' => 'col-md-3'];
         }
-        $this->keys['create'][$key] = ['key'=>'Otros', 'label' => 'Otros', "type" => 'text', 'name' => 'others', 'default' => $sections['Otros']];
+        $this->keys['create']['Radiografía'] = ['key'=>'Radiografía', 'label' => 'Radiografía', "type" => 'text', 'name' => 'radiografia', 'default' => !empty($sections['Radiografía']) ? $sections['Radiografía'] : ''];
+        $this->keys['create']['Otros'] = ['key'=>'Otros', 'label' => 'Otros', "type" => 'text', 'name' => 'others', 'default' => !empty($sections['Otros']) ? $sections['Otros'] : ''];
         $laboratory = LaboratoryOrder::find($id);
         $this->patient_id = $laboratory->patient_id;
         $previous = LaboratoryOrder::where('id', '<', $id)->where('patient_id', $this->patient_id)->orderBy('id', 'desc')->first();

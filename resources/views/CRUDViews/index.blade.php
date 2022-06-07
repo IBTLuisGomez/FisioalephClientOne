@@ -61,7 +61,6 @@
 			data:{id:id},
 			url:'{{route($route_delete,[],false)}}',
 			success:function(data){
-				if(data==="true")
 					location.reload();
 			}
 		});
@@ -106,7 +105,7 @@
 								@endforeach
 								<td class="actions">
 									@if(!empty($route_show) && Route::has($route_show))
-									<a href="{{route($route_show, $model->id)}}"><i class="fas fa-eye btn"></i></a>
+										<a href="{{route($route_show, $model->id)}}"><i class="fas fa-eye btn"></i></a>
 									@endif
 									@if(in_array('general_database.edit', Auth::user()->getReadablePermissions()) || Auth::user()->getAdminAttribute()
 										|| (!empty($permissions['edit']) && Auth::user()->permissions->where('name', $permissions['edit'])->count()))
@@ -114,7 +113,6 @@
 									<i class="fas fa-edit btn btn-warning i_edit" cie9mc_id="{{$model->id}}"></i>
 									@endif
 							@if(in_array('general_database.delete', Auth::user()->getReadablePermissions()) || Auth::user()->getAdminAttribute())
-							<i class="fas fa-check btn btn-primary i_accept" cie9mc_id="{{$model->id}}"></i>
 							<i class="fas fa-trash btn btn-danger i_delete" cie9mc_id="{{$model->id}}"></i>
 							@endif
 						</td>

@@ -149,7 +149,7 @@
       </a>
     </div>
     <div style="margin-right: 10px">
-      <a target="_blank" href="https://www.facebook.com/recuperate.fisioterapia/">
+      <a target="_blank" href="https://www.facebook.com/profile.php?id=100079561466852">
         <span>
           <i class="fab fa-facebook-square fa-2x"></i>
         </span>

@@ -12,9 +12,12 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>RecuperaT</title>
-  <meta content="" name="descriptison">
-  <meta content="" name="keywords">
+  <title>{{!empty($title) ? $title : "RecuperaT. Fisioterapia. Terapia física. Fisioterapia de Ortopedia. Fisioterapia post operatoria. Terapia fisica post operatoria"}}</title>
+  <meta content={{!empty($description) ? $description : "Terapia física, fisioterapia de ortopedia, fisioterapia post operatoria, terapia física post operatoria"}} name="description">
+  <meta property="og:title" content="{{!empty($tags['og']['title']) ? $tags['og']['title'] : 'RecuperaT. Fisioterapia. Terapia física.'}}">
+  <meta property="og:type" content="">
+  <meta property="og:description" content="{{!empty($tags['og']['description']) ? $tags['og']['description'] : 'Terapia física, fisioterapia de ortopedia, fisioterapia post operatoria, terapia física post operatoria'}}">
+  <meta property="og:image" content="{{!empty($tags['og']['images']) ? $tags['og']['images'] : ''}}">
   <!-- Favicons -->
   <link href="/060cead63688ab551c45d867bc4cba2b.ico/favicon.ico" rel="icon">
   <link href="/medilab/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -71,7 +74,7 @@
   <script src="/js/print.min.js"></script>
 </head>
 
-<body style="overflow: auto">
+<body style="overflow: auto; min-height:100vh">
   {{-- @dd(Auth::user()->permissions) --}}
   <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MSX7Z5V"
@@ -89,7 +92,7 @@
       </div>
       <div class="social-links">
         <a href="https://www.youtube.com/channel/UCeAc7ypqE35wJ-vQgO9M-tQ/" class="twitter"><i class="icofont-youtube"></i></a>
-        <a href="https://www.facebook.com/recuperate.fisioterapia/" class="facebook"><i class="icofont-facebook"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=100079561466852" class="facebook"><i class="icofont-facebook"></i></a>
         <a href="https://www.instagram.com/explore/locations/2231465163776299/recupera-t-fisioterapia-rehabilitacion/" class="instagram"><i class="icofont-instagram"></i></a>
         {{-- <a href="#" class="skype"><i class="icofont-skype"></i></a> --}}
         {{-- <a href="#" class="linkedin"><i class="icofont-linkedin"></i></i></a> --}}
@@ -109,7 +112,7 @@
       </div>
       {{-- <div class="social-links">
         <a href="https://www.youtube.com/channel/UCeAc7ypqE35wJ-vQgO9M-tQ/" class="twitter"><i class="icofont-youtube"></i></a>
-        <a href="https://www.facebook.com/recuperate.fisioterapia/" class="facebook"><i class="icofont-facebook"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=100079561466852" class="facebook"><i class="icofont-facebook"></i></a>
         <a href="https://www.instagram.com/explore/locations/2231465163776299/recupera-t-fisioterapia-rehabilitacion/" class="instagram"><i class="icofont-instagram"></i></a> --}}
         {{-- <a href="#" class="skype"><i class="icofont-skype"></i></a> --}}
         {{-- <a href="#" class="linkedin"><i class="icofont-linkedin"></i></i></a> --}}
@@ -119,10 +122,10 @@
   <!-- ======= Header ======= -->
   <header id="header" class="">
     <div class="container flex-wrap d-flex align-items-center">
-
+      <title>Terapia física, fisioterapia, post operatoria, ortopedia</title>
       {{-- <h1 class="logo mr-auto"><a href="index.html">RecuperaT</a></h1> --}}
       <!-- Uncomment below if you prefer to use an image logo -->
-      <a href="/" class="mr-auto"><img src="{{ ('/medilab/assets/img/' . 'logo.png') }}" style="heigth:250px !important; width:300px !important" alt="" class=""></a>
+      <div class="col-lg-3"><a href="/" class="mr-auto"><img src="{{ ('/medilab/assets/img/' . 'logo.png') }}" style="heigth:250px !important; width:300px !important" alt="" class=""></a></div>
 
       <nav class="nav-menu d-none d-lg-block">
         <ul style = "width:100%; flex-direction: row; flex-wrap:wrap">
@@ -130,7 +133,7 @@
           <li><a href="{{route('contacto.index')}}">Contacto</a></li>
           <li class="active"><a href="/">Conócenos</a></li>
           <li><a href="{{route('companies')}}">Fisioterapia Laboral</a></li>
-          <li><a href="{{route('tienda.index')}}">Tienda</a></li>
+          <li><a href="{{route('tienda.index')}}">Tienda en linea</a></li>
           <li><a href="{{action('OfferController@indexForClients')}}">Promociones</a></li>
           <li><a href="{{action('ServicesController@index')}}">Servicios</a></li>
           <li class="nav-item">
@@ -150,17 +153,18 @@
           <li>
           @if(Auth::user())
             @if(Auth::user()->admin)
-            <li class="drop-down"><a href="">Administration</a>
+            <li class="drop-down"><a href="">Administración</a>
               <ul>
-                <li><a href="{{route('users.index')}}">Usuarios</a></li>
+                <li><a href="{{route('users.index')}}">Perfil de Usuarios</a></li>
                 <li><a href="{{route('information.index')}}">Preguntas</a></li>
                 <li><a href="{{route('orders.index')}}">Órdenes</a></li>
                 <!-- <li><a href="#">Editar Página de Inicio</a></li> -->
-                <li><a href="{{route('ofertas.index')}}">Ofertas</a></li>
-                <li><a href="{{action('ProductController@index', ['unclassified'=>true])}}">Productos sin clasificar</a></li>
-                <li><a href="{{action('AppoinmentController@index')}}">Citas</a></li>
+                <li><a href="{{route('ofertas.index')}}">Promociones</a></li>
+                <li><a href="{{action('ProductController@index', ['unclassified'=>true])}}">(Tienda) Productos sin categoría</a></li>
+                <li><a href="{{action('AppoinmentController@index')}}">Citas agendadas</a></li>
                 <li><a href="{{route('clinics.index')}}">Centros</a></li>
-                <li><a href="{{route('product_categories.index')}}">Categorias de Productos</a></li>
+                <li><a href="{{route('product_categories.index')}}">Categorias de Productos y Servicios</a></li>
+                <li><a href="{{route('dspace_metadata.create')}}">Carga de metadatos</a></li>
               </ul>
             </li>
             @endif
@@ -181,7 +185,7 @@
                   @endif
                   @if(
                     Auth::user()->rol->id == 1 ||
-                    Auth::user()->permissions->where('name', 'physiotherapyTests.see')->count()
+                    Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_diagnosis_plan')->count()
                   )
                   <li> <a href="{{route('diagnosis_plan.index')}}">Pruebas y medidas funcionales</a></li>
                   @endif
@@ -196,18 +200,6 @@
                     Auth::user()->permissions->where('name', 'physiotherapyHomePhysitherapyProgram.see')->count()
                   )
                   <li> <a href="{{route('home_physiotherapy_program.index')}}">Programas Fisioterapéuticos en Casa</a></li> 
-                  @endif
-                  @if(
-                    Auth::user()->rol->id == 1 ||
-                    Auth::user()->permissions->where('name', 'physiotherapyCie10.see')->count()
-                  )
-                  <li><a href="{{route('cie10.index')}}">Catálogo CIE10</a></li>
-                  @endif
-                  @if(
-                    Auth::user()->rol->id == 1 ||
-                    Auth::user()->permissions->where('name', 'physiotherapyCie9MC.see')->count()
-                  )
-                  <li><a href="{{route('cie9_mc.index')}}">Catálogo CIE9-CM</a></li>
                   @endif
                 </li>
               </ul>
@@ -254,9 +246,28 @@
                 </li>
               </ul>
             </li>
+            <li class="drop-down"><a href="#">Fuentes de consulta</a>
+              <ul>
+                <li class="nav-item nav-right">
+                  @if(
+                    Auth::user()->rol->id == 1 ||
+                    Auth::user()->permissions->where('name', 'physiotherapyCie10.see')->count()
+                  )
+                  <li><a href="{{route('cie10.index')}}">Catálogo CIE10</a></li>
+                  @endif
+                  @if(
+                    Auth::user()->rol->id == 1 ||
+                    Auth::user()->permissions->where('name', 'physiotherapyCie9MC.see')->count()
+                  )
+                  <li><a href="{{route('cie9_mc.index')}}">Catálogo CIE9-CM</a></li>
+                  @endif
+                </li>
+                <li><a href="">CIF-21</a></li>
+                <li><a href="{{route('keywords.index')}}">Glosario de fisioterapia</a></li>
+                <li><a href="{{route('anato_physiology_glosary_item.index')}}">Diccionario de anatomía y fisiología</a></li>
+              </ul>
+            </li>
             <li> <a href="https://moodle.fisioaleph.com/">Cursos</a></li>
-            <li> <a href="{{route('keywords.index')}}">Glosario de fisioterapia</a></li>
-            <li> <a href="{{route('anato_physiology_glosary_item.index')}}">Diccionario de anatomía y fisiología</a></li>
             <li class="nav-item nav-right">
               <form action="{{url('/logout')}}" id="form_logout" method="post">
                 @csrf
@@ -275,9 +286,9 @@
           <div class="col-lg-12 ml-4">
             {{Form::open(['url'=>action('GlobalSearchController@index'),'method'=>'GET'])}}
             <div class="input-group">
-              {{Form::text('keywords',null,['placeholder'=>'Nombre del paciente','class'=>'form-control','style'=>'display:inline; width:80%;'])}}
+              {{Form::text('keywords',null,['placeholder'=>'Búsqueda documental','class'=>'form-control','style'=>'display:inline; width:80%;'])}}
               <div class="input-group-append">
-                <button type="submit" class="btn btn-mod-primary" style="display: inline;">Busqueda Global <span><i class="fas fa-search"></i></span></input>
+                <button type="submit" class="btn btn-mod-primary" style="display: inline;">Búsqueda documental <span><i class="fas fa-search"></i></span></input>
                 </div>
               </div>
               {{Form::close()}}
@@ -368,7 +379,7 @@
       </div>
       <div class="social-links text-center text-md-right pt-3 pt-md-0">
         <a href="https://www.youtube.com/channel/UCeAc7ypqE35wJ-vQgO9M-tQ/" class="twitter"><i class="bx bxl-youtube"></i></a>
-        <a href="https://www.facebook.com/recuperate.fisioterapia/" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=100079561466852" class="facebook"><i class="bx bxl-facebook"></i></a>
         <a href="https://www.instagram.com/explore/locations/2231465163776299/recupera-t-fisioterapia-rehabilitacion/" class="instagram"><i class="bx bxl-instagram"></i></a>
       </div>
     </div>

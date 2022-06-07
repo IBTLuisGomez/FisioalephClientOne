@@ -64,7 +64,7 @@
 	});
 	
 </script>
-<div class="col-lg-12">
+<div class="col-lg-12 {{!empty($value['no_print_header']) ? 'no_print': '' }}">
 	<h4>{{!empty($value['label'])?$value['label']:'Galeria de Imágenes'}}</h4>
 </div>
 <div class="col-lg-12" id="div_hidden_input_files_{{$value['key']}}">

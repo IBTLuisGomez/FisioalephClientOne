@@ -20,8 +20,10 @@ class AnatoPhysiologyGlosaryItemsController extends CRUDController
         $this->index_search_fields = array(
             'name'
         );
-        $this->printTableHeader = true;
+        $this->printTableHeader = false;
+        $this->hideImage = true;
         $this->route_path = 'anato_physiology_glosary_item';
+        $this->route_show = 'anato_physiology_glosary_item.show';
         $this->class_name = '\App\AnatoPhysiologyGlosaryItemsController';
         $this->model_name = '\App\AnatoPhysiologyGlosaryItem';
         $this->short_model_name = 'AnatoPhysiologyGlosaryItem';
@@ -39,10 +41,12 @@ class AnatoPhysiologyGlosaryItemsController extends CRUDController
                 'name'=>'Nombre',
             ],
             'create' => [
-                ['label'=>'Nombre', 'type'=>'separator', 'class' => "no_print", 'tag'=>'h4', 'no_count' => true],
-                ['key'=>'name', 'label'=>'', 'class' => "no_print", 'type'=>'text'],
-                ['label'=>'Descripción', 'type'=>'separator', 'class' => "no_print", 'tag'=>'h4', 'no_count' => true],
-                ['key'=>'description', 'label'=>'', 'class' => "no_print", 'type'=>'text'],
+                ['key'=>'name', 'label'=>'Nombre', 'type'=>'text'],
+                ['key'=>'description', 'label'=>'Definición', 'type'=>'textarea', 'rows' => 3],
+            ],
+            'edit' => [
+                ['key'=>'name', 'label'=>'Nombre', 'type'=>'text'],
+                ['key'=>'description', 'label'=>'Definición', 'type'=>'textarea', 'rows' => 3],
             ]
         ];
     }

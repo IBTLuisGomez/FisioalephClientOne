@@ -11,10 +11,15 @@ class KeywordController extends CRUDController
         $this->index_search_fields = array(
             'name'
         );
+
+        $this->route_show = 'keywords.show';
         $this->route_path = 'keywords';
         $this->class_name = '\App\KeywordController';
         $this->model_name = '\App\Keyword';
         $this->short_model_name = 'Keyword';
+        $this->hide_header = true;
+        $this->printTableHeader = false;
+        $this->hideImage = true;
 
         // $this->file_output = 'images/plans_images/diagnosis/';
         $this->A_validator = [

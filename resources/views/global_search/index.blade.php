@@ -5,18 +5,10 @@
       <div class="col-lg-12">
         <table class="table table-responsive">
           <th>Nombre</th>
-          <th>Tipo</th>
-          <th>Acción</th>
-          @foreach($resultsArray as $type => $resultRows)
-          @if(!$resultRows)
-            @continue
-          @endif
-            @foreach($resultRows as $row)
-              <tr>
-                <td>{{$row['name']}}</td>
-                <td>{{$type}}</td>
-              </tr>
-            @endforeach
+          @foreach($resultsArray as $type => $resultRow)
+            <tr>
+              <td><a target="_blank" href="https://biblioteca.fisioaleph.com/xmlui/{{$resultRow->handle}}">{{$resultRow->name}}</a></td>
+            </tr>
           @endforeach
         </table>
       </div>

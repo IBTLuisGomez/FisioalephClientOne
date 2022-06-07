@@ -40,7 +40,9 @@ class CRUDController extends Controller
             with('route_edit',$this->route_path.'.edit')->
             with('route_update',$this->route_path.'.ajaxUpdate')->
             with('route_delete',$this->route_path.'.ajaxDelete');
-            with('search_terms',$request->search_terms);
+            with('search_terms',$request->search_terms)->
+            with('hide_header',!empty($this->hide_header) ? $this->hide_header : false)->
+            with('printTableHeader',!empty($this->printTableHeader) ? $this->printTableHeader : false);
         }else{
             return view('CRUDViews.index')->with('C_model',$this->model_name::paginate(20))->
                 with('permissions',!empty($this->permissions)?$this->permissions:[])->
@@ -52,8 +54,10 @@ class CRUDController extends Controller
                 with('route_create',$this->route_path.'.create')->
                 with('route_edit',$this->route_path.'.edit')->
                 with('route_update',$this->route_path.'.ajaxUpdate')->
-                with('route_delete',$this->route_path.'.ajaxDelete');
-                with('search_terms',$request->search_terms);
+                with('route_delete',$this->route_path.'.ajaxDelete')->
+                with('search_terms',$request->search_terms)->
+                with('hide_header',!empty($this->hide_header) ? $this->hide_header : false)->
+                with('printTableHeader',!empty($this->printTableHeader) ? $this->printTableHeader : false);
         }
     }
 
@@ -72,7 +76,7 @@ class CRUDController extends Controller
     public function edit($id, $stop_extend = false)
     {
         $model = $this->model_name::where('id',$id)->first();
-        dd($this->relationships, $model->anato_physiology_glosary_item);
+        // dd($this->relationships, $model->anato_physiology_glosary_item);
         if(!empty($this->relationships)){
             foreach ($this->relationships as $key => $relationship_name) {
                 if(!empty($this->keys['edit'])){

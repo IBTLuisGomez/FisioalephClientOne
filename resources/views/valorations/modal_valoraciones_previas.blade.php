@@ -9,6 +9,7 @@
 				return [key, this.valorations[key]];
 			});
 			renderPreviousEvaluation();
+			$("#print-button").css("display", 'none');
 		});
 
 		function changeEvaluation(next){
@@ -27,6 +28,32 @@
 				}else{
 					this.opened_valoration++;
 				}
+			}
+		}
+
+		function deleteEvaluation () {
+			deleteConfirm = confirm('Está seguro que desea eliminar esta evaluación')
+			if (deleteConfirm) {
+				let deleted = false
+				$(this.valorations).each((key, valoration_group)=>{
+					if (deleted) return
+					deleted = true
+					const updated_at = valoration_group[1][window.opened_valoration].updated_at.replace(' ','T')
+					$.ajax({
+						url: '/historia/valoration_delete/'+updated_at,
+						method: 'delete',
+						success (data) {
+							var url = window.location.href;    
+							if (url.indexOf('?') > -1){
+								url += '&param=1'
+							}else{
+								url += '?param=1'
+							}
+							window.location.href = url;
+
+						}
+					})
+				})
 			}
 		}
 
@@ -61,11 +88,114 @@
 			});
 			return changed;
 		}
+
+	function printObjectives() {
+		let checkboxes = $("#print-checkboxes input[type='checkbox']:checked")
+		let arrayCBs = []
+		checkboxes.each((index, checkbox) => {
+			checkbox = $(checkbox)
+			let id = checkbox.attr('objectiveId')
+			let name = checkbox.attr('value')
+			arrayCBs.push({id, name})
+		})
+		$.ajax(
+			{
+				url: "{{route('historia.print')}}",
+				method: 'post',
+				data: {patient_id: {{$patient_id}}, data: arrayCBs},
+				success: (res) => {
+					Object.keys(res).forEach( objectiveName => {
+						const h4 = $('<h4></h4>', {html: 'Objetivo: ' + objectiveName, style:"margin-left: 2.2%;"})
+						$("#col_table").append(h4)
+						const table = $('<table></table>', {class: 'table', style:'width:90%'})
+						const headers = $('<tr></tr>')
+						$("#col_table").append(table)
+						headers.append($('<td></td>',{class: 'font-weight-bold', html: '# de sesión'}))
+						headers.append($('<td></td>',{class: 'font-weight-bold', html: 'Actividades'}))
+						headers.append($('<td></td>',{class: 'font-weight-bold', html: 'Observaciones'}))
+						headers.append($('<td></td>',{class: 'font-weight-bold', html: 'Fisioterapeuta'}))
+						table.append(headers)
+						console.log(res[objectiveName])
+
+						if(Array.isArray(res[objectiveName])) {
+							const objectiveSorted = res[objectiveName];
+							objectiveSorted.sort( (a, b) => {
+								return parseInt(a?.['Numero de sesión']) > parseInt(b?.['Numero de sesión']) ? 1 : -1
+							})
+							objectiveSorted.forEach( (objective) => {
+								const tr =  $('<tr></tr>')
+								tr.append($('<td></td>', {html: objective?.['Numero de sesión'] || ''}))
+								tr.append($('<td></td>', {html: objective?.Actividades || ''}))
+								tr.append($('<td></td>', {html: objective?.Observaciones || ''}))
+								tr.append($('<td></td>', {html: objective?.Fisioterapeuta || ''}))
+								table.append(tr)
+							})
+						} else {
+							Object.keys(res[objectiveName]).forEach((order, key) => {
+								const objective = res[objectiveName][key]
+								const tr =  $('<tr></tr>')
+								tr.append($('<td></td>', {html: objective?.['Numero de sesión'] || ''}))
+								tr.append($('<td></td>', {html: objective?.Actividades || ''}))
+								tr.append($('<td></td>', {html: objective?.Observaciones || ''}))
+								tr.append($('<td></td>', {html: objective?.Fisioterapeuta || ''}))
+								table.append(tr)
+							})
+						}
+					})
+					$("#print-button").trigger('click');
+					setTimeout(() => {
+						$("#print-button").css("display", 'none');
+						$("#col_table").html("");
+					}, 2000);
+				}
+			} 
+		)
+		let printEvolution = $("#printEvolution")
+		let row = printEvolution.append($("<div></div>", {class: "row"}))
+		let col = printEvolution.append($("<div></div>", {class: "col-lg-12"}))
+
+	}
 	
 	@endif
 </script>
 @if(!empty($default))
+<div class="container" id="printEvolution"></div>
+<a class="btn btn-primary" data-toggle="modal" href='#modal_print'>Imprimir</a>
 <a class="btn btn-primary" data-toggle="modal" href='#modal-id'>Ver anteriores</a>
+<div class="container note_container">
+	<div class="row">
+			@include('reports.row_print_report', ['hide_header' => false, 'hideImage' => true, 'protocol' => !empty($protocol) ? $protocol : null, 'patient' => $patient])
+	</div>
+	<div class="row">
+		<div class="col-lg-12" id="col_table">
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="modal_print">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Objetivos</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+					<div class="row" id="print-checkboxes">
+						@php $uniqueNames = !empty($allObjectives) ? $allObjectives->unique('json_values') : []; @endphp
+						@foreach ($uniqueNames as $key => $objective)
+							<div class="col-lg-12">
+								<input type="checkbox" objectiveId="{{$objective->id}}" id="{{'cb_' . str_replace(' ','',$objective->json_values)}}" name="printObjectives[{{$key}}]" value="{{$objective->json_values}}"> <label for="{{'cb_' . str_replace(' ','',$objective->json_values)}}">{{$objective->json_values}}</label>
+							</div>
+						@endforeach
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="printObjectives()">Imprimir</button>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="modal fade" id="modal-id">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -91,7 +221,8 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary" onclick="changeEvaluation(false)">Anterior</button>
 				<button type="button" class="btn btn-primary" onclick="changeEvaluation(true)">Siguiente</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-danger" onclick="deleteEvaluation()">Borrar</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 			</div>
 		</div>
 	</div>

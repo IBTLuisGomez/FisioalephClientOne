@@ -5,31 +5,27 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Patient;
 use App\State;
+use App\User;
 use Validator;
+use Auth;
 
 class PatientController extends Controller
 {
 
     public function index(Request $request){
-        $collection= [];
+        $collection=[];
         if(!empty($request->all()['search'])){
-            $collection=Patient::all();
-            // dd($collection->first()->full_name);
+            $collection = Patient::all();
             $term = $request->all()['search'];
             $collection= $collection->filter(function ($patient) use ($term) {
                 return is_numeric(strpos(strtolower($patient->full_name), strtolower($term)));
             });
-            // foreach ($terms as $key => $term) {
-            //     if($key==0){
-
-            //     }else{
-            //         foreach (Patient::where('name','like','%'.$term.'%')->orWhere('surname','like','%'.$term.'%')->orWhere('second_surname','like','%'.$term.'%')->get() as $key => $patient) {
-            //             if(!$collection->where('id',$patient->id)->count()){
-            //                 $collection->add($patient);
-            //             }
-            //         }
-            //     }
-            // }
+            if (!Auth::user()->admin &&
+                (Auth::user()->rol->name=="traumatologo" ||
+                Auth::user()->rol->name=="rehabilitador" ||
+                Auth::user()->rol->name=="nutriologo")) {
+                $collection = $collection->where('responsible_id', Auth::user()->id);
+            }
         }
         if($request->input('laboral') == 1) {
             return view("patient.laboral_job_analysis_index")->with("collection",$collection);
@@ -45,10 +41,18 @@ class PatientController extends Controller
         }
     }
     public function create(){
-    	return view("patient.create")->with('states',State::all());
+        $responsibleIdOptions = User::all()->pluck('name', 'id');
+    	return view("patient.create")->with('states',State::all())
+            ->with('responsibleIdOptions',$responsibleIdOptions);
     }
     public function edit(Patient $paciente){
-    	return view("patient.create")->with('states',State::all())->with('model', $paciente);
+
+        $responsibleIdOptions = User::all()->pluck('name', 'id');
+
+    	return view("patient.create")
+            ->with('states',State::all())
+            ->with('responsibleIdOptions',$responsibleIdOptions)
+            ->with('model', $paciente);
     }
     public function store(Request $request) {
         $res = $this->_store_patient($request);
@@ -82,7 +86,7 @@ class PatientController extends Controller
                         'required',
                         'integer',
                         function($attribute, $value, $fail){
-                            if($value==1){
+                            if($value==1 || $value==0){
                                 $fail('Por favor selecciona un municipio de nacimiento');
                             }
                         }
