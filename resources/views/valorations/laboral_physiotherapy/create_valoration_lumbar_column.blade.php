@@ -1,7 +1,9 @@
 @php
 	$count=0;
 @endphp
-@extends('layouts.basic')
+@if (empty($client_view))
+  @extends('layouts.basic')
+@endif
 @section('content')
 {{Form::model($model,['route'=>['historia.store',$patient_id]])}}
 @if($model)
@@ -14,7 +16,7 @@
 	            overflow-y: auto;
 	            overflow-x: hidden;
 	            padding-right: 20px;
-	        } 
+	        }
 	input[type=radio], input[type=checkbox] {
 	    border: 0px !important;
 	    width: 20px !important;
@@ -48,7 +50,7 @@
 			    $(this).autocomplete("search");
 			});
 		});
-		
+
 	});
 </script>
 @endpush
@@ -114,9 +116,74 @@
 							[]
 							])
 				</div>
+                {{-- Inicia: aún no en csv --}}
+                <div class="col-xl-12">
+					@include('clinical_histories.valoration_row_options_nordic',			[
+							'name'=>'valoration_laboral_lumbar_pain_action',
+							'S_label'=>'Acción',
+							'radio_options'=>['Sí','No'],
+							'S_order'=>(++$count),
+							'label_width'=>"100%",
+							'default'=>($valorations)?
+							$valorations->where('section','valoration_laboral_lumbar_pain_action'):
+							[]
+							])
+				</div>
+                <div class="col-xl-12">
+					@include('clinical_histories.valoration_row_options_nordic',			[
+							'name'=>'valoration_laboral_lumbar_pain_elongation',
+							'S_label'=>'Acción',
+							'radio_options'=>['Sí','No'],
+							'S_order'=>(++$count),
+							'label_width'=>"100%",
+							'default'=>($valorations)?
+							$valorations->where('section','valoration_laboral_lumbar_pain_elongation'):
+							[]
+							])
+				</div>
+                <div class="col-xl-12">
+					@include('clinical_histories.valoration_row_options_nordic',			[
+							'name'=>'valoration_laboral_lumbar_rest_improves',
+							'S_label'=>'Mejora al reposo',
+							'radio_options'=>['Sí','No'],
+							'S_order'=>(++$count),
+							'label_width'=>"100%",
+							'default'=>($valorations)?
+							$valorations->where('section','valoration_laboral_lumbar_rest_improves'):
+							[]
+							])
+				</div>
+                <div class="col-xl-12">
+					@include('clinical_histories.valoration_row_options_nordic',			[
+							'name'=>'valoration_laboral_lumbar_pain_extension',
+							'S_label'=>'Dolor a la extensión',
+							'radio_options'=>['Sí','No'],
+							'S_order'=>(++$count),
+							'label_width'=>"100%",
+							'default'=>($valorations)?
+							$valorations->where('section','valoration_laboral_lumbar_pain_extension'):
+							[]
+							])
+				</div>
+                <div class="col-xl-12">
+					@include('clinical_histories.valoration_row_options_nordic',			[
+							'name'=>'valoration_laboral_lumbar_pain_postures',
+							'S_label'=>'Posturas nocivas para mejorar el dolor',
+							'radio_options'=>['Sí','No'],
+							'S_order'=>(++$count),
+							'label_width'=>"100%",
+							'default'=>($valorations)?
+							$valorations->where('section','valoration_laboral_lumbar_pain_postures'):
+							[]
+							])
+				</div>
+                {{-- Termina: aún no en csv --}}
 			</div>
 		</div>
 		<div class="col-xl-6">
+            <div class="row">
+                <img class="img-fluid" src="/images/valoraciones/nordico/lumbar.png">
+            </div>
 			<div class="row">
 				<div class="col-xl-12">
 					@include('clinical_histories.valoration_row_options_nordic',			[
@@ -154,12 +221,7 @@
 			</div>
 		</div>
 	</div>
-	<hr>
-	<hr>
-	@include('valorations.laboral_physiotherapy.create_valoration_laboral_lumbar_column_first_line')
-	<hr>
-	@include('valorations.laboral_physiotherapy.create_valoration_laboral_lumbar_column_second_line')
-	<hr>
+
 	<div class="col-xl-12">
 		<div class="row">
 		<div class="col-xl-12">
@@ -176,65 +238,14 @@
 		</div>
 	</div>
 	<hr>
-	@include('valorations.laboral_physiotherapy.create_valoration_laboral_lumbar_column_contractures')
+	@include('valorations.laboral_physiotherapy.create_valoration_laboral_lumbar_column_first_line')
+	@include('valorations.laboral_physiotherapy.create_valoration_laboral_lumbar_column_second_line')
 	<hr>
 		<div class="row">
 		<div class="col-xl-12">
 			<strong>Factores de riesgo laboral</strong>
 		</div>
-		<div class="col-xl-12">
-			@include('clinical_histories.valoration_row_options_nordic',			[
-					'name'=>'valoration_laboral_lumbar_column_forced_postures',
-					'S_label'=>'Posturas forzadas de cabeza',
-					'show_label'=>true,
-					'radio_options'=>['Sí','No'],
-					'S_order'=>(++$count),
-					'label_width'=>"100%",
-					'default'=>($valorations)?
-					$valorations->where('section','valoration_laboral_lumbar_column_forced_postures'):
-					[]
-					])
-		</div>
-		<div class="col-xl-12">
-			@include('clinical_histories.valoration_row_options_nordic',			[
-					'name'=>'valoration_laboral_lumbar_column_same_position',
-					'S_label'=>'Mantener la cabeza en la misma posición durante muchos minutos',
-					'show_label'=>true,
-					'radio_options'=>['Sí','No'],
-					'S_order'=>(++$count),
-					'label_width'=>"100%",
-					'default'=>($valorations)?
-					$valorations->where('section','valoration_laboral_lumbar_column_same_position'):
-					[]
-					])
-		</div>
-		<div class="col-xl-12">
-			@include('clinical_histories.valoration_row_options_nordic',			[
-					'name'=>'valoration_laboral_lumbar_head_arms',
-					'S_label'=>'Movimientos repetitivos de la cabeza y brazos',
-					'show_label'=>true,
-					'radio_options'=>['Sí','No'],
-					'S_order'=>(++$count),
-					'label_width'=>"100%",
-					'default'=>($valorations)?
-					$valorations->where('section','valoration_laboral_lumbar_head_arms'):
-					[]
-					])
-		</div>
-		<div class="col-xl-12">
-			@include('clinical_histories.valoration_row_options_nordic',			[
-					'name'=>'valoration_laboral_lumbar_column_head_hands',
-					'S_label'=>'Aplicar fuerza con brazos y manos',
-					'show_label'=>true,
-					'radio_options'=>['Sí','No'],
-					'S_order'=>(++$count),
-					'label_width'=>"100%",
-					'default'=>($valorations)?
-					$valorations->where('section','valoration_laboral_lumbar_column_head_hands'):
-					[]
-					])
-		</div>
-		<div class="col-xl-12">
+		<div class="col-xl-4">
 			@include('clinical_histories.valoration_row_options_nordic',			[
 					'name'=>'valoration_laboral_lumbar_tension_work',
 					'S_label'=>'Tensión durante el trabajo',
@@ -247,6 +258,93 @@
 					[]
 					])
 		</div>
+        {{--Inicia: No está en csv--}}
+        <div class="col-xl-4">
+			@include('clinical_histories.valoration_row_options_nordic',			[
+					'name'=>'valoration_laboral_lumbar_lift_deposit_etc',
+					'S_label'=>'Levantar, depositar, sostener y empujar cargas pesadas',
+					'show_label'=>true,
+					'radio_options'=>['Sí','No'],
+					'S_order'=>(++$count),
+					'label_width'=>"100%",
+					'default'=>($valorations)?
+					$valorations->where('section','valoration_laboral_lumbar_lift_deposit_etc'):
+					[]
+					])
+		</div>
+        <div class="col-xl-4">
+			@include('clinical_histories.valoration_row_options_nordic',			[
+					'name'=>'valoration_laboral_lumbar_posture_inclination',
+					'S_label'=>'Posturas, giros e inclinaciones forzadas del tronco',
+					'show_label'=>true,
+					'radio_options'=>['Sí','No'],
+					'S_order'=>(++$count),
+					'label_width'=>"100%",
+					'default'=>($valorations)?
+					$valorations->where('section','valoration_laboral_lumbar_posture_inclination'):
+					[]
+					])
+		</div>
+        <div class="col-xl-4">
+			@include('clinical_histories.valoration_row_options_nordic',			[
+					'name'=>'valoration_laboral_lumbar_physical_work',
+					'S_label'=>'Trabajo físico muy intenso',
+					'show_label'=>true,
+					'radio_options'=>['Sí','No'],
+					'S_order'=>(++$count),
+					'label_width'=>"100%",
+					'default'=>($valorations)?
+					$valorations->where('section','valoration_laboral_lumbar_physical_work'):
+					[]
+					])
+		</div>
+        <div class="col-xl-4">
+			@include('clinical_histories.valoration_row_options_nordic',			[
+					'name'=>'valoration_laboral_lumbar_vibrations',
+					'S_label'=>'Vibraciones transmitidas al cuerpo',
+					'show_label'=>true,
+					'radio_options'=>['Sí','No'],
+					'S_order'=>(++$count),
+					'label_width'=>"100%",
+					'default'=>($valorations)?
+					$valorations->where('section','valoration_laboral_lumbar_vibrations'):
+					[]
+					])
+		</div>
+        <div class="col-xl-4">
+			@include('clinical_histories.valoration_row_options_nordic',			[
+					'name'=>'valoration_laboral_lumbar_tension_stress',
+					'S_label'=>'Tensión nerviosa y estrés',
+					'show_label'=>true,
+					'radio_options'=>['Sí','No'],
+					'S_order'=>(++$count),
+					'label_width'=>"100%",
+					'default'=>($valorations)?
+					$valorations->where('section','valoration_laboral_lumbar_tension_stress'):
+					[]
+					])
+		</div>
+        <div class="col-xl-12">
+			@include('clinical_histories.valoration_row',			[
+						'name'=>'valoration_laboral_lumbar_laboral_higiene',
+						'S_label'=>'Medidas de higiene laboral',
+						'S_order'=>(++$count),
+						'default'=>($valorations)?
+						$valorations->where('section','valoration_laboral_lumbar_laboral_higiene'):
+						[]
+						])
+		</div>
+        <div class="col-xl-12">
+			@include('clinical_histories.valoration_row',			[
+						'name'=>'valoration_laboral_lumbar_treatment_protocol',
+						'S_label'=>'Protocolo de tratamiento',
+						'S_order'=>(++$count),
+						'default'=>($valorations)?
+						$valorations->where('section','valoration_laboral_lumbar_treatment_protocol'):
+						[]
+						])
+		</div>
+        {{--Termina: No está en csv--}}
 		</div>
 		{{Form::submit('Aceptar',['class'=>'btn btn-primary'])}}
 {{Form::close()}}

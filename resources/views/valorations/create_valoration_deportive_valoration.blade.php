@@ -15,7 +15,7 @@ $parameters = [
 			],
 	['test'=>
 				'Pasar la Valla',
-				
+
 
 			],
 	['test'=>
@@ -77,7 +77,11 @@ $parameters = [
 
 </script>
 <div class="container note_container">
-	@include('reports.row_print_report')
+{{Form::model($model,['route'=>['historia.store',$patient_id]])}}
+@if($model)
+{{ method_field('PATCH') }}
+@endif
+	@include('reports.row_print_report', ['hideImage' => true])
  <div class="row">
     <div class="col-lg-12">
         <strong>VALORACIÓN DEPORTIVA</strong>
@@ -126,7 +130,7 @@ $parameters = [
 	            'S_label'=>$parameter['test'],
 	            'label_show' => false,
 	            'S_order'=>(++$count),
-	            'default'=>(($valorations)?$valorations:null),])					
+	            'default'=>(!empty($valorations)?$valorations:null),])
 			</div>
 			<div class="col-lg-3">
 				@include('clinical_histories.valoration_row',[
@@ -134,7 +138,7 @@ $parameters = [
 	            'S_label'=>$parameter['test'],
 	            'label_show' => false,
 	            'S_order'=>(++$count),
-	            'default'=>(($valorations)?$valorations:null),])					
+	            'default'=>(!empty($valorations)?$valorations:null),])
 			</div>
 		@else
 			<div class="col-lg-6">
@@ -143,7 +147,7 @@ $parameters = [
 	            'S_label'=>$parameter['test'],
 	            'label_show' => false,
 	            'S_order'=>(++$count),
-	            'default'=>(($valorations)?$valorations:null),])					
+	            'default'=>(!empty($valorations)?$valorations:null),])
 			</div>
 		@endif
 		<div class="col-lg-3">
@@ -152,7 +156,7 @@ $parameters = [
 	            'S_label'=>$parameter['test'],
 	            'label_show' => false,
 	            'S_order'=>(++$count),
-	            'default'=>(($valorations)?$valorations:null),])					
+	            'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 	</div>
 	<br>
@@ -167,7 +171,7 @@ $parameters = [
             'S_label'=>'Puntos Gatillo',
 	            'label_show' => false,
             'S_order'=>(++$count),
-            'default'=>(($valorations)?$valorations:null),])					
+            'default'=>(!empty($valorations)?$valorations:null),])
 	</div>
 	<div class="col-lg-12">
 		<strong>Puntaje</strong>
@@ -179,11 +183,15 @@ $parameters = [
 	            'S_label'=>'puntaje',
 	            'label_show' => false,
 	            'S_order'=>(++$count),
-	            'default'=>(($valorations)?$valorations:null),])					
+	            'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 </div>
+<div class="row">
+    <div class="col-xl-12">
+        <br>
+        {{Form::submit('Aceptar',['class'=>'btn btn-primary'])}}
+    </div>
 </div>
-
-
-</div>    
+{{Form::close()}}
+</div>
 @endsection

@@ -3,8 +3,8 @@
     {{Form::hidden($name."[$count][cie10_id]",isset($ID_cie10)?$ID_cie10:null)}}
     {{Form::hidden($name."[$count][section]",isset($name)?$name:null)}}
     @if(!empty($S_label))
-    @php 
-    $show_label = !isset($show_label)?true:$show_label; 
+    @php
+    $show_label = !isset($show_label)?true:$show_label;
     @endphp
         @if($show_label)
             <div class="col-lg-12 {{!empty($class) ? $class : ''}}" style="text-align: center">
@@ -12,7 +12,7 @@
             </div>
         @endif
     @endif
-    
+
     @if(!empty($clarification))
         <div class="col-lg-12" style="">
             {!!$clarification!!}
@@ -25,7 +25,7 @@
     @endif
     @if(!empty($options))
         @foreach($options as $option)
-            <div class="col-md-{{intdiv(12, sizeof($options))}}" style="text-align: center; color: 
+            <div class="col-md-{{intdiv(12, sizeof($options))}}" style="text-align: center; color:
             @php
             switch ($option['color']) {
                 case 'y':
@@ -70,7 +70,10 @@
             @else
                 {{Form::radio($name."[$count][json_values][label]",$option['pts']?$option['pts']:0,null,['class'=> (!empty($option['class']) ? $option['class'] : '') .' no_print', 'color' => $option['rgb_color'] , 'pts'=>!empty($option['pts'])?$option['pts']:0])}}<label for="{{$name."[$count][json_values][label]"}}">{{$option['label']}}</label>
             @endif
-            </div>
+            @if(!empty($option['explanation']))
+                <p style="color:black">{{$option['explanation']}}</p>
+            @endif
+        </div>
         @endforeach
     @endif
     <div class="col-lg-12">

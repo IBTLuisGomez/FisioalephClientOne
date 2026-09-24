@@ -172,7 +172,7 @@
 							'S_order'=>(++$count),
 							'label_width'=>"100%",
 							'default'=>($valorations)?
-							$valorations->where('section','valoration_laboral_shoulder'):
+							$valorations->where('section','valoration_laboral_shoulder_fist_row_abd_flex'):
 							[]
 							])
 				</div>
@@ -185,7 +185,7 @@
 							'S_order'=>(++$count),
 							'label_width'=>"100%",
 							'default'=>($valorations)?
-							$valorations->where('section','valoration_laboral_shoulder'):
+							$valorations->where('section','valoration_laboral_shoulder_fist_pain'):
 							[]
 							])
 				</div>
@@ -198,7 +198,7 @@
 							'S_order'=>(++$count),
 							'label_width'=>"100%",
 							'default'=>($valorations)?
-							$valorations->where('section','valoration_laboral_shoulder'):
+							$valorations->where('section','valoration_laboral_shoulder_fist_pain_limitation'):
 							[]
 							])
 				</div>
@@ -211,7 +211,7 @@
 							'S_order'=>(++$count),
 							'label_width'=>"100%",
 							'default'=>($valorations)?
-							$valorations->where('section','valoration_laboral_shoulder'):
+							$valorations->where('section','valoration_laboral_shoulder_fist_adhesive_capsulitis'):
 							[]
 							])
 				</div>

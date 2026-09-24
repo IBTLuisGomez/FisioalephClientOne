@@ -42,6 +42,7 @@
             <div class="col-lg-5">
                 {{Form::open(['url'=>action('PatientController@index'),'method'=>'GET'])}}
                     {{Form::hidden('laboral', '1')}}
+                    {{Form::hidden('is_laboral', '1')}}
                     {{Form::text('search',null,['placeholder'=>'Nombre del paciente','class'=>'form-control','style'=>'display:inline; width:80%;'])}}
                     <button type="submit" class="btn btn-primary" style="display: inline;"><span><i class="fas fa-search"></i></span></input>
                 {{Form::close()}}
@@ -55,7 +56,7 @@
 		</div>
 			@endif
 		<div class="row">
-			<a class="btn btn-primary" href="{{route('pacientes.create')}}">Añadir Paciente</a>
+			<a class="btn btn-primary" href="{{route('job_analysis.create')}}">Añadir puestoa>
 		</div>
 		<div class="row">
 			<div class="col-lg-12">

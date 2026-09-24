@@ -13,7 +13,7 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view("contact.index");
+        return view("contact.index")->with('no_data_footer', true);
     }
 
     /**

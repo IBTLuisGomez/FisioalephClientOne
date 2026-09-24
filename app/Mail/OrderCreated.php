@@ -29,7 +29,7 @@ class OrderCreated extends Mailable
      */
     public function build()
     {
-        return $this->from(env("MAIL_USERNAME","otra@otra.com"))->subject("Naturissima, detalle de tu compra!")
-        ->view('openpay.success.email_content')->with("order",$this->order);
+        return $this->from(env("MAIL_USERNAME", "otra@otra.com"))->subject("RecuperaT, detalle de tu compra!")
+            ->view('openpay.success.email_content')->with("order", $this->order);
     }
 }

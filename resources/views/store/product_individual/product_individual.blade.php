@@ -29,7 +29,7 @@
     </div>
   </div>
 </div>
-<div class="col-xs-12 col-md-12 col-lg-3 p-2" style="{{!($product->active)?'opacity: 0.5; filter: alpha(opacity=50);':''}}">
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 p-2" style="{{!($product->active)?'opacity: 0.5; filter: alpha(opacity=50);':''}}">
 	<div  style="text-align: center; height:100; font-weight: bold;">
 		<a href="#" class="text-dark btn" data-toggle="modal" data-target="#modal_product_{{$product->id}}" style="font-weight: bold; max-width: 100%;">{{$product->name}}
 		@if(!($product->active))

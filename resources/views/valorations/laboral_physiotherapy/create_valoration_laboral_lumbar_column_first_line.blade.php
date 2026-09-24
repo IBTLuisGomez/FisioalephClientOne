@@ -10,7 +10,7 @@
 							'S_order'=>(++$count),
 							'label_width'=>"100%",
 							'default'=>($valorations)?
-							$valorations->where('section','valoration_laboral_column_lumbar'):
+							$valorations->where('section','valoration_laboral_column_lumbar_first_distribution'):
 							[]
 							])
 				</div>
@@ -23,7 +23,7 @@
 							'S_order'=>(++$count),
 							'label_width'=>"100%",
 							'default'=>($valorations)?
-							$valorations->where('section','valoration_laboral_column_lumbar'):
+							$valorations->where('section','valoration_laboral_column_lumbar_first_weakness'):
 							[]
 							])
 				</div>
@@ -40,9 +40,23 @@
 							[]
 							])
 				</div>
+                {{--Inicia: No está en csv--}}
+                <div class="col-xl-12">
+					@include('clinical_histories.valoration_row_options_nordic',			[
+							'name'=>'valoration_laboral_column_lumbar_first_lasegue',
+							'S_label'=>'Lasegue',
+							'show_label'=>true,
+							'radio_options'=>['Sí','No'],
+							'S_order'=>(++$count),
+							'label_width'=>"100%",
+							'default'=>($valorations)?
+							$valorations->where('section','valoration_laboral_column_lumbar_first_lasegue'):
+							[]
+							])
+				</div>
+                {{--Termina: No está en csv--}}
 			</div>
 		</div>
-
 		<div class="col-xl-4">
 			<div class="row">
 				<div class="col-xl-12">
@@ -97,6 +111,21 @@
 							[]
 							])
 				</div>
+                {{--Inicia: No está en csv--}}
+                <div class="col-xl-12">
+					@include('clinical_histories.valoration_row_options_nordic',			[
+							'name'=>'valoration_laboral_column_lumbar_first_bragard',
+							'S_label'=>'Bragard',
+							'show_label'=>true,
+							'radio_options'=>['Sí','No'],
+							'S_order'=>(++$count),
+							'label_width'=>"100%",
+							'default'=>($valorations)?
+							$valorations->where('section','valoration_laboral_column_lumbar_first_bragard'):
+							[]
+							])
+				</div>
+                {{--Termina: No está en csv--}}
 			</div>
 		</div>
 
@@ -124,7 +153,7 @@
 							'S_order'=>(++$count),
 							'label_width'=>"100%",
 							'default'=>($valorations)?
-							$valorations->where('section','valoration_laboral_column_lumbar'):
+							$valorations->where('section','valoration_laboral_column_lumbar_first_motor_neuropathy'):
 							[]
 							])
 				</div>
@@ -141,6 +170,21 @@
 							[]
 							])
 				</div>
+                {{--Inicia: No está en csv--}}
+                <div class="col-xl-12">
+					@include('clinical_histories.valoration_row_options_nordic',			[
+							'name'=>'valoration_laboral_column_lumbar_first_lasegue_inv',
+							'S_label'=>'Lasegue Inv.',
+							'show_label'=>true,
+							'radio_options'=>['Sí','No'],
+							'S_order'=>(++$count),
+							'label_width'=>"100%",
+							'default'=>($valorations)?
+							$valorations->where('section','valoration_laboral_column_lumbar_first_lasegue_inv'):
+							[]
+							])
+				</div>
+                {{--Termina: No está en csv--}}
 			</div>
 		</div>
 	</div>

@@ -42,7 +42,7 @@
         <div class="row">
             <div class="col-lg-5">
                 {{Form::open(['url'=>action('PatientController@index'),'method'=>'GET'])}}
-										{{Form::hidden('laboral', '11')}}
+										{{Form::hidden('laboral', '2')}}
                     {{Form::text('search',null,['placeholder'=>'Nombre del paciente','class'=>'form-control','style'=>'display:inline; width:80%;'])}}
                     <button type="submit" class="btn btn-primary" style="display: inline;"><span><i class="fas fa-search"></i></span></input>
                 {{Form::close()}}
@@ -68,8 +68,8 @@
 								<br>
 								<a class='btn btn-sm btn-secondary' href= "{{route('historia.create.choose', ['stop_extend'=>false, 'patient_id' => $model->id, 'id_clinical_history'=>6])}}">Mano</a>
 								<a class='btn btn-sm btn-secondary' href= "{{route('historia.create.choose', ['stop_extend'=>false, 'patient_id' => $model->id, 'id_clinical_history'=>7])}}">Codo</a>
-								<a class='btn btn-sm btn-secondary' href= "{{route('historia.create.choose', ['stop_extend'=>false, 'patient_id' => $model->id, 'id_clinical_history'=>9])}}">Hombro</a>
-								<a class='btn btn-sm btn-secondary' href= "{{route('historia.create.choose', ['stop_extend'=>false, 'patient_id' => $model->id, 'id_clinical_history'=>11])}}">Columna Cervical</a>
+								<a class='btn btn-sm btn-secondary' href= "{{route('historia.create.choose', ['stop_extend'=>false, 'patient_id' => $model->id, 'id_clinical_history'=>8])}}">Hombro</a>
+								<a class='btn btn-sm btn-secondary' href= "{{route('historia.create.choose', ['stop_extend'=>false, 'patient_id' => $model->id, 'id_clinical_history'=>9])}}">Columna Cervical</a>
 								<a class='btn btn-sm btn-secondary' href= "{{route('historia.create.choose', ['stop_extend'=>false, 'patient_id' => $model->id, 'id_clinical_history'=>10])}}">Columna Lumbar</a>
 								<a class='btn btn-sm btn-secondary' href= "{{route('historia.create.choose', ['stop_extend'=>false, 'patient_id' => $model->id, 'id_clinical_history'=>22])}}">Rodilla</a>
 								<a class='btn btn-sm btn-secondary' href= "{{route('historia.create.choose', ['stop_extend'=>false, 'patient_id' => $model->id, 'id_clinical_history'=>23])}}">Pie</a>

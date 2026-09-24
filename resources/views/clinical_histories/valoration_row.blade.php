@@ -15,12 +15,12 @@
 @php
 	$textarea = !empty($textarea)?'textarea':'text';
 @endphp
-{{Form::hidden($name."[$S_order][name]",$S_label,['id'=>''])}}
-{{Form::hidden($name."[$S_order][cie10_id]",isset($ID_cie10)?$ID_cie10:null,['id'=>''])}}
-{{Form::hidden($name."[$S_order][section]",isset($name)?$name:null,['id'=>''])}}
+{{Form::hidden($name."[$S_order][name]",$S_label,['id' => "name".$S_order.$S_label])}}
+{{Form::hidden($name."[$S_order][cie10_id]",isset($ID_cie10)?$ID_cie10:null,['id' => "cie10".$S_order.$S_label])}}
+{{Form::hidden($name."[$S_order][section]",isset($name)?$name:null,['id' => "section".$S_order.$S_label])}}
 @if(isset($default))
 	@if($default==null || !$default->count())
-		{{Form::$textarea($name."[$S_order][json_values]",null,['class'=>'form-control', 'rows'=>!empty($rows)?$rows:''])}}
+		{{Form::$textarea($name."[$S_order][json_values]",null,['placeholder'=>!empty($placeholder) ? $placeholder : '', 'class'=>'form-control', 'rows'=>!empty($rows)?$rows:''])}}
 	@else
 		@php
 			$already_created=false;
@@ -28,13 +28,13 @@
 			$already_created = !empty($d_value);
 		@endphp
 		@if(!empty($d_value))
-			{{Form::$textarea($name."[$S_order][json_values]",$d_value->json_values,['class'=>'form-control', 'rows'=>!empty($rows)?$rows:'','disabled' => (!empty($disabled) ? true : false)])}}
+			{{Form::$textarea($name."[$S_order][json_values]",$d_value->json_values,['placeholder'=>!empty($placeholder) ? $placeholder : '', 'class'=>'form-control', 'rows'=>!empty($rows)?$rows:'','disabled' => (!empty($disabled) ? true : false)])}}
 			@else
-			{{Form::$textarea($name."[$S_order][json_values]",null,['class'=>'form-control', 'rows'=>!empty($rows)?$rows:''])}}
+			{{Form::$textarea($name."[$S_order][json_values]",null,['placeholder'=>!empty($placeholder) ? $placeholder : '', 'class'=>'form-control', 'rows'=>!empty($rows)?$rows:''])}}
 		@endif
 	@endif
 @else
-	{{Form::$textarea($name."[$S_order][json_values]",null,['class'=>'form-control', 'rows'=>!empty($rows)?$rows:'', 'disabled' => (!empty($disabled) ? true : false)])}}
+	{{Form::$textarea($name."[$S_order][json_values]",null,['placeholder'=>!empty($placeholder) ? $placeholder : '', 'class'=>'form-control', 'rows'=>!empty($rows)?$rows:'', 'disabled' => (!empty($disabled) ? true : false)])}}
 @endif
 @if(!empty($explanation))
 	<div class="modal fade" id="modal_explanation_{{$S_order}}">

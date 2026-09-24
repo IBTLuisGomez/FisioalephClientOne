@@ -100,5 +100,4 @@ text-align:center;
   </div>  
 </div>
 <br/>
-
 @endsection

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d92725ceb2797671b9558052ff5719bf",
+    "content-hash": "135b2d548eced54e5187bb55718e7d9a",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -1658,6 +1658,73 @@
             "description": "HTML and Form Builders for the Laravel Framework",
             "homepage": "https://laravelcollective.com",
             "time": "2019-10-02T00:37:39+00:00"
+        },
+        {
+            "name": "laravelcollective/remote",
+            "version": "v6.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/LaravelCollective/remote.git",
+                "reference": "35ce8e947ef7952eac7ac96cce2b71f7de7c8862"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/LaravelCollective/remote/zipball/35ce8e947ef7952eac7ac96cce2b71f7de7c8862",
+                "reference": "35ce8e947ef7952eac7ac96cce2b71f7de7c8862",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/filesystem": "^6.0|^7.0|^8.0",
+                "illuminate/support": "^6.0|^7.0|^8.0",
+                "php": ">=7.2",
+                "phpseclib/phpseclib": "^2.0"
+            },
+            "require-dev": {
+                "illuminate/console": "^6.0|^7.0|^8.0",
+                "mockery/mockery": "~1.0",
+                "phpunit/phpunit": "~5.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "6.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Collective\\Remote\\RemoteServiceProvider"
+                    ],
+                    "aliases": {
+                        "SSH": "Collective\\Remote\\RemoteFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Collective\\Remote\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com"
+                },
+                {
+                    "name": "Tom Shafer",
+                    "email": "tj@tjshafer.com"
+                }
+            ],
+            "description": "Remote SSH access for The Laravel Framework.",
+            "homepage": "http://laravelcollective.com",
+            "support": {
+                "issues": "https://github.com/LaravelCollective/remote/issues",
+                "source": "https://github.com/LaravelCollective/remote"
+            },
+            "abandoned": "spatie/ssh",
+            "time": "2023-04-25T02:34:56+00:00"
         },
         {
             "name": "league/commonmark",

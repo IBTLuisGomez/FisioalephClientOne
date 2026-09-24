@@ -11,11 +11,12 @@ use App\Http\Controllers\CRUDController;
 class AnatoPhysiologyGlosaryItemsController extends CRUDController
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Anato Physiology Glosary Items "Diccionario de anatomía y Fisiología".
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(array $attributes = array()){
+    public function __construct(array $attributes = array())
+    {
         parent::__construct();
         $this->index_search_fields = array(
             'name'
@@ -32,31 +33,43 @@ class AnatoPhysiologyGlosaryItemsController extends CRUDController
             'name' => 'required',
         ];
         $this->A_validator_messages = [
-            'name.required'=>'El campo de nombre es obligatorio',
+            'name.required' => 'El campo de nombre es obligatorio',
         ];
         $this->file_relationships = [
         ];
+        $this->permissions = [
+            'create' => '*',
+            'edit' => '*',
+            'delete' => '*'
+        ];
         $this->keys = [
             'index' => [
-                'name'=>'Nombre',
+                'name' => 'Nombre',
             ],
             'create' => [
-                ['key'=>'name', 'label'=>'Nombre', 'type'=>'text'],
-                ['key'=>'description', 'label'=>'Definición', 'type'=>'textarea', 'rows' => 3],
+                ['key' => 'name', 'label' => 'Nombre', 'type' => 'text'],
+                ['key' => 'description', 'label' => 'Definición', 'type' => 'textarea', 'rows' => 3],
+                ['key' => 'bibliography', 'label' => 'Bibliografía', 'type' => 'textarea', 'rows' => 3],
             ],
             'edit' => [
-                ['key'=>'name', 'label'=>'Nombre', 'type'=>'text'],
-                ['key'=>'description', 'label'=>'Definición', 'type'=>'textarea', 'rows' => 3],
+                ['key' => 'name', 'label' => 'Nombre', 'type' => 'text'],
+                ['key' => 'description', 'label' => 'Definición', 'type' => 'textarea', 'rows' => 3],
+                ['key' => 'bibliography', 'label' => 'Bibliografía', 'type' => 'textarea', 'rows' => 3],
             ]
         ];
     }
 
-    public function ajaxGet($string = null){
+    /** 
+     * Get the specified Anato Physiology Glosary from storage.
+     */
+
+    public function ajaxGet($string = null)
+    {
         $col = [];
-        if($string){
-            $col=$this->model_name::where("name","like",$string ? "%$string%" : "%")->limit(40)->orderBy('name','asc')->get();
+        if ($string) {
+            $col = $this->model_name::where("name", "like", $string ? "%$string%" : "%")->limit(40)->orderBy('name', 'asc')->get();
         } else {
-            $col=$this->model_name::where("name","like","%")->orderBy('name','asc')->get();
+            $col = $this->model_name::where("name", "like", "%")->orderBy('name', 'asc')->get();
         }
         return $col->map(function ($cie10) {
             return [

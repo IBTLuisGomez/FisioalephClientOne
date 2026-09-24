@@ -53,20 +53,40 @@ Object.size = function(obj) {
     }
     return size;
 };
-function gotoPage(event){
+function checkTotal(){
+	pressumed_total=$("#checkout_total").html();
+	if(pressumed_total<minimum_checkout){
+		return false;
+	}
+	return true;
+}
+function gotoPage(event=false){
+	if(event==false){
+		$(".modal_checkout_page").hide();
+		$(".modal_checkout_page").first().show();
+		return;
+	}
 	event.preventDefault();
 	event.stopPropagation();
 	object=$(event.target);
+	if(object.hasClass("delivery") && minimum_checkout!=undefined){
+		// if(!checkTotal()){
+		// 	alert("El precio de tu compra no supera el mínimo requerido, no puedes utilizar esta opción.");
+		// 	return;
+		// }
+	}
 	if(object.attr("type")=="checkbox"){
-		$(".delivery_pickup").attr("disabled",true);
+		// $(".delivery_pickup").attr("disabled",true);
 		$(object.attr("target")).removeAttr("disabled");
 	}
 	parent_page=getFirstParentWithClass(object, "modal_checkout_page");
 	parent_page.css("display","none");
 	div_next_page=$(object.attr("next_page"));
-	if((div_next_page.attr("no-show")!=0) && (div_next_page.attr("no-show")!=undefined)){
-		div_next_page=$(div_next_page.attr("no-show"));
-	}
+	console.log('div_next_page', div_next_page);
+	console.log('jjjjjjjjj', div_next_page.attr("no-show")!=0) && (div_next_page.attr("no-show")!=undefined)
+	// if((div_next_page.attr("no-show")!=0) && (div_next_page.attr("no-show")!=undefined)){
+	// 	div_next_page=$(div_next_page.attr("no-show"));
+	// }
 	div_next_page.css("display","block");
-
+	console.log('div_next_page', div_next_page);
 }

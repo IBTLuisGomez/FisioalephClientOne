@@ -1,4 +1,6 @@
-@extends('layouts.basic')
+@if (empty($client_view))
+  @extends('layouts.basic')
+@endif
 @section('content')
 <script type="text/javascript">
 	$(function(){
@@ -78,7 +80,9 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-12">
-				{{ $C_model->appends(request()->except('page'))->links() }}
+                @if($C_model)
+				    {{ $C_model->appends(request()->except('page'))->links() }}
+                @endif
 			</div>
 		</div>
 		<div class="row">
@@ -90,10 +94,10 @@
 								$A_request = array_merge(request()->all(), [explode('.', $key)[0]=>true]);
 								@endphp
 							@if(explode('.', $key)[1] == "filter")
-							<th><a href="{{route($route_search,$A_request)}}">{{$value}}</a></th>
+							    <th><a href="{{route($route_search,$A_request)}}">{{$value}}</a></th>
 							@endif
 							@else
-							<th>{{$value}}</th>
+							    <th>{{$value}}</th>
 							@endif
 							@endforeach
 							<th>Acciones</th>
@@ -104,16 +108,23 @@
 								<td name="{{$key}}">{{$model->$key}}</td>
 								@endforeach
 								<td class="actions">
-									@if(!empty($route_show) && Route::has($route_show))
-										<a href="{{route($route_show, $model->id)}}"><i class="fas fa-eye btn"></i></a>
-									@endif
-									@if(in_array('general_database.edit', Auth::user()->getReadablePermissions()) || Auth::user()->getAdminAttribute()
+									@if(
+                                        (in_array('general_database.edit', Auth::user()->getReadablePermissions()) || Auth::user()->getAdminAttribute()
 										|| (!empty($permissions['edit']) && Auth::user()->permissions->where('name', $permissions['edit'])->count()))
-									<a href='/{{$route_path}}/{{$model->id}}'><i class="fas fa-eye btn"></i></a>
-									<i class="fas fa-edit btn btn-warning i_edit" cie9mc_id="{{$model->id}}"></i>
-									@endif
-							@if(in_array('general_database.delete', Auth::user()->getReadablePermissions()) || Auth::user()->getAdminAttribute())
-							<i class="fas fa-trash btn btn-danger i_delete" cie9mc_id="{{$model->id}}"></i>
+                                        )
+                                        @if(!empty($route_show) && Route::has($route_show))
+                                            <a href="{{route($route_show, $model->id)}}"><i class="fas fa-eye btn"></i></a>
+                                        @else
+                                            <a href='/{{$route_path}}/{{$model->id}}'><i class="fas fa-eye btn"></i></a>
+                                        @endif
+                                        @if(!Session::get('client_view'))
+                                        <i class="fas fa-edit btn btn-warning i_edit" cie9mc_id="{{$model->id}}"></i>
+                                        @endif
+                                        @endif
+                                    @if( Auth::user()->id == 2 || (empty($model->is_sealed)&& (Auth::user()->getAdminAttribute() || Auth::user()->permissions->where('name', (!empty($permissions['delete']) ? $permissions['delete'] : ''))->count())  && !($model->is_sealed)))
+                                        @if(!Session::get('client_view'))
+                                            <i class="fas fa-trash btn btn-danger i_delete" cie9mc_id="{{$model->id}}"></i>
+                                        @endif
 							@endif
 						</td>
 					</tr>
@@ -123,7 +134,9 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-12">
-				{{ $C_model->appends(request()->except('page'))->links() }}
+                @if($C_model)
+				    {{ $C_model->appends(request()->except('page'))->links() }}
+                @endif
 			</div>
 		</div>
 	</div>

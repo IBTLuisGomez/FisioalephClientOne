@@ -1,0 +1,82 @@
+name: CI/CD RecuperaT
+
+on:
+  push:
+    branches:
+      - main
+      - develoment
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Tests y assets
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Obtener codigo
+        uses: actions/checkout@v4
+
+      - name: Preparar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.2'
+          extensions: mbstring, bcmath, intl, pdo_mysql, zip, gd
+          coverage: none
+
+      - name: Instalar dependencias PHP
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Preparar entorno de pruebas
+        run: |
+          cp .env.example .env
+          php artisan key:generate --force
+
+      - name: Ejecutar PHPUnit
+        run: vendor/bin/phpunit
+
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '12'
+          cache: npm
+
+      - name: Instalar dependencias frontend
+        run: npm ci
+
+      - name: Compilar assets de produccion
+        run: npm run production
+
+  deploy:
+    name: Desplegar en fisioalep.com
+    needs: test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-22.04
+    environment: production
+
+    steps:
+      - name: Desplegar por SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.DEPLOY_PORT || 22 }}
+          script_stop: true
+          script: |
+            set -eu
+            cd "${{ secrets.DEPLOY_PATH }}"
+            git fetch origin main
+            git checkout main
+            git reset --hard origin/main
+            composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+            npm ci
+            npm run production
+            php artisan migrate --force
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache

@@ -1,4 +1,6 @@
-@extends('layouts.basic')
+@if (empty($client_view))
+  @extends('layouts.basic')
+@endif
 @push('javascript')
 @if(!empty($stop_extend))
 <script type="text/javascript">
@@ -375,7 +377,7 @@
               <input id="phases_name" class="form-control" placeholder="Nombre"></textarea>
               <textarea rows="3" id="phases_goals" placeholder="Objetivos" class="form-control"></textarea>
               <textarea rows="3" id="phases_progresion" placeholder="Criterios de progresión" class="form-control"></textarea>
-              <textarea rows="3" id="phases_physical_modalities" placeholder="Modalidades físicas" class="form-control"></textarea>
+              <textarea rows="3" id="phases_physical_modalities" placeholder="Agentes físicos" class="form-control"></textarea>
               <textarea rows="3" id="phases_functional_activities" placeholder="Actividades funcionales" class="form-control"></textarea>
               <button class="btn btn-primary" type="button" onclick="addExtra(event)" target="#add_phases"><span><i class="fa fa-plus"></i></span> Añadir</button>
             </div>

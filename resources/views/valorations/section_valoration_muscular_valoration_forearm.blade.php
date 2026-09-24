@@ -8,22 +8,17 @@
 		$count=0;
 	@endphp
 	<div class="col-xl-6">
-		@include('valorations.muscular_valoration_sections.muscular_valoration_row',['name'=>'section_valoration_muscular_valoration_forearm',
+		@include('valorations.muscular_valoration_sections.muscular_valoration_daniels_row',['name'=>'section_valoration_muscular_valoration_forearm',
 			'S_label'=>'Bíceps braquial Supinador corto.',
 			'label_show'=>true,
 			'S_info'=>'Paciente sentado con el brazo al costado, codo flexionado y pronación de antebrazo. Realiza supinación del antebrazo',
-			'S_order'=>(++$count),'default'=>(($valorations)?$valorations:null),])
+			'S_order'=>(++$count),'default'=>(!empty($valorations)?$valorations:null),])
 	</div>
 	<div class="col-xl-6">
-		@include('valorations.muscular_valoration_sections.muscular_valoration_row',['name'=>'section_valoration_muscular_valoration_forearm',
+		@include('valorations.muscular_valoration_sections.muscular_valoration_daniels_row',['name'=>'section_valoration_muscular_valoration_forearm',
 			'S_label'=>'Bíceps braquial Supinador corto.',
 			'label_show'=>true,
 			'S_info'=>'Paciente sentado con el brazo al costado, codo flexionado y pronación de antebrazo. Realiza supinación del antebrazo',
-			'S_order'=>(++$count),'default'=>(($valorations)?$valorations:null),])
-{{-- 		@include('valorations.muscular_valoration_sections.muscular_valoration_row',['name'=>'section_valoration_muscular_valoration_forearm',
-			'S_label'=>'Pronador redondo Pronador cuadrado.',
-			'label_show'=>true,
-			'S_info'=>'Paciente sentado con el brazo al costado, codo flexionado (90 grados y en supinación, realiza pronación',
-			'S_order'=>(++$count),'default'=>(($valorations)?$valorations:null),]) --}}
+			'S_order'=>(++$count),'default'=>(!empty($valorations)?$valorations:null),])
 	</div>
 </div>

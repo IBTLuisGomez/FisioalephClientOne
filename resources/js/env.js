@@ -1,5 +1,5 @@
-const urlBase = 'https://www.recuperatfisioterapia.com'
-// const urlBase = 'http://localhost:8006'
+// const urlBase = 'https://www.recuperatfisioterapia.com'
+const urlBase = 'http://localhost:8006'
 const urlApiBase = urlBase + '/api'
 export default {
   urlBase,

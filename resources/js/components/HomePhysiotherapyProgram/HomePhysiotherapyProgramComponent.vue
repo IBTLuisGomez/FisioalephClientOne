@@ -7,63 +7,100 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <input type="text" class="form-control" placeholder="Nombre" v-model="hfp.name">
-                <button type="button" class="btn btn-primary" @click="changeName()">Cambiar nombre</button>
+                <input type="text" :disabled="hfp.is_sealed" class="form-control" placeholder="Nombre" v-model="hfp.name">
+                <button type="button" v-if="!hfp.is_sealed" class="btn btn-primary" @click="changeName()">Cambiar nombre</button>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <input type="text" class="form-control" placeholder="Páginas" v-model="hfp.pages">
-                <button type="button" class="btn btn-primary" @click="changePages()">Cambiar páginas</button>
+                <input type="text" :disabled="hfp.is_sealed" class="form-control" placeholder="Páginas" v-model="hfp.pages">
+                <button type="button" v-if="!hfp.is_sealed" class="btn btn-primary" @click="changePages()">Cambiar páginas</button>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <input type="text" class="form-control" placeholder="Código" v-model="hfp.code">
-                <button type="button" class="btn btn-primary" @click="changeCode()">Cambiar código</button>
+                <input type="text" :disabled="hfp.is_sealed" class="form-control" placeholder="Clave" v-model="hfp.code">
+                <button type="button" v-if="!hfp.is_sealed" class="btn btn-primary" @click="changeCode()">Cambiar clave</button>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <input type="text" class="form-control" placeholder="Versión" v-model="hfp.version">
-                <button type="button" class="btn btn-primary" @click="changeVersion()">Cambiar versión</button>
+                <input type="text" :disabled="hfp.is_sealed" class="form-control" placeholder="Versión" v-model="hfp.version">
+                <button type="button" v-if="!hfp.is_sealed" class="btn btn-primary" @click="changeVersion()">Cambiar versión</button>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <input type="text" class="form-control" placeholder="Elaborado por" v-model="hfp.made_by">
-                <button type="button" class="btn btn-primary" @click="changeMadeBy()">Cambiar elaborado por</button>
+                <input type="text" :disabled="hfp.is_sealed" class="form-control" placeholder="Elaborado por" v-model="hfp.made_by">
+                <button type="button" v-if="!hfp.is_sealed" class="btn btn-primary" @click="changeMadeBy()">Cambiar elaborado por</button>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <input type="text" class="form-control" placeholder="Revisado por" v-model="hfp.revised_by">
-                <button type="button" class="btn btn-primary" @click="changeRevisedBy()">Cambiar revisado por</button>
+                <input type="text" :disabled="hfp.is_sealed" class="form-control" placeholder="Revisado por" v-model="hfp.revised_by">
+                <button type="button" v-if="!hfp.is_sealed" class="btn btn-primary" @click="changeRevisedBy()">Cambiar revisado por</button>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
                 <h4><strong>Categoría Anatomica/Fisiológica</strong></h4>
-                <multiselect class="mb-2" :multiple="false" v-model="hfp.glosary_ap" :options="glosary_ap" placeholder="Categoria anatomica/fisiológica" label="label" track-by="id"></multiselect>
+                <multiselect :disabled="hfp.is_sealed" class="mb-2" :multiple="false" v-model="hfp.glosary_ap" :options="glosary_ap" placeholder="Categoria anatomica/fisiológica" label="label" track-by="id"></multiselect>
+                <a type="button" class="btn btn-primary" href="/anato_physiology_glosary_item/create" target="_blank"><i class="fas fa-plus"></i></a>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
                 <h4><strong>Palabras clave</strong></h4>
-                <multiselect class="mb-2" :multiple="true" v-model="hfp.keywords" :options="keywords" placeholder="Palabras Clave" label="name" track-by="id"></multiselect>
+                <multiselect :disabled="hfp.is_sealed" class="mb-2" :multiple="true" v-model="hfp.keywords" :options="keywords" placeholder="Palabras Clave" label="name" track-by="id"></multiselect>
+                <a type="button" class="btn btn-primary" href="/keywords/create" target="_blank"><i class="fas fa-plus"></i></a>
             </div>
         </div>
-            <exercise-form :key="updateExercise" @onExerciseCategoryAdded="onExerciseCategoryAdded" @onExerciseDeleted = "onExerciseDeleted" @onExerciseImageRemoved = "onExerciseImageRemoved" @onExerciseAdded = "addExercise" @onExerciseEditted = "onExerciseEditted" :exercises = "hfp.exercises" :exercise_divisions = "hfp.exercise_divisions"></exercise-form>
-            <massage-form @onMassageDeleted = "onMassageDeleted" @onMassageRemoved = "onMassageRemoved" @onMassageAdded = "addMassage" @onMassageEditted = "onMassageEditted" :massages = "hfp.massages"></massage-form>
-            <physical-agent-form @onPhysicalAgentDeleted = "onPhysicalAgentDeleted" @onPhysicalAgentRemoved = "onPhysicalAgentRemoved" @onPhysicalAgentAdded = "addPhysicalAgent" @onPhysicalAgentEditted = "onPhysicalAgentEditted" :physical_agents = "hfp.physical_agents"></physical-agent-form>
-            <prescription-form @onPrescriptionDeleted = "onPrescriptionDeleted" @onPrescriptionRemoved = "onPrescriptionRemoved" @onPrescriptionAdded = "addPrescription" @onPrescriptionEditted = "onPrescriptionEditted" :prescriptions = "hfp.prescriptions"></prescription-form>
-            <contraindication-form @onContraindicationDeleted = "onContraindicationDeleted" @onContraindicationAdded = "addContraindication" @onContraindicationEditted = "onContraindicationEditted" :contraindications = "hfp.contraindications"></contraindication-form>
+            <exercise-form :isSealed="hfp.is_sealed" :key="updateExercise" @onExerciseCategoryAdded="onExerciseCategoryAdded" @onExerciseDeleted = "onExerciseDeleted" @onExerciseImageRemoved = "onExerciseImageRemoved" @onExerciseAdded = "addExercise" @onExerciseEditted = "onExerciseEditted" :exercises = "hfp.exercises" :exercise_divisions = "hfp.exercise_divisions"></exercise-form>
+            <massage-form :isSealed="hfp.is_sealed" @onMassageDeleted = "onMassageDeleted" @onMassageRemoved = "onMassageRemoved" @onMassageAdded = "addMassage" @onMassageEditted = "onMassageEditted" :massages = "hfp.massages"></massage-form>
+            <physical-agent-form :isSealed="hfp.is_sealed" @onPhysicalAgentDeleted = "onPhysicalAgentDeleted" @onPhysicalAgentRemoved = "onPhysicalAgentRemoved" @onPhysicalAgentAdded = "addPhysicalAgent" @onPhysicalAgentEditted = "onPhysicalAgentEditted" :physical_agents = "hfp.physical_agents"></physical-agent-form>
+            <prescription-form :isSealed="hfp.is_sealed" @onPrescriptionDeleted = "onPrescriptionDeleted" @onPrescriptionRemoved = "onPrescriptionRemoved" @onPrescriptionAdded = "addPrescription" @onPrescriptionEditted = "onPrescriptionEditted" :prescriptions = "hfp.prescriptions"></prescription-form>
+            <contraindication-form :isSealed="hfp.is_sealed" @onContraindicationDeleted = "onContraindicationDeleted" @onContraindicationAdded = "addContraindication" @onContraindicationEditted = "onContraindicationEditted" :contraindications = "hfp.contraindications"></contraindication-form>
             <hr>
         <div class="row">
             <div class="col-lg-12">
                 <h5><strong>Bibliografía</strong></h5>
-                <textarea rows=4 class="form-control" v-model="hfp.bibliography" placeholder="Bibliogafía"></textarea>
-                <button type="button" class="btn btn-primary" @click="changeBibliography()">Cambiar bibliografía</button>
+                <textarea :disabled="hfp.is_sealed"  rows=4 class="form-control" v-model="hfp.bibliography" placeholder="Bibliogafía"></textarea>
+                <button type="button" v-if="!hfp.is_sealed" class="btn btn-primary" @click="changeBibliography()">Cambiar bibliografía</button>
+            </div>
+        </div>
+        <v-row>
+            <v-col>
+                <h2>DUBLIN CORE</h2>
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.abstract" placeholder="Resumen"/>
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.description" placeholder="Descripción"/>
+
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.source" placeholder="DC.Tema"/>
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.language" placeholder="DC.Idioma"/>
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.relation" placeholder="DC.Relación"/>
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.coverage" placeholder="DC.Cobertura"/>
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.publisher" placeholder="DC.Editor"/>
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.contributor" placeholder="DC.Colaboradores"/>
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.rights" placeholder="DC.Derechos"/>
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.date" placeholder="DC.Fecha"/>
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.type" placeholder="DC.Tipo"/>
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.format" placeholder="DC.Formato"/>
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.identifier" placeholder="DC.Identificador"/>
+
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.creator" placeholder="Creador"/>
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.date_issued" placeholder="Fecha de emisión"/>
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.latest_version" placeholder="Última Versión"/>
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.version_history" placeholder="Historial de versiones"/>
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.document_status" placeholder="Estatus del documento"/>
+                <input type="text" class="mb-3 form-control" :disabled="hfp.is_sealed" v-model="hfp.doi" placeholder="DOI"/>
+            </v-col>
+        </v-row>
+        <div class="row">
+            <div class="col-lg-12">
+                <input type="checkbox" @click="changeSeal" :disabled="hfp.is_sealed" v-model="hfp.is_sealed"/>
+                <label>Sellado</label>
+            </div>
+            <div class="col-lg-12" v-if="is_admin">
+                <button class="btn btn-warning" @click="createNewVersion">Nueva version</button>
             </div>
         </div>
     </div>
@@ -80,8 +117,9 @@
     Vue.component('contraindication-form', require('./ContraindicationForm.vue').default);
     export default {
         components: { Multiselect },
-        props: ['id'],
+        props: ['id', 'is_admin', 'new_version_path'],
         mounted() {
+            console.log('ENV.urlApiHFPBase', ENV.urlApiHFPBase)
         },
         created : function () {
             if (!this.id) {
@@ -121,6 +159,19 @@
             }
         },
         methods : {
+            createNewVersion() {
+                window.open(this.new_version_path, '_blank')
+            },
+            changeSeal() {
+                const url = `${ENV.urlApiHFPBase}/${this.id}`
+                if (confirm('¿Estás seguro de que deseas sellar este programa?')) {
+                    this.hfp.is_sealed = true
+                    axios.put(url, {is_sealed: this.hfp.is_sealed}).then(() => {
+                        alert ('Programa sellado con éxito')
+                        window.location.href('/home_physiotherapy_program')
+                    })
+                }
+            },
             changeBibliography () {
                 const url = `${ENV.urlApiHFPBase}/${this.id}`
                 if (this.hfp.name.length > 0) {
@@ -149,7 +200,7 @@
                 const url = `${ENV.urlApiHFPBase}/${this.id}`
                 if (this.hfp.code.length > 0) {
                     axios.put(url, {code: this.hfp.code}).then(() => {
-                        alert ('Código cambiado con éxito')
+                        alert ('Clave cambiada con éxito')
                     })
                 }
             },
@@ -319,6 +370,7 @@
                 this.hfp.bibliography = response.data.bibliography;
                 this.hfp.revised_by = response.data.revised_by;
                 this.hfp.id = response.data.id;
+                this.hfp.is_sealed = response.data.is_sealed ? true : false;
                 this.hfp.glosary_ap = (response.data.anato_physiology_glosary_item) ? response.data.anato_physiology_glosary_item : this.hfp.anato_physiology_glosary_item;
                 if(this.hfp.glosary_ap){
                     this.hfp.glosary_ap.label = (response.data.anato_physiology_glosary_item) ? response.data.anato_physiology_glosary_item.name : this.hfp.anato_physiology_glosary_item.name;
@@ -330,7 +382,21 @@
                 this.hfp.physical_agents = (response.data.physical_agent) ? response.data.physical_agent : this.hfp.physical_agents;
                 this.hfp.prescriptions = (response.data.prescription) ? response.data.prescription : this.hfp.prescriptions;
                 this.hfp.contraindications = (response.data.contraindication) ? response.data.contraindication : this.hfp.contraindications;
-                this.hfp.exercise_divisions = (response.data.exercise_divisions) ? response.data.exercise_divisions : this.hfp.exercise_divisions;            }
+                this.hfp.exercise_divisions = (response.data.exercise_divisions) ? response.data.exercise_divisions : this.hfp.exercise_divisions;
+
+                this.hfp.source = (response.data.source) ? response.data.source : this.hfp?.source;
+                this.hfp.language = (response.data.language) ? response.data.language : this.hfp?.language;
+                this.hfp.relation = (response.data.relation) ? response.data.relation : this.hfp?.relation;
+                this.hfp.coverage = (response.data.coverage) ? response.data.coverage : this.hfp?.coverage;
+                this.hfp.publisher = (response.data.publisher) ? response.data.publisher : this.hfp?.publisher;
+                this.hfp.contributor = (response.data.contributor) ? response.data.contributor : this.hfp?.contributor;
+                this.hfp.rights = (response.data.rights) ? response.data.rights : this.hfp?.rights;
+                this.hfp.date = (response.data.date) ? response.data.date : this.hfp?.date;
+                this.hfp.type = (response.data.type) ? response.data.type : this.hfp?.type;
+                this.hfp.format = (response.data.format) ? response.data.format : this.hfp?.format;
+                this.hfp.identifier = (response.data.identifier) ? response.data.identifier : this.hfp?.identifier;
+
+            }
         },
         data : function () {
             return {
@@ -339,6 +405,7 @@
                 glosary_ap: [],
                 hfp : {
                     id: '',
+                    is_sealed: false,
                     name: '',
                     pages: null,
                     code: null,

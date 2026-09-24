@@ -8,16 +8,18 @@ use Illuminate\Support\Facades\Storage;
 class BibliographyController extends CRUDController
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of Bibliography controllers.
      *
-     * @return \Illuminate\biHttp\Response
+     * @return \Illuminate\Http\Response
      */
 
-    public function __construct(array $attributes = array()){
+    public function __construct(array $attributes = array())
+    {
         parent::__construct();
 
         $this->index_search_fields = array(
-            'code', 'name'
+            'code',
+            'name'
         );
         $this->route_path = 'bibliography';
         $this->class_name = '\App\BibliographyController';
@@ -29,8 +31,8 @@ class BibliographyController extends CRUDController
             'date' => 'nullable|date_format:Y-m-d',
         ];
         $this->A_validator_messages = [
-            'name.required'=>'El campo de nombre es obligatorio',
-            'date.date_format'=>'La fecha debe estar en formato "AAAA-MM-DD"',
+            'name.required' => 'El campo de nombre es obligatorio',
+            'date.date_format' => 'La fecha debe estar en formato "AAAA-MM-DD"',
         ];
         $this->relationships = [
             // 'sintomas',
@@ -43,40 +45,41 @@ class BibliographyController extends CRUDController
         ];
         $this->keys = [
             'index' => [
-                'title'=>'Título',
-                'date'=>'Fecha'
+                'title' => 'Título',
+                'date' => 'Fecha'
             ],
             'user_id' => true,
             'create' => [
                 // ['key'=>'drive_info', 'label'=>'Información Drive', 'type'=>'text'],
-                ['key'=>'title', 'label'=>'Título', 'type'=>'text'],
-                ['key'=>'file', 'label'=>'Archivo', 'type'=>'file'],
-                ['key'=>'date', 'label'=>'Fecha', 'type'=>'date'],
-                ['key'=>'format', 'label'=>'Formato', 'type'=>'text'],
-                ['key'=>'identifier', 'label'=>'Identificador', 'type'=>'text'],
-                ['key'=>'language', 'label'=>'Idioma', 'type'=>'text'],
-                ['key'=>'description', 'label'=>'Descripción', 'type'=>'text'],
-                ['key'=>'coverage', 'label'=>'Coverage', 'type'=>'text'],
-                ['key'=>'relation', 'label'=>'Relación', 'type'=>'text'],
-                ['key'=>'source', 'label'=>'Fuente', 'type'=>'text'],
-                ['key'=>'subject', 'label'=>'Materia', 'type'=>'text'],
-                ['key'=>'type', 'label'=>'Tipo', 'type'=>'text'],
-                ['key'=>'contributor', 'label'=>'Contribuidor', 'type'=>'text'],
-                ['key'=>'creator', 'label'=>'Creador', 'type'=>'text'],
-                ['key'=>'publisher', 'label'=>'Publicador(?)', 'type'=>'text'],
-                ['key'=>'rights', 'label'=>'Derechos', 'type'=>'text'],
+                ['key' => 'title', 'label' => 'Título', 'type' => 'text'],
+                ['key' => 'file', 'label' => 'Archivo', 'type' => 'file'],
+                ['key' => 'date', 'label' => 'Fecha', 'type' => 'date'],
+                ['key' => 'format', 'label' => 'Formato', 'type' => 'text'],
+                ['key' => 'identifier', 'label' => 'Identificador', 'type' => 'text'],
+                ['key' => 'language', 'label' => 'Idioma', 'type' => 'text'],
+                ['key' => 'description', 'label' => 'Descripción', 'type' => 'text'],
+                ['key' => 'coverage', 'label' => 'Coverage', 'type' => 'text'],
+                ['key' => 'relation', 'label' => 'Relación', 'type' => 'text'],
+                ['key' => 'source', 'label' => 'Fuente', 'type' => 'text'],
+                ['key' => 'subject', 'label' => 'Materia', 'type' => 'text'],
+                ['key' => 'type', 'label' => 'Tipo', 'type' => 'text'],
+                ['key' => 'contributor', 'label' => 'Contribuidor', 'type' => 'text'],
+                ['key' => 'creator', 'label' => 'Creador', 'type' => 'text'],
+                ['key' => 'publisher', 'label' => 'Publicador(?)', 'type' => 'text'],
+                ['key' => 'rights', 'label' => 'Derechos', 'type' => 'text'],
             ]
         ];
     }
 
-    public function downloadBibliography(Request $request, Bibliography $bibliography) {
+    public function downloadBibliography(Request $request, Bibliography $bibliography)
+    {
         $files = (Storage::cloud()->allFiles());
         $filename = $bibliography->file;
         $correctId = 0;
         foreach ($files as $file) {
             $file_array = Storage::disk('google')->getAdapter()->getMetadata($file);
-            $correctId = $filename == $file_array['filename'].'.'.$file_array['extension'] ? $file_array['path'] : 0;
-            var_dump($filename, $file_array['filename'].'.'.$file_array['extension']);
+            $correctId = $filename == $file_array['filename'] . '.' . $file_array['extension'] ? $file_array['path'] : 0;
+            var_dump($filename, $file_array['filename'] . '.' . $file_array['extension']);
             if ($correctId) {
                 break;
             }

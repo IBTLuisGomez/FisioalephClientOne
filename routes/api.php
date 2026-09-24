@@ -37,6 +37,28 @@ Route::prefix('glosary_ap')->group(
     }
 );
 
+Route::prefix('terapeutic_plans')->group(
+    function () {
+        Route::post('', 'TerapeuticPlanController@apiStore');
+        Route::put('/{id}', 'TerapeuticPlanController@apiUpdate');
+    }
+);
+
+Route::prefix('terapeutic_plan_phases')->group(
+    function () {
+        Route::post('create', 'TerapeuticPlanController@apiStorePhase');
+        Route::post('{id}/images', 'TerapeuticPlanController@apiStorePhaseImage');
+        Route::put('{id}', 'TerapeuticPlanController@apiUpdatePhase');
+        Route::delete('{id}', 'TerapeuticPlanController@deletePhase');
+    }
+);
+
+Route::prefix('terapeutic_plan_phases_images')->group(
+    function () {
+        Route::delete('{id}', 'TerapeuticPlanController@apiDeletePhaseImage');
+    }
+);
+
 Route::prefix('home_physiotherapy_program')->group(
     function () {
         Route::get('search/{string}', 'HomePhysiotherapyProgramController@apiSearch');
@@ -72,14 +94,10 @@ Route::prefix('home_physiotherapy_program')->group(
     }
 );
 
-// Route::prefix('job_analysis')->group(
-//     function () {
-//         Route::get('/{id}', 'ApiClinicalHistoryController@show');
-//         Route::post('/create', 'ApiClinicalHistoryController@store');
-//     }
-// );
+Route::resource('job_analysis', 'JobAnalysisController');
 
 Route::prefix('decision')->group(
     function () {
-        Route::get('home_physiotherapy_program/{string}', 'DecisionController@apiHomePhysiotherapyProgramShow');    }
+        Route::get('home_physiotherapy_program/{string}', 'DecisionController@apiHomePhysiotherapyProgramShow');
+    }
 );

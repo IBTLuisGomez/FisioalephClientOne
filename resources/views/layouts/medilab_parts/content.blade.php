@@ -1,16 +1,28 @@
-@extends('layouts.basic')
+@if(false)
+  @extends('layouts.basic')
+@endif
+@section('partial_js')
+<style>
+    .pic img{
+        width: 200px;
+        height:200px;
+        object-fit: cover;
+    }
+</style>
+@endsection
 @section('content')
+@if(!Session::get('client_view'))
 <!-- ======= Hero Section ======= -->
-<section id="hero" class="d-none d-md-flex align-items-center">
+<section id="hero" class="d-none d-md-flex pt-10">
   <div class="container">
-    <h1>Bienvenido a RecuperaT</h1>
+    <h1 style="-webkit-text-stroke: 1px #83a3c1;">Bienvenido a RecuperaT</h1>
     {{-- <a href="#about" class="btn-get-started scrollto">Get Started</a> --}}
   </div>
 </section>
 
-<section id="hero" class="d-flex d-md-none align-items-center" style="height:50vh;">
+<section id="hero" class="d-flex d-md-none pt-10" style="height:50vh;">
   <div class="container">
-    <h1>Bienvenido a RecuperaT</h1>
+    <h1 style="-webkit-text-stroke: 1px #83a3c1;">Bienvenido a RecuperaT</h1>
     {{-- <a href="#about" class="btn-get-started scrollto">Get Started</a> --}}
   </div>
 </section>
@@ -82,9 +94,9 @@
       <div class="container-fluid">
 
         <div class="row text-center">
-          <img src="/medilab/assets/img/mainpageimage.jpg" class="d-block d-lg-none" alt="" style="width: 100%; height: auto;">
+          <img src="/medilab/assets/img/mainpagemassage.jpg" class="d-block d-lg-none" alt="" style="width: 100%; height: auto;">
           <div class="col-6 d-none d-lg-block">
-            <img src="/medilab/assets/img/mainpageimage.jpg" class="d-none d-md-block ml-auto mr-auto" style="width: 100%; height: auto;" alt="">
+            <img src="/medilab/assets/img/mainpagemassage.jpg" class="d-none d-md-block ml-auto mr-auto" style="width: 100%; height: auto;" alt="">
           </div>
           {{-- <div class="col-xl-5 col-lg-6 video-box d-flex justify-content-center align-items-stretch">
             <a href="https://www.youtube.com/watch?v=jDDaplaOz7Q" class="venobox play-btn mb-4" data-vbtype="video" data-autoplay="true"></a>
@@ -170,7 +182,7 @@
           <p>Nuestro centros cuentan con:</p>
         </div>
         <div class="section-title">
-          <h2>Centro de Fisioterapia Valle Imperial</h2>
+          <h2>Clínica de Fisioterapia Valle Imperial</h2>
         </div>
         <div class="row">
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
@@ -208,12 +220,12 @@
           </div>
         </div>
         <div class="section-title mt-2">
-          <h2>Centro de Fisioterapia T-Center</h2>
+          <h2>Clínica de Fisioterapia Plaza Paseo Sendas</h2>
         </div>
         <div class="row">
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
             <div class="icon-box" style="width:100%; text-align:center">
-              <div style="background: url(/medilab/assets/img/deportivo_exterior.jpeg);
+              <div style="background: url(/medilab/assets/img/sendas_exterior.jpeg);
               background-repeat: no-repeat;
               background-size: cover;
               background-position: center, center;
@@ -224,7 +236,7 @@
 
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
             <div class="icon-box" style="width:100%">
-              <div style="background: url(/medilab/assets/img/deportivo_consultorio.jpeg);
+              <div style="background: url(/medilab/assets/img/sendas_consultorio.jpeg);
               background-repeat: no-repeat;
               background-size: cover;
               background-position: center, center;
@@ -235,13 +247,13 @@
 
           <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
             <div class="icon-box" style="width:100%">
-              <div style="background: url(/medilab/assets/img/deportivo_recepcion.jpeg);
+              <div style="background: url(/medilab/assets/img/sendas_equipo.jpeg);
               background-repeat: no-repeat;
               background-size: cover;
               display: inline-block;
               background-position: center, center;
               height:200px; width:100%"></div>
-              <h4><a href="">Gimnasio</a></h4>
+              <h4><a href="">Equipo</a></h4>
             </div>
           </div>
         </div>
@@ -252,7 +264,7 @@
         <!-- ======= Doctors Section ======= -->
         <section id="colaborators" class="doctors">
           <div class="container">
-    
+
             <div class="section-title">
               <h2>Colaboradores</h2>
             </div>
@@ -277,7 +289,7 @@
 
               <div class="col-lg-6">
                 <div class="member d-flex align-items-start">
-                  <div class="pic"><img src="/medilab/assets/img/personal/licrocio.png"  class="img-fluid" alt=""></div>
+                  <div class="pic"><img src="/medilab/assets/img/personal/v2/rocio.jpeg"  class="img-fluid" alt=""></div>
                   <div class="member-info">
                     <h4>Lic. María Rocío Elizabeth Mendoza Gómez</h4>
                     <span>Licenciada en Terapia física</span>
@@ -311,7 +323,7 @@
 
               <div class="col-lg-6">
                 <div class="member d-flex align-items-start">
-                  <div class="pic"><img src="/medilab/assets/img/personal/licadolfo.jpg" class="img-fluid" alt=""></div>
+                  <div class="pic"><img src="/medilab/assets/img/personal/v2/adolfo.jpeg" class="img-fluid" alt=""></div>
                   <div class="member-info">
                     <h4>Lic. Adolfo Corona Cázares</h4>
                     <span>Licenciado en Terapia física</span>
@@ -327,7 +339,7 @@
               </div>
 
             </div>
-    
+
           </div>
         </section><!-- End Doctors Section -->
 
@@ -791,4 +803,5 @@
     </section><!-- End Contact Section --> --}}
 
   </main><!-- End #main -->
+@endif
 @endsection

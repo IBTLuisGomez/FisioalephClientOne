@@ -10,16 +10,19 @@
         max-height: 200px;
         overflow-y: auto;
         overflow-x: hidden;
-        padding-right: 20px;
-    } 
+        padding-right: 250px;
+    }
 
 </style>
 @endpush
 @push('javascript')
 @endpush
 @include('menus.sidebar_protocolos');
-<div class="container note_container">	
-	@include('reports.row_print_report')
+@include('menus.sidebar_home_physiotherapy_programs');
+@include('menus.sidebar_therapeutic_plans');
+@include('menus.sidebar_diagnosis_plans');
+<div class="container note_container">
+	@include('reports.row_print_report', ['show_created_at' => true, 'hideImage' => true])
 	<div class="row">
 		<div class="col-xl-12">
 			@if (session('modifiedSuccess'))
@@ -41,6 +44,7 @@
 	@include('clinical_histories.phisiotherapy_sections.evolution')
 	@include('clinical_histories.phisiotherapy_sections.vital_signs')
 	@include('clinical_histories.phisiotherapy_sections.antecedents_no_patological')
+	@include('clinical_histories.phisiotherapy_sections.antecedents')
 	@include('clinical_histories.phisiotherapy_sections.antecedents_familial')
 	@include('clinical_histories.phisiotherapy_sections.valorations_postural')
 	@include('clinical_histories.phisiotherapy_sections.valorations_exploración_muscular')
@@ -65,12 +69,14 @@
 			<input type="file" class="form-controller" name="file" id="file">
 			<button id="addFile" type="button" class="btn btn-primary">Agregar</button>
 			<ul>
-			@foreach($files as $file)
-				<li>
-					<a href="/historia/download_file/{{$file['path']}}">{{$file['name']}}</a>
-					<button class="btn btn-danger delete_file" type="button" file_path="{{$file['path']}}">Eliminar</button>
-				</li>
-				@endforeach
+            @if(!empty($files))
+                @foreach($files as $file)
+                    <li>
+                        <a href="/historia/download_file/{{$file['path']}}/{{$file['name']}}">{{$file['name']}}</a>
+                        <button class="btn btn-danger delete_file" type="button" file_path="{{$file['path']}}">Eliminar</button>
+                    </li>
+                @endforeach
+            @endif
 			</ul>
 			<script>
 				$(() => {
@@ -147,7 +153,9 @@
 	<div class="row">
 		<div class="col-xl-12">
 			<br>
-			{{Form::submit('Aceptar',['class'=>'btn btn-primary'])}}
+			@if(Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'medical_office_session_clinical_history.create')->count())
+				{{Form::submit('Aceptar',['class'=>'btn btn-primary'])}}
+			@endif
 			<a href="{{route('pacientes.index')}}" class="btn btn-light">Atras</a>
 		</div>
 	</div>

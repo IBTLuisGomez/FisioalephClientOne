@@ -1,4 +1,6 @@
-@extends('layouts.basic')
+@if (empty($client_view))
+  @extends('layouts.basic')
+@endif
 @section('content')
 
 
@@ -11,7 +13,7 @@
 			'Cáncer: ' => 'Enfermedad en la que células anómalas se dividen sin control y destruyen los tejidos corporales',
 			'Enfermedades reumatológicas'=>'Artritis, Osteoporosis',
 			'Cirugías:'=>
-			'Cualquier intervención quirúrgica realizada', 
+			'Cualquier intervención quirúrgica realizada',
 			'Hipertensión: ' =>
 			'Afección en la que la presión de la sangre hacia las paredes de la arteria es demasiado alta.',
 			'Fracturas:' =>
@@ -19,7 +21,7 @@
 			'Esguinces:' =>
 			'Estiramiento o rasgadura de los ligamentos,',
 			'Afecciones de la columna:'=>
-			'Anomalías en la columna vertebral' 
+			'Anomalías en la columna vertebral'
 		],
 		'Estado de la piel' => [
 			'Textura:'=>
@@ -38,13 +40,13 @@
 			'Tipo de intervención:'=>
 			'Nombre de la cirugía ',
 			'Tiempo de reposo post operatorio:'=>
-			'Tiempo de descanso después de la cirugía', 
+			'Tiempo de descanso después de la cirugía',
 			'Uso de férula-ortesis- prótesis:'=>
 			'Las indicadas por el medico (pre o post operatorias)',
 			'Indicaciones medicas:'=>
 			'Estas nos dirán como progresar con el paciente.',
 			'Contraindicaciones absolutas:'=>
-			'Movimientos o medios físicos prohibidos', 
+			'Movimientos o medios físicos prohibidos',
 			'Contraindicaciones relativas:'=>
 			'Se debe tener precaución, pero no están prohibidas.'
 		],
@@ -64,12 +66,12 @@
 			'Solo si tocas las estructuras dañadas',
 			'En movimiento:'=>
 			'Se presenta la molestia si realizas algún movimiento',
-			'Localización:'=>	
+			'Localización:'=>
 			'Segmento, dermatoma, proximal o distal',
 			'Intensidad:'=>
 			'En escala de EVA , Del 1-10 que tan doloroso es.',
 			'Duración:'=>'Agudo o crónico',
-			'Frecuencia:'=>'Continuo , Ocasional, Intermitente, Periódico', 
+			'Frecuencia:'=>'Continuo , Ocasional, Intermitente, Periódico',
 			'Origen:'=>
 			'Respiratorio, vascular, respiratorio, osteomuscular.',
 			'Parestesias:'=>
@@ -115,7 +117,7 @@
 			'Alteraciones en el tono:'=>
 			'Hipotonía, hipertonía, espasticidad, rigidez.',
 			'Posturas viciosas:'=>
-			'Alteraciones posturales, 
+			'Alteraciones posturales,
 						Por ejemplo, la hiperlordosis',
 			'Desequilibrios musculares:'=>
 			'Discordancia de tono muscular, Potenciar músculos fásicos y relajar los tónicos.',
@@ -133,13 +135,13 @@
 			'Semana que se inicia el ejercicio propioceptivo'=>
 			'Planificación de ejercicios de estabilidad y equilibrio que depende de la semana o fase de la fisioterapia en que vaya el paciente',
 			'Semana que se inicia la marcha'=>
-			'Comenzar con la reducación de la marcha, 
+			'Comenzar con la reducación de la marcha,
 						(basados en el caso clinico) y que depende de la semana o fase de la fisioterapia en que vaya el paciente',
 			'Semana de agente físico'=>
-'			Dar prioridad a eliminar el dolor después progresar 
+'			Dar prioridad a eliminar el dolor después progresar
 			Tipos de agentes físicos ideales para el paciente.
 			Que depende de la semana o fase de la fisioterapia en que vaya el paciente',
-			'Días recomendados para asistir a Fisioterapia'=> 
+			'Días recomendados para asistir a Fisioterapia'=>
 			'Esto dependerá de la intensidad y frecuencia del dolor y tambien dependera de la semana o fase de la fisioterapia en que vaya el paciente'
 
 		]
@@ -156,14 +158,15 @@
         overflow-y: auto;
         overflow-x: hidden;
         padding-right: 20px;
-    } 
+    }
 </style>
 @endpush
 @push('javascript')
 @endpush
 @include('menus.sidebar_protocolos');
+{{Form::model($model,['route'=>['historia.store',$patient_id]])}}
 <div class="container note_container">
-	@include('reports.row_print_report')
+	@include('reports.row_print_report', ['hideImage' => true])
 	<div class="row">
 		<div class="col-xl-12">
 			@if (session('modifiedSuccess'))
@@ -182,7 +185,7 @@
 
 	<div class="row">
 		<script type="text/javascript">
-		
+
 		</script>
 		@foreach($sections as $s_name => $section)
 			<div class="col-lg-12">
@@ -196,12 +199,17 @@
 								'S_order'=>(++$count),
 								'explanation'=>$element,
 								'default'=>($valorations)?
-								$valorations->where('section','valoration_laboral_hand'):
+								$valorations->where('section','valoration_orthopedy'):
 								[]
 								])
 				</div>
 			@endforeach
 		@endforeach
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        {{Form::submit('Aceptar',['class'=>'btn btn-primary'])}}
+    </div>
 </div>
 {{Form::close()}}
 @endsection

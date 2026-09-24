@@ -30,31 +30,16 @@
 		<strong>{{$segmento}}</strong>
 	</div>
 		@foreach($modifiers as $modifier)
-		<div class="col-lg-4">
-			{{Form::label(str_replace(' ','_',$segmento).str_replace(' ','_',$modifier)."[$S_order][json_values]", $modifier)}}
-			@if(isset($default))
-				@if($default==null || !$default->count())
-					{{Form::text(str_replace(' ','_',$segmento).str_replace(' ','_',$modifier)."[$S_order][json_values]",null,['class'=>'form-control'])}}
-				@else
-						@php
-							$already_created=false;
-						@endphp
-					@foreach($default as $key=>$value)
-						@if($value->name==$S_label && $value->section==str_replace(' ','_',$segmento).str_replace(' ','_',$modifier))
-							@php
-								$already_created=true;
-							@endphp
-							{{Form::text(str_replace(' ','_',$segmento).str_replace(' ','_',$modifier)."[$S_order][json_values]",$value->json_values,['class'=>'form-control'])}}
-						@endif
-					@endforeach
-					@if(!$already_created)
-						{{Form::text(str_replace(' ','_',$segmento).str_replace(' ','_',$modifier)."[$S_order][json_values]",null,['class'=>'form-control'])}}
-					@endif
-				@endif
-			@else
-				{{Form::text(str_replace(' ','_',$segmento).str_replace(' ','_',$modifier)."[$S_order][json_values]",null,['class'=>'form-control'])}}
-			@endif
-		</div>
+        <div class="col-lg-12">
+            @include('clinical_histories.valoration_row',[
+                'name'=>'valoration_postural_'.str_replace(' ','_',$segmento).str_replace(' ','_',$modifier).str_replace(' ','_',$vista['Vista']),
+                'S_label'=>$modifier,
+                'S_order'=>(++$count),
+                'default'=>($valorations)?
+                $valorations->where('section', 'valoration_postural_'.str_replace(' ','_',$segmento).str_replace(' ','_',$modifier).str_replace(' ','_',$vista['Vista'])):
+                []
+                ])
+        </div>
 		@endforeach
 	@endforeach
 @endforeach

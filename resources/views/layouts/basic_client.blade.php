@@ -85,77 +85,15 @@
   <header id="header" class="">
     <div class="container flex-wrap d-flex align-items-center">
       <nav class="nav-menu d-none d-lg-block">
-        <ul style = "width:100%; flex-direction: row; flex-wrap:wrap">
-          <li class="nav-item">
-          </li>
-        </ul>
         <ul>
           <li>
-            @if(Auth::user()->admin)
-            <li class="drop-down"><a href="">Administración</a>
-              <ul>
-                <li><a href="{{route('users.index')}}">Perfil de Usuarios</a></li>
-                <li><a href="{{route('information.index')}}">Preguntas</a></li>
-                <li><a href="{{route('orders.index')}}">Órdenes</a></li>
-                <!-- <li><a href="#">Editar Página de Inicio</a></li> -->
-                <li><a href="{{route('ofertas.index')}}">Promociones</a></li>
-                <li><a href="{{action('ProductController@index', ['unclassified'=>true])}}">(Tienda) Productos sin categoría</a></li>
-                <li><a href="{{action('AppoinmentController@index')}}">Citas agendadas</a></li>
-                <li><a href="{{route('clinics.index')}}">Centros</a></li>
-                <li><a href="{{route('product_categories.index')}}">Categorias de Productos y Servicios</a></li>
-                <li><a href="{{route('dspace_metadata.create')}}">Carga de metadatos</a></li>
-              </ul>
+            <li class=""> <a class="nav-link" style="cursor: pointer;" href="{{route('pacientes.index')}}">Consulta</a></li>
+            <li class=""><a href="{{route('protocolos_fisioterapia.index')}}">Protocolos</a></li>
+            <li class=""><a href="{{route('diagnosis_plan.index')}}">Pruebas y medidas funcionales</a></li>
+            <li class=""><a href="{{route('terapeutic_plan.index')}}">Planes Terapéuticos</a></li>
+            <li class=""><a href="{{route('home_physiotherapy_program.index')}}">Programas Fisioterapéuticos en Casa</a></li>
             </li>
-            @endif
-            <li class="drop-down"><a href="#">Fisioterapia</a>
-              <ul>
-                <li class="nav-item nav-right">
-                  @if(
-                    Auth::user()->rol->id == 1 ||
-                    Auth::user()->permissions->where('name', 'physiotherapyOffice.see')->count()
-                  )
-                    <a class="nav-link" style="cursor: pointer;" href="{{route('pacientes.index')}}">Consulta</a>
-                  @endif
-                  @if(
-                    Auth::user()->rol->id == 1 ||
-                    Auth::user()->permissions->where('name', 'physiotherapyProtocols.see')->count()
-                  )
-                    <li> <a href="{{route('protocolos_fisioterapia.index')}}">Protocolos</a></li>
-                  @endif
-                  @if(
-                    Auth::user()->rol->id == 1 ||
-                    Auth::user()->permissions->where('name', 'physiotherapyTests.see')->count()
-                  )
-                  <li> <a href="{{route('diagnosis_plan.index')}}">Pruebas y medidas funcionales</a></li>
-                  @endif
-                  @if(
-                    Auth::user()->rol->id == 1 ||
-                    Auth::user()->permissions->where('name', 'physiotherapyTherapeuticPlan.see')->count()
-                  )
-                  <li> <a href="{{route('terapeutic_plan.index')}}">Planes Terapéuticos</a></li>
-                  @endif
-                  @if(
-                    Auth::user()->rol->id == 1 ||
-                    Auth::user()->permissions->where('name', 'physiotherapyHomePhysitherapyProgram.see')->count()
-                  )
-                  <li> <a href="{{route('home_physiotherapy_program.index')}}">Programas Fisioterapéuticos en Casa</a></li> 
-                  @endif
-                  @if(
-                    Auth::user()->rol->id == 1 ||
-                    Auth::user()->permissions->where('name', 'physiotherapyCie10.see')->count()
-                  )
-                  <li><a href="{{route('cie10.index')}}">Catálogo CIE10</a></li>
-                  @endif
-                  @if(
-                    Auth::user()->rol->id == 1 ||
-                    Auth::user()->permissions->where('name', 'physiotherapyCie9MC.see')->count()
-                  )
-                  <li><a href="{{route('cie9_mc.index')}}">Catálogo CIE9-CM</a></li>
-                  @endif
-                </li>
-              </ul>
-            </li>
-            <li class="drop-down"><a href="#">Fisioterapia Laboral</a>
+            {{-- <li class="drop-down"><a href="#">Fisioterapia Laboral</a>
               <ul>
                 <li class="nav-item nav-right">
                   @if(
@@ -196,8 +134,7 @@
                   @endif
                 </li>
               </ul>
-            </li>
-            <li> <a href="https://moodle.fisioaleph.com/">Cursos</a></li>
+            </li> --}}
             <li> <a href="{{route('keywords.index')}}">Glosario de fisioterapia</a></li>
             <li> <a href="{{route('anato_physiology_glosary_item.index')}}">Diccionario de anatomía y fisiología</a></li>
             <li class="nav-item nav-right">
@@ -211,17 +148,9 @@
         </ul>
       </nav><!-- .nav-menu -->
       @if(Auth::user())
-      <div class="row">
-        <div class="col-lg-12 ml-4">
-          {{Form::open(['url'=>action('GlobalSearchController@index'),'method'=>'GET'])}}
-          <div class="input-group">
-            {{Form::text('keywords',null,['placeholder'=>'Búsqueda global','class'=>'form-control','style'=>'display:inline; width:80%;'])}}
-            <div class="input-group-append">
-              <button type="submit" class="btn btn-mod-primary" style="display: inline;">Busqueda Global <span><i class="fas fa-search"></i></span></input>
-              </div>
+        <div class="row">
+            <div class="col-lg-12 ml-4">
             </div>
-            {{Form::close()}}
-          </div>
         </div>
         @endif
       </div>

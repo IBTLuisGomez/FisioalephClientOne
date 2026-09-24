@@ -8,3 +8,9 @@
 <div>
   <strong>Centro: </strong> {{$appointment->clinic ? $appointment->clinic->name : 'No especificado'}}
 </div>
+<div>
+  <strong>Procedimiento: </strong> {{$appointment->product ? $appointment->product->name : 'No especificado'}}
+</div>
+<div>
+  <strong>Teléfono del paciente: </strong> {{$appointment->telephone ?? 'No especificado'}}
+</div>

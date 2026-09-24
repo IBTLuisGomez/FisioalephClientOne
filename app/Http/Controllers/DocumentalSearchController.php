@@ -27,6 +27,8 @@ class DocumentalSearchController extends Controller
                 }
                 return false;
             });
+        } else {
+            $results = [];
         }
         return view('layouts.fisioaleph.documents_search')->with('resultsArray', $results);
     }

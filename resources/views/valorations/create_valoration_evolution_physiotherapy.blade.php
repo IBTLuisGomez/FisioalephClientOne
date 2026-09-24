@@ -48,7 +48,7 @@
             <div class="col-lg-6">
                     @include('clinical_histories.valoration_row',[
                     'name'=>'physiotherapy_valoration_subjective',
-                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_notas')->count()) ? false : true,
+                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'medical_office_evolution.edit')->count()) ? false : true,
                     'S_label'=>'Subjetivo',
                     'rows'=>'3',
                     'textarea'=>true,
@@ -58,7 +58,7 @@
             </div>
             <div class="col-lg-6">
                     @include('clinical_histories.valoration_row',[
-                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_notas')->count()) ? false : true,
+                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'medical_office_evolution.edit')->count()) ? false : true,
                     'name'=>'physiotherapy_valoration_objective',
                     'S_label'=>'Objetivo',
                     'rows'=>'3',
@@ -69,7 +69,7 @@
             </div>  
             <div class="col-lg-6">
                     @include('clinical_histories.valoration_row',[
-                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_notas')->count()) ? false : true,
+                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'medical_office_evolution.edit')->count()) ? false : true,
                     'name'=>'physiotherapy_valoration_anlysis',
                     'S_label'=>'Analisis',
                     'rows'=>'3',
@@ -80,7 +80,7 @@
             </div>  
             <div class="col-lg-6">
                     @include('clinical_histories.valoration_row',[
-                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_notas')->count()) ? false : true,
+                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'medical_office_evolution.edit')->count()) ? false : true,
                     'name'=>'physiotherapy_valoration_plans',
                     'S_label'=>'Planes',
                     'rows'=>'3',
@@ -92,7 +92,7 @@
 
             <div class="col-lg-3">
                     @include('clinical_histories.valoration_row',[
-                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_notas')->count()) ? false : true,
+                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'medical_office_evolution.edit')->count()) ? false : true,
                     'name'=>'physiotherapy_valoration_vs_ta',
                     'S_label'=>'T/A',
                     'rows'=>'3',
@@ -102,7 +102,7 @@
             </div>  
             <div class="col-lg-3">
                     @include('clinical_histories.valoration_row',[
-                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_notas')->count()) ? false : true,
+                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'medical_office_evolution.edit')->count()) ? false : true,
                     'name'=>'physiotherapy_valoration_temperature',
                     'S_label'=>'TEMP',
                     'S_order'=>(++$count),
@@ -111,7 +111,7 @@
             </div>  
             <div class="col-lg-3">
                     @include('clinical_histories.valoration_row',[
-                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_notas')->count()) ? false : true,
+                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'medical_office_evolution.edit')->count()) ? false : true,
                     'name'=>'physiotherapy_valoration_fca',
                     'S_label'=>'FCA',
                     'S_order'=>(++$count),
@@ -120,16 +120,18 @@
             </div>  
             <div class="col-lg-3">
                     @include('clinical_histories.valoration_row',[
-                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_notas')->count()) ? false : true,
+                    'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'medical_office_evolution.edit')->count()) ? false : true,
                     'name'=>'physiotherapy_valoration_fre',
                     'S_label'=>'FRE',
                     'S_order'=>(++$count),
                 //     'default'=>(($valorations)?$valorations:null)
                     ])
             </div>   
+            @if(Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'medical_office_evolution.create')->count())
             <div class="col-lg-12">
-                {{Form::submit('Agregar Valoración', ['class'=>'btn btn-info', 'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapyOffice.edit_notas')->count()) ? null : true,                ])}}
+                {{Form::submit('Agregar Valoración', ['class'=>'btn btn-info', 'disabled' => (Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'medical_office_evolution.edit')->count()) ? null : true,                ])}}
             </div>          
+            @endif
     	</div>
     </div> 
 

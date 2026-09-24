@@ -1,7 +1,9 @@
 @php
 	$count=0;
 @endphp
-@extends('layouts.basic')
+@if (empty($client_view))
+  @extends('layouts.basic')
+@endif
 @section('content')
 {{Form::model($model,['route'=>['historia.store',$patient_id]])}}
 @if($model)
@@ -14,7 +16,7 @@
 	            overflow-y: auto;
 	            overflow-x: hidden;
 	            padding-right: 20px;
-	        } 
+	        }
 	input[type=radio], input[type=checkbox] {
 	    border: 0px !important;
 	    width: 20px !important;
@@ -48,7 +50,7 @@
 			    $(this).autocomplete("search");
 			});
 		});
-		
+
 	});
 </script>
 @endpush
@@ -175,6 +177,39 @@
 	</div>
 	<hr>
 	@include('valorations.laboral_physiotherapy.create_valoration_laboral_shoulder_contractures')
+    <div class="row">
+		<div class="col-xl-12">
+			<h3>Factores de riesgo laboral</h3>
+		</div>
+		<div class="col-xl-6">
+			@include('clinical_histories.valoration_row',[
+			'name'=>'valoration_laboral_shoulder_contusions',
+			'S_label'=>'Golpes, contusiones con objetos, superficies u otras personas',
+			'S_order'=>(++$count),
+			'default'=>(!empty($valorations)?$valorations:null),])
+		</div>
+		<div class="col-xl-6">
+			@include('clinical_histories.valoration_row',[
+			'name'=>'valoration_laboral_shoulder_postures_forced',
+			'S_label'=>'Posturas forzadas y prolongadas',
+			'S_order'=>(++$count),
+			'default'=>(!empty($valorations)?$valorations:null),])
+		</div>
+		<div class="col-xl-12">
+			@include('clinical_histories.valoration_row',[
+			'name'=>'valoration_laboral_shoulder_laboral_hygene',
+			'S_label'=>'Medidas de higiene laboral',
+			'S_order'=>(++$count),
+			'default'=>(!empty($valorations)?$valorations:null),])
+		</div>
+		<div class="col-xl-12">
+			@include('clinical_histories.valoration_row',[
+			'name'=>'valoration_laboral_shoulder_treatmen_protocol',
+			'S_label'=>'Protocolo de tratamiento',
+			'S_order'=>(++$count),
+			'default'=>(!empty($valorations)?$valorations:null),])
+		</div>
+	</div>
 	{{Form::submit('Aceptar',['class'=>'btn btn-primary'])}}
 {{Form::close()}}
 @endsection

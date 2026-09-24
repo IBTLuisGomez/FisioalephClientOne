@@ -1,7 +1,9 @@
 @php
 	$count=0;
 @endphp
-@extends('layouts.basic')
+@if (empty($client_view))
+  @extends('layouts.basic')
+@endif
 @section('content')
 {{Form::model($model,['route'=>['historia.store',$patient_id]])}}
 @if($model)
@@ -14,7 +16,7 @@
 	            overflow-y: auto;
 	            overflow-x: hidden;
 	            padding-right: 20px;
-	        } 
+	        }
 	input[type=radio], input[type=checkbox] {
 	    border: 0px !important;
 	    width: 20px !important;
@@ -48,7 +50,7 @@
 			    $(this).autocomplete("search");
 			});
 		});
-		
+
 	});
 </script>
 @endpush
@@ -254,6 +256,26 @@
 					$valorations->where('section','valoration_laboral_cervical_column_tension_work'):
 					[]
 					])
+		</div>
+        <div class="col-xl-12">
+			@include('clinical_histories.valoration_row',			[
+						'name'=>'valoration_laboral_cervical_laboral_higiene',
+						'S_label'=>'Medidas de higiene laboral',
+						'S_order'=>(++$count),
+						'default'=>($valorations)?
+						$valorations->where('section','valoration_laboral_cervical_laboral_higiene'):
+						[]
+						])
+		</div>
+        <div class="col-xl-12">
+			@include('clinical_histories.valoration_row',			[
+						'name'=>'valoration_laboral_cervical_treatment_protocol',
+						'S_label'=>'Protocolo de tratamiento',
+						'S_order'=>(++$count),
+						'default'=>($valorations)?
+						$valorations->where('section','valoration_laboral_cervical_treatment_protocol'):
+						[]
+						])
 		</div>
 		</div>
 		{{Form::submit('Aceptar',['class'=>'btn btn-primary'])}}

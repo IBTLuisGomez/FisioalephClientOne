@@ -37,13 +37,13 @@
 
 <div class="container">
         <div class="row">
-					<h2>Evluación Nórdico</h2>
+					<h2>Evaluación Nórdiko</h2>
 				</div>
         <div class="row">
             <div class="col-lg-5">
                 {{Form::open(['url'=>action('PatientController@index'),'method'=>'GET'])}}
 										{{Form::hidden('laboral', '5')}}
-                    {{Form::text('search',null,['placeholder'=>'Nombre del paciente','class'=>'form-control','style'=>'display:inline; width:80%;'])}}
+                    {{Form::text('search',null,['placeholder'=>'Nombre del trabajador','class'=>'form-control','style'=>'display:inline; width:80%;'])}}
                     <button type="submit" class="btn btn-primary" style="display: inline;"><span><i class="fas fa-search"></i></span></input>
                 {{Form::close()}}
             </div>
@@ -55,9 +55,6 @@
 			    </div>
 		</div>
 			@endif
-		<div class="row">
-			<a class="btn btn-primary" href="{{route('pacientes.create')}}">Añadir Paciente</a>
-		</div>
 		<div class="row">
 			<div class="col-lg-12">
 				<table>

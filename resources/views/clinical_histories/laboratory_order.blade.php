@@ -1,7 +1,9 @@
-@extends('layouts.basic')
+@if (empty($client_view))
+  @extends('layouts.basic')
+@endif
 @push('javascript')
 @php
-	
+
 @endphp
 <script type="text/javascript">
 	var array_decision = [];
@@ -14,7 +16,7 @@
 		let last_element = (array_decision[array_decision.length - 1]);
 		window.active_decision = array_decision.length - 1;
 		$("#decision_text").html(last_element.text);
-		$("#responsible_text").html(last_element.user.name);
+		$("#responsible_text").html(`{{$patient->responsible->name}}`);
 	});
 	function changeDecisionText(previous){
 		if(previous && active_decision >= 1){
@@ -41,7 +43,7 @@
 	        </button>
 	      </div>
 	      <div class="modal-body note_container">
-			  @include('reports.row_print_report', ['hide_header' => true])
+			  @include('reports.row_print_report', ['hide_header' => true, 'hide_header' => true])
 			  <label for="responsible_text" class="no_print"><strong>Responsable:</strong></label>
 			  <p id="responsible_text" class="no_print"></p>
 	      	<label for="decision_text"><strong>Contenido:</strong></label>

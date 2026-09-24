@@ -1,4 +1,6 @@
-@extends('layouts.basic')
+@if (empty($client_view))
+  @extends('layouts.basic')
+@endif
 @push('javascript')
 @if(!empty($stop_extend))
 <script type="text/javascript">
@@ -38,7 +40,7 @@
 		$("#select_product_category_id").trigger("change");
 		$("#btn_enable_switch_files").click(enableFile);
     $(".btn_print").attr('view', 1);
-    $(".btn_print").trigger('click');
+    $("#btn_print").trigger('click');
 	});
 	function unsetImg(event){
 		event.preventDefault();
@@ -95,7 +97,7 @@
 @endpush
 @section('content')
 	@if(!empty($O_model))
-		@if($O_model->is_sealed)
+        @if($O_model->is_sealed && Auth::user()->rol->id != 1)
 		<script>
 			$(() => {
 				$("form.actual_form input:not(.new-version),textarea").attr('disabled', true)
@@ -241,10 +243,10 @@
 					@endphp
 					<div class="col-lg-12">
 						@if(!empty($value['label']))
-							{{Form::label($value['key'],$value['label'])}}
+                            {{Form::label($value['key'],$value['label'], ['class' => !empty($value['class']) ? $value['class'] : ''])}}
 						@endif
 						@php $type=$value['type'] @endphp
-						<textarea id="{{$value['key']}}" name="{{$value['key']}}" class="form-control" rows="{{!empty($value['rows'])?$value['rows']:1}}">{{!empty($O_model)?$O_model->$this_attribute:''}}</textarea>
+						<textarea id="{{$value['key']}}" name="{{$value['key']}}" class="form-control{{!empty($value['class']) ? " " . $value['class']  : ""}}" rows="{{!empty($value['rows'])?$value['rows']:1}}">{{!empty($O_model)?$O_model->$this_attribute:''}}</textarea>
 					</div>
 				@elseif($value['type'] == 'div')
 					<div class="col-lg-12" id = "{{$value['key']}}">

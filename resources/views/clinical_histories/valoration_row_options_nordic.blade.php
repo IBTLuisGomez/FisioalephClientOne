@@ -1,7 +1,9 @@
 <div class="d-inline-flex">
-				<div class="mt-auto mb-auto" style="font-weight: bold; width: 100px">
-{{Form::label($S_label)}}
-				</div>
+<div class="mt-auto mb-auto" style="font-weight: bold; width: 100px">
+    @if(!isset($label_show) || $label_show)
+        {{Form::label($S_label)}}
+    @endif
+</div>
 {{Form::hidden($name."[$S_order][name]",$S_label)}}
 {{Form::hidden($name."[$S_order][cie10_id]",isset($ID_cie10)?$ID_cie10:null)}}
 {{Form::hidden($name."[$S_order][section]",isset($name)?$name:null)}}
@@ -18,7 +20,9 @@
 					@php continue; @endphp
 				@endif
 				{{Form::radio($name."[$S_order][json_values]",$key)}}
-				{{Form::label($name."[$S_order][json_values]",$option)}}
+                @if(!isset($radio_label_show) || $radio_label_show)
+				    {{Form::label($name."[$S_order][json_values]",$option)}}
+                @endif
 			@endforeach
 		@else
 			{{-- Hay default, tenemos que buscar que index es y darlo como true --}}
@@ -36,7 +40,9 @@
 							@continue
 						@endif
 								{{Form::radio($name."[$S_order][json_values]",$key,($key == $default->json_values)?true:false)}}
-								{{Form::label($name."[$S_order][json_values]",$option)}}
+								@if(!isset($radio_label_show) || $radio_label_show)
+                                    {{Form::label($name."[$S_order][json_values]",$option)}}
+                                @endif
 								@php $count_option++; @endphp
 						@endforeach
 				@endif
@@ -52,7 +58,9 @@
 						@else
 						{{Form::radio($name."[$S_order][json_values]",$key)}}
 					@endif
-					{{Form::label($name."[$S_order][json_values]",$option)}}
+					@if(!isset($radio_label_show) || $radio_label_show)
+                        {{Form::label($name."[$S_order][json_values]",$option)}}
+                    @endif
 				</div>
 				@endforeach
 			@endif
@@ -67,7 +75,9 @@
 					@else
 					{{Form::radio($name."[$S_order][json_values]",$key)}}
 				@endif
-				{{Form::label($name."[$S_order][json_values]",$option)}}
+				@if(!isset($radio_label_show) || $radio_label_show)
+				    {{Form::label($name."[$S_order][json_values]",$option)}}
+                @endif
 			@endforeach
 	@endif
 @else
@@ -86,8 +96,10 @@
 			}
 		@endphp
 		{{Form::checkbox($name."[$S_order][json_values][$key]", null, !empty($jsonDefault->$key) )}}
-		{{Form::label($name."[$S_order][json_values][$key]",$option)}}
-		@php $count_option++; @endphp
+        @if(!isset($radio_label_show) || $radio_label_show)
+            {{Form::label($name."[$S_order][json_values]",$option)}}
+        @endif
+    @php $count_option++; @endphp
 	@endforeach
 @endif
 			</div>

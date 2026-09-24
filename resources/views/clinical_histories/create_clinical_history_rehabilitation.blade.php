@@ -1,4 +1,6 @@
-@extends('layouts.basic')
+@if (empty($client_view))
+  @extends('layouts.basic')
+@endif
 @section('content')
 {{Form::model($model,['route'=>['historia.store',$patient_id],'id' =>'form_fisioterapia'])}}
 @if($model)
@@ -11,15 +13,66 @@
         overflow-y: auto;
         overflow-x: hidden;
         padding-right: 20px;
-    } 
+    }
 </style>
 @endpush
 @push('javascript')
+<script>
+    $(() => {
+        $(".delete_file").click((event) => {
+            if (!confirm('Al eliminar un archivo, la página se va a refrescar, ¿desea continuar?')) return
+            const btn = $(event.target)
+            btn.attr('disabled', true)
+            file_path = btn.attr('file_path')
+            $.ajax({
+                    url : `/historia/remove_file/${file_path}`,
+                    type : 'DELETE',
+                    processData: false,  // tell jQuery not to process the data
+                    contentType: false,  // tell jQuery not to set contentType
+                    success : function(data) {
+                            alert('Elminado con éxito!');
+                            location.reload()
+                    },
+                    failure : function(data) {
+                            btn.attr('disabled', false)
+                            alert('Elminado con éxito!');
+                            location.reload()
+                    }
+                });
+        })
+        $("#addFile").click((event) => {
+            file = $("#file").prop('files')[0];
+            if (file){
+                if (!confirm('Al agregar un archivo, la página se va a refrescar, ¿desea continuar?')) return
+                $(event.target).attr("disabled", true)
+                console.log(file)
+                var formData = new FormData();
+                formData.append('file', file);
+                formData.append('patient_id', {{$patient_id}});
+                $.ajax({
+                    url : '/historia/add_file',
+                    type : 'POST',
+                    data : formData,
+                    processData: false,  // tell jQuery not to process the data
+                    contentType: false,  // tell jQuery not to set contentType
+                    success : function(data) {
+                            alert('Guardado con éxito!');
+                            location.reload()
+                    },
+                    failure: function () {
+                        $(event.target).attr("disabled", false)
+                    }
+                });
+
+            }
+        })
+    })
+</script>
 <script type="text/javascript">
 	$(function(){
 		$('#form_fisioterapia').on('keyup keypress', function(e) {
 		  var keyCode = e.keyCode || e.which;
-		  if (keyCode === 13) { 
+		  if (keyCode === 13) {
 		    e.preventDefault();
 		    return false;
 		  }
@@ -45,7 +98,7 @@
 			    $(this).autocomplete("search");
 			});
 		});
-		
+
 	});
 </script>
 @endpush
@@ -63,7 +116,12 @@
 			@endif
 		</div>
 	</div>
-	@include('reports.row_print_report')
+    @php
+        $resonsibleValoration = $valorations->where('name', 'like', 'Responsable')->first();
+        $responsibleId = $resonsibleValoration ? $resonsibleValoration->json_values : null;
+        $user = $responsibleId ? \App\User::find($responsibleId) : null;
+    @endphp
+	@include('reports.row_print_report', ['responsible' => $user ? $user->name : null, 'hideImage' => true])
 	<div class=row>
 		<div class="col-md-12">
 			<h2><strong>HISTORIA CLÍNICA DE REHABILITACIÓN</strong></h2>
@@ -79,7 +137,7 @@
 			'rows'=>'3',
 			'textarea'=>true,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 
 		<div class="col-md-12">
@@ -92,7 +150,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-4">
 			@include('clinical_histories.valoration_row',[
@@ -101,7 +159,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-4">
 			@include('clinical_histories.valoration_row',[
@@ -110,7 +168,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-4">
 			@include('clinical_histories.valoration_row',[
@@ -119,7 +177,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-4">
 			@include('clinical_histories.valoration_row',[
@@ -128,7 +186,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-4">
 			@include('clinical_histories.valoration_row',[
@@ -137,7 +195,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-4">
 			@include('clinical_histories.valoration_row',[
@@ -146,7 +204,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-4">
 			@include('clinical_histories.valoration_row',[
@@ -155,7 +213,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-4">
 			@include('clinical_histories.valoration_row',[
@@ -164,7 +222,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-12">
 			<strong>Antecedentes Personales Patológicos</strong>
@@ -176,7 +234,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-4">
 			@include('clinical_histories.valoration_row',[
@@ -185,7 +243,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-4">
 			@include('clinical_histories.valoration_row',[
@@ -194,7 +252,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-4">
 			@include('clinical_histories.valoration_row',[
@@ -203,7 +261,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-4">
 			@include('clinical_histories.valoration_row',[
@@ -212,7 +270,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-4">
 			@include('clinical_histories.valoration_row',[
@@ -221,7 +279,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-4">
 			@include('clinical_histories.valoration_row',[
@@ -230,7 +288,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-4">
 			@include('clinical_histories.valoration_row',[
@@ -239,7 +297,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<hr>
 		<div class="col-md-12">
@@ -249,7 +307,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 
 		<div class="col-md-12">
@@ -259,7 +317,7 @@
 			'rows'=>'2',
 			'textarea'=>true,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 
 		<div class="col-md-12">
@@ -269,7 +327,7 @@
 			'rows'=>'2',
 			'textarea'=>true,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 
 		<div class="col-md-12">
@@ -279,7 +337,7 @@
 			'rows'=>'2',
 			'textarea'=>true,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 
 		<div class="col-md-12">
@@ -293,7 +351,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-3">
 			@include('clinical_histories.valoration_row',[
@@ -302,7 +360,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-3">
 			@include('clinical_histories.valoration_row',[
@@ -311,7 +369,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-3">
 			@include('clinical_histories.valoration_row',[
@@ -320,7 +378,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<hr>
 
@@ -331,7 +389,7 @@
 			'rows'=>'3',
 			'textarea'=>true,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 
 		<div class="col-md-12">
@@ -341,7 +399,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-12">
 			@include('clinical_histories.valoration_row',[
@@ -350,7 +408,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-12">
 			@include('clinical_histories.valoration_row',[
@@ -359,7 +417,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-12">
 			<strong>Terapia Física</strong>
@@ -371,7 +429,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-10">
 			@include('clinical_histories.valoration_row',[
@@ -380,7 +438,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-10">
 			@include('clinical_histories.valoration_row',[
@@ -389,7 +447,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-md-10">
 			@include('clinical_histories.valoration_row',[
@@ -398,7 +456,7 @@
 			'rows'=>'3',
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 	</div>
 	<div class="row">
@@ -419,7 +477,7 @@
 			'rows'=>1,
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-lg-6">
 			<label></label>
@@ -429,7 +487,7 @@
 			'rows'=>1,
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-lg-6">
 			<label></label>
@@ -439,7 +497,7 @@
 			'rows'=>1,
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-lg-6">
 			<label></label>
@@ -449,7 +507,7 @@
 			'rows'=>1,
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-lg-6">
 			<label></label>
@@ -459,7 +517,7 @@
 			'rows'=>1,
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-lg-6">
 			<label></label>
@@ -469,7 +527,7 @@
 			'rows'=>1,
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-lg-6">
 			<label></label>
@@ -479,7 +537,7 @@
 			'rows'=>1,
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-lg-6">
 			<label></label>
@@ -489,7 +547,7 @@
 			'rows'=>1,
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-lg-6">
 			<label></label>
@@ -499,7 +557,7 @@
 			'rows'=>1,
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-lg-6">
 			<label></label>
@@ -509,7 +567,7 @@
 			'rows'=>1,
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-lg-6">
 			<label></label>
@@ -519,7 +577,7 @@
 			'rows'=>1,
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-lg-6">
 			<label></label>
@@ -529,7 +587,7 @@
 			'rows'=>1,
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-lg-6">
 			<label></label>
@@ -539,7 +597,7 @@
 			'rows'=>1,
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-lg-6">
 			<label></label>
@@ -549,7 +607,7 @@
 			'rows'=>1,
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-lg-6">
 			<label></label>
@@ -559,7 +617,7 @@
 			'rows'=>1,
 			'textarea'=>false,
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 	</div>
 	<div class="row">
@@ -567,6 +625,34 @@
 			<img src="/images/valoraciones/hc_rehabilitacion/last_body.png" class="img-fluid">
 		</div>
 	</div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h4><strong>Imágenes/Documentos</strong></h4>
+			<input type="file" class="form-controller" name="file" id="file">
+			<button id="addFile" type="button" class="btn btn-primary">Agregar</button>
+			<ul>
+            @if(!empty($files))
+                @foreach($files as $file)
+                    <li>
+                        <a href="/historia/download_file/{{$file['path']}}/{{$file['name']}}">{{$file['name']}}</a>
+                        <button class="btn btn-danger delete_file" type="button" file_path="{{$file['path']}}">Eliminar</button>
+                    </li>
+                @endforeach
+            @endif
+			</ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            @include('inputs.simple_select', ['value'=>[
+                    'key' => 'clinical_history_rehabilitation',
+                    'count' => $count,
+                    'label' => 'Responsable',
+                ],
+                'options' => $users,
+            ])
+        </div>
+    </div>
 	<div class="row">
 		<div class="col-md-12">
 			<br>

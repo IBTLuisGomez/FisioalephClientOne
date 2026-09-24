@@ -1,4 +1,6 @@
-@extends('layouts.basic')
+@if (empty($client_view))
+  @extends('layouts.basic')
+@endif
 @push('javascript')
 @if(!empty($O_model))
 	<script>
@@ -48,7 +50,7 @@
 	</script>
 @endif
 @stack('javascript')
-<script src="https://malsup.github.com/jquery.form.js"></script> 
+<script src="https://malsup.github.com/jquery.form.js"></script>
 <script type="text/javascript">
 	$(function(){
 		$("#product_img").change(readURL);
@@ -147,7 +149,7 @@
 					'background-image': image,
 					width: '200px',
 					height: '200px',
-					display: 'inline-block', 
+					display: 'inline-block',
 					'background-repeat': 'no-repeat',
 					'background-size': '100%',
 				})
@@ -258,7 +260,7 @@
 			div.append(hiddenPhasesActivities)
 			div.append(hiddenPhasesImages)
 			div.append(hiddenPhasesExternalLinks)
-			
+
       targetDiv.append(div)
       hiddenPhasesName
       orderExtras(targetDiv, names)
@@ -269,6 +271,12 @@
 	}
   function addExtra(e) {
     button = $(e.target)
+    //Validate
+    textPhasesProgression = button.parent().find('#phases_progresion').val()
+    if(textPhasesProgression == '') {
+      alert('Debe ingresar una progresión')
+      return
+    }
     targetDiv = $(button.attr('target'))
     div = $('<div></div>', {
       class:'col-lg-4'
@@ -281,7 +289,6 @@
     textPhasesInmovilization = button.parent().find('#inmovilization').val() || ''
     textPhasesPainControl = button.parent().find('#pain_control').val() || ''
     textPhasesMobility = button.parent().find('#mobility').val() || ''
-    textPhasesProgression = button.parent().find('#phases_progresion').val()
     textPhasesPhysicalModalities = button.parent().find('#phases_physical_modalities').val()
     textPhasesEjercicios = button.parent().find('#phases_exercises').val()
     textPhasesActivities = button.parent().find('#phases_functional_activities').val()
@@ -308,7 +315,7 @@
     div.append(h4Name)
     div.append(pGoals)
     div.append(images)
-			
+
     //hidden fields
     hiddenPhasesImages = $('<input></input>', {
       value: jsonTextImages,
@@ -435,7 +442,7 @@
 @endpush
 @section('content')
 	@if(!empty($O_model))
-	@if($O_model->is_sealed)
+	@if($O_model->is_sealed && Auth::user()->rol->id != 1)
 		<script>
 			$(() => {
 				$("form.actual_form input:not(.new-version),textarea").attr('disabled', true)
@@ -487,6 +494,9 @@
 		@endif
 		<div class="row mb-3">
 				@if($value['type'] == 'separator')
+                    @if ((!empty($value['onlyAdmin'])) && !(Auth::user()->rol->name=="admin"))
+                        @continue
+                    @endif
 					<div class="col-lg-12 mt-1">
 						<{{$value['tag']}} class="{{!empty($value['class']) ? $value['class'] : ''}}" no_count = {{!empty($value['no_count'])? 1 : 0}}>{{$value['label']}}</{{$value['tag']}}>
 						@if(!empty($value['link']) && !empty($value['link']['text']) && !empty($value['link']['href']))
@@ -575,7 +585,10 @@
 						'defult_values' => !empty($value['default'])?$value['default']:null
 					]
 					)
-				@elseif($value['type'] == 'textarea')
+				@elseif($value['type'] == 'textarea' && ((!empty($value['onlyAdmin']) && Auth::user()->rol->name=="admin")))
+                    @if ((!empty($value['onlyAdmin'])) && !(Auth::user()->rol->name=="admin"))
+                        @continue
+                    @endif
 					@php
 						$this_attribute = $value['key'];
 					@endphp
@@ -640,8 +653,8 @@
 						<p><strong>Signos de alarma:</strong> {{!empty($extra->alarm_signs) ? $extra->alarm_signs : ''}}</p>
 						<p><strong>Inmovilización:</strong> {{!empty($extra->inmovilization) ? $extra->inmovilization : ''}}</p>
 						<p><strong>Control del dolor:</strong> {{!empty($extra->pain_control) ? $extra->pain_control : ''}}</p>
-						<p><strong>Mobilidad</strong>:</strong> {{!empty($extra->mobility) ? $extra->mobility : ''}}</p>
-						<p><strong>Modalidaes físicas:</strong> {{!empty($extra->physical_modalities) ? $extra->physical_modalities : ''}}</p>
+						<p><strong>Movilidad</strong>:</strong> {{!empty($extra->mobility) ? $extra->mobility : ''}}</p>
+						<p><strong>Agentes físicos:</strong> {{!empty($extra->physical_modalities) ? $extra->physical_modalities : ''}}</p>
 						<p><strong>Ejercicios:</strong> {{!empty($extra->exercises) ? $extra->exercises : ''}}</p>
 						<p><strong>Criterios de progresión:</strong> {{!empty($extra->progression) ? $extra->progression : ''}}</p>
 						<p><strong>Imágenes:</strong></p>
@@ -659,7 +672,7 @@
 							{{-- 'background-image': image,
 							width: '200px',
 							height: '200px',
-							, 
+							,
 							'background-repeat': 'no-repeat',
 							'background-size': '100%', --}}
 						<p><strong>Enlaces externos:</strong> {{!empty($extra->external_links) ? $extra->external_links : ''}}</p>

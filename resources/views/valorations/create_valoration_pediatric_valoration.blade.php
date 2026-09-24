@@ -8,30 +8,30 @@ $reflejos = [
 			'Reflejo acústico facial',
 			'Moro',
 			'Reflejo de Rooting',
-			'Ojos de muñeca ',
-			'Reflejo marcha automática ',
+			'Ojos de muñeca',
+			'Reflejo marcha automática',
 			'Reflejo tónico-cervical',
-			'Reflejo expansión palmar ',
-			'Reflejo suprapúbico ',
-			'Reflejo de Babin ',
+			'Reflejo expansión palmar',
+			'Reflejo suprapúbico',
+			'Reflejo de Babin',
 		]
 	],
 	[
 		'edad' => '3-6 meses', 'parametros'=>
 		[
-			'Reflejo de succión ',
-			'Reflejo de enderezamiento ',
-			'Reflejo de Galant ',
+			'Reflejo de succión',
+			'Reflejo de enderezamiento',
+			'Reflejo de Galant',
 			'Reflejo acústico facial',
-			'Reflejo óptico facial ',
+			'Reflejo óptico facial',
 			'Reflejo defensivo sentado',
 		]
 	],
 	[
 		'edad' => '6-9 meses', 'parametros'=>
 		[
-			'Reflejo paracaídas ',
-			'Alpinista ',
+			'Reflejo paracaídas',
+			'Alpinista',
 		]
 	],
 	[
@@ -43,7 +43,7 @@ $reflejos = [
 	[
 		'edad' => '36-48 meses', 'parametros'=>
 		[
-			'Romberg ',
+			'Romberg',
 		]
 	],
 ];
@@ -52,11 +52,11 @@ $motricidad = [
 	[
 		'edad' => '1 meses', 'parametros'=>
 		[
-			'Sigue movimiento horizontal y vertical de objetos ',
+			'Sigue movimiento horizontal y vertical de objetos',
 			'Patea',
 			' Vigorosamene',
-			'Gira la cabeza hacia ambos lados ',
-			'Flexiona los brazos a los lados con puños cerrados ',
+			'Gira la cabeza hacia ambos lados',
+			'Flexiona los brazos a los lados con puños cerrados',
 			'Flexiona y abre las piernas a los lados y levanta los pies',
 			'Levanta la pelvis del suelo',
 		]
@@ -65,41 +65,41 @@ $motricidad = [
 		'edad' => '2 meses', 'parametros'=>
 		[
 			'Disminuye la fuerte flexión de las piernas',
-			'Se apoya brevemente en los antebrazos ',
+			'Se apoya brevemente en los antebrazos',
 		]
 	],
 	[
 		'edad' => '3 meses', 'parametros'=>
 		[
-			'Se apoya sobre codo y pelvis ',
-			'Levanta y gira la cabeza ',
-			'Sostiene objetos en manos ',
-			'Se lleva objetos a la boca ',
-			'Levanta la cabeza y pecho en prono ',
-			'Sostiene la cabeza al levantar los brazos ',
+			'Se apoya sobre codo y pelvis',
+			'Levanta y gira la cabeza',
+			'Sostiene objetos en manos',
+			'Se lleva objetos a la boca',
+			'Levanta la cabeza y pecho en prono',
+			'Sostiene la cabeza al levantar los brazos',
 		]
 	],
 	[
 		'edad' => '4 meses', 'parametros'=>
 		[
-			'Pasa objetos de una mano a otra ',
-			'Mantiene el equilibrio sobre el abdomen ',
-			'Comienza a desplazar el equilibrio hacia un lado ',
+			'Pasa objetos de una mano a otra',
+			'Mantiene el equilibrio sobre el abdomen',
+			'Comienza a desplazar el equilibrio hacia un lado',
 		]
 	],
 	[
 		'edad' => '5 meses', 'parametros'=>
 		[
-			'Extiende los brazos hacia adelante ',
-			'Brazos y piernas levantadas haciendo simulación de nado ',
-			'Pelvis y muslos en reposo, piernas separadas, rodillas flexionadas y empieza a agitar las piernas en el aire ',
+			'Extiende los brazos hacia adelante',
+			'Brazos y piernas levantadas haciendo simulación de nado',
+			'Pelvis y muslos en reposo, piernas separadas, rodillas flexionadas y empieza a agitar las piernas en el aire',
 		]
 	],
 	[
 		'edad' => '6 meses', 'parametros'=>
 		[
-			'Se apoya con brazos extendidos y manos abiertas ',
-			'Columna vertebral completamente extendida ',
+			'Se apoya con brazos extendidos y manos abiertas',
+			'Columna vertebral completamente extendida',
 			'Desplaza el cuerpo hacia la pelvis.',
 			'Intenta sentarse solo',
 		]
@@ -109,54 +109,54 @@ $motricidad = [
 		[
 			'Manipula varios objetos a la vez',
 			'Agarra objetos pequeños con los dedos',
-			'Desplaza el cuerpo hacia los muslos ',
-			'Desplaza el peso lateralmente ',
+			'Desplaza el cuerpo hacia los muslos',
+			'Desplaza el peso lateralmente',
 		]
 	],
 	[
 		'edad' => '8 meses', 'parametros'=>
 		[
-			'Se apoya en manos y rodillas ',
-			'Gira sobre su propio cuerpo ',
-			'Patrón de marcha ',
+			'Se apoya en manos y rodillas',
+			'Gira sobre su propio cuerpo',
+			'Patrón de marcha',
 		]
 	],
 	[
 		'edad' => '9 meses', 'parametros'=>
 		[
 			'Repta (Gatea)',
-			'Se para solo ',
-			'Se agarra y sostiene ',
+			'Se para solo',
+			'Se agarra y sostiene',
 		]
 	],
 	[
 		'edad' => '10 meses', 'parametros'=>
 		[
-			'Marcha con ayuda ',
-			'Desplaza el peso del cuerpo hacia el costado y adelante ',
-			'Posición en 4 puntos ',
-			'Gateo descoordinado ',
+			'Marcha con ayuda',
+			'Desplaza el peso del cuerpo hacia el costado y adelante',
+			'Posición en 4 puntos',
+			'Gateo descoordinado',
 
 		]
 	],
 	[
 		'edad' => '11 meses', 'parametros'=>
 		[
-			'Gatea con movimientos cruzados ',
+			'Gatea con movimientos cruzados',
 		]
 	],
 	[
 		'edad' => '12 meses', 'parametros'=>
 		[
-			'Puede escalar obstáculos ',
-			'Se apoya sobre manos y pies ',
-			'De apoyo en manos y pies a cunclillas ',
+			'Puede escalar obstáculos',
+			'Se apoya sobre manos y pies',
+			'De apoyo en manos y pies a cunclillas',
 		]
 	],
 	[
 		'edad' => '13-18 meses', 'parametros'=>
 		[
-			'Camina solo ',
+			'Camina solo',
 			'Corre',
 			'Sube y baja escaleras con ayuda',
 		]
@@ -164,7 +164,7 @@ $motricidad = [
 	[
 		'edad' => '19-24 meses', 'parametros'=>
 		[
-			'Manipula objetos pequeños ',
+			'Manipula objetos pequeños',
 		]
 	],
 	[
@@ -172,7 +172,7 @@ $motricidad = [
 		[
 			'Reconoce las partes pequeñas del cuerpo: boca, ojos, etc. ',
 			'Camina hacia atrás',
-			'Se levanta sin usar las manos ',
+			'Se levanta sin usar las manos',
 			'Salta venciendo gravedad',
 		]
 	],
@@ -183,18 +183,22 @@ $motricidad = [
 @section("content")
 @push('javascript')
 @endpush
+{{Form::model($model,['route'=>['historia.store',$patient_id]])}}
+@if($model)
+{{ method_field('PATCH') }}
+@endif
 <script type="text/javascript">
 
 </script>
 <div class="container note_container">
-    @include('reports.row_print_report')
+    @include('reports.row_print_report', ['hideImage' => true])
  <div class="row">
     <div class="col-lg-12">
-        <strong>VALORACIOŃ PEDIÁTRICA</strong>
+        <strong>VALORACIÓN PEDIÁTRICA</strong>
     </div>
     <div class="col-lg-12">
         @include('clinical_histories.valoration_row_options_nordic',[
-                        'name'=>'valoration_pediatric_valoration',
+                        'name'=>'valoration_pediatric_valoration_abortion',
                         'S_label'=>'Amenaza de aborto',
                         'width' => '100',
                         'radio_options'=>[
@@ -202,13 +206,13 @@ $motricidad = [
                         ],
                         'S_order'=>(++$count),
                         'default'=>($valorations)?
-                        $valorations->where('section','valoration_pediatric_valoration'):
+                        $valorations->where('section','valoration_pediatric_valoration_abortion'):
                         []
                         ])
     </div>
     <div class="col-lg-12">
         @include('clinical_histories.valoration_row_options_nordic',[
-                        'name'=>'valoration_pediatric_valoration',
+                        'name'=>'valoration_pediatric_valoration_complications_during_pregnancy',
                         'S_label'=>'Complicaciones durante el embarazo',
                         'width' => '100%',
                         'radio_options'=>[
@@ -216,23 +220,26 @@ $motricidad = [
                         ],
                         'S_order'=>(++$count),
                         'default'=>($valorations)?
-                        $valorations->where('section','valoration_pediatric_valoration'):
+                        $valorations->where('section','valoration_pediatric_valoration_complications_during_pregnancy'):
                         []
                         ])
     </div>
     <div class="col-lg-12">
     	@include('clinical_histories.valoration_row',[
-                    'name'=>'valoration_pediatric_valoration',
+                    'name'=>'valoration_pediatric_valoration_which_complications',
                     'S_label'=>'¿Cuáles?',
                         'width' => '100%',
                     'rows'=>'2',
                     'textarea'=>true,
                     'S_order'=>(++$count),
-                    'default'=>(($valorations)?$valorations:null),])
+                    'default'=>($valorations)?
+                        $valorations->where('section','valoration_pediatric_valoration_which_complications'):
+                        []
+                        ])
     </div>
     <div class="col-lg-12">
         @include('clinical_histories.valoration_row_options_nordic',[
-                        'name'=>'valoration_pediatric_valoration',
+                        'name'=>'valoration_pediatric_valoration_medicine_during_pregnancy',
                         'S_label'=>'Ingesta de medicamento durante el embarazo',
                         'width' => '100%',
                         'radio_options'=>[
@@ -240,23 +247,26 @@ $motricidad = [
                         ],
                         'S_order'=>(++$count),
                         'default'=>($valorations)?
-                        $valorations->where('section','valoration_pediatric_valoration'):
+                        $valorations->where('section','valoration_pediatric_valoration_medicine_during_pregnancy'):
                         []
                         ])
     </div>
     <div class="col-lg-12">
     	@include('clinical_histories.valoration_row',[
-                    'name'=>'valoration_pediatric_valoration',
+                    'name'=>'valoration_pediatric_valoration_which_medicines_during_preganancy',
                     'S_label'=>'¿Cuáles?',
                         'width' => '100%',
                     'rows'=>'2',
                     'textarea'=>true,
                     'S_order'=>(++$count),
-                    'default'=>(($valorations)?$valorations:null),])
+                    'default'=>($valorations)?
+                        $valorations->where('section','valoration_pediatric_valoration_which_medicines_during_preganancy'):
+                        []
+                        ])
     </div>
     <div class="col-lg-12">
         @include('clinical_histories.valoration_row_options_nordic',[
-                        'name'=>'valoration_pediatric_valoration',
+                        'name'=>'valoration_pediatric_valoration_birth',
                         'S_label'=>'Nacimiento',
                         'width' => '100%',
                         'radio_options'=>[
@@ -264,80 +274,93 @@ $motricidad = [
                         ],
                         'S_order'=>(++$count),
                         'default'=>($valorations)?
-                        $valorations->where('section','valoration_pediatric_valoration'):
+                        $valorations->where('section','valoration_pediatric_valoration_birth'):
                         []
                         ])
     </div>
     <div class="col-lg-12">
     	@include('clinical_histories.valoration_row',[
-                    'name'=>'valoration_pediatric_valoration',
+                    'name'=>'valoration_pediatric_valoration_observations_birth',
                     'S_label'=>'¿Observaciones / Motivo de la cesárea?',
                         'width' => '100%',
                     'rows'=>'2',
                     'textarea'=>true,
                     'S_order'=>(++$count),
-                    'default'=>(($valorations)?$valorations:null),])
+                    'default'=>($valorations)?
+                        $valorations->where('section','valoration_pediatric_valoration_observations_birth'):
+                        []
+                        ])
     </div>
     <div class="col-lg-12">
     	<strong>Datos del paciente</strong>
     </div>
     <div class="col-lg-12">
     	@include('clinical_histories.valoration_row',[
-                    'name'=>'valoration_pediatric_valoration',
+                    'name'=>'valoration_pediatric_valoration_hours_sleep',
                     'S_label'=>'Horas y tipo de sueño',
                         'width' => '100%',
                     'S_order'=>(++$count),
-                    'default'=>(($valorations)?$valorations:null),])
+                    'default'=>($valorations)?
+                        $valorations->where('section','valoration_pediatric_valoration_hours_sleep'):
+                        []
+                        ])
     </div>
     <div class="col-lg-4">
     	@include('clinical_histories.valoration_row',[
-                    'name'=>'valoration_pediatric_valoration',
+                    'name'=>'valoration_pediatric_valoration_irritability',
                     'S_label'=>'Irritabilidad',
                         'width' => '100%',
                     'S_order'=>(++$count),
-                    'default'=>(($valorations)?$valorations:null),])
+                    'default'=>($valorations)?
+                        $valorations->where('section','valoration_pediatric_valoration_irritability'):
+                        []
+                        ])
     </div>
     <div class="col-lg-4">
     	@include('clinical_histories.valoration_row',[
-                    'name'=>'valoration_pediatric_valoration',
-                    'S_label'=>'Irritabilidad',
-                        'width' => '100%',
-                    'S_order'=>(++$count),
-                    'default'=>(($valorations)?$valorations:null),])
-    </div>
-    <div class="col-lg-4">
-    	@include('clinical_histories.valoration_row',[
-                    'name'=>'valoration_pediatric_valoration',
+                    'name'=>'valoration_pediatric_valoration_inquietud',
                     'S_label'=>'Inquietud',
                         'width' => '100%',
                     'S_order'=>(++$count),
-                    'default'=>(($valorations)?$valorations:null),])
+                    'default'=>($valorations)?
+                        $valorations->where('section','valoration_pediatric_valoration_inquietud'):
+                        []
+                        ])
     </div>
      <div class="col-lg-4">
     	@include('clinical_histories.valoration_row',[
-                    'name'=>'valoration_pediatric_valoration',
+                    'name'=>'valoration_pediatric_valoration_sleepy',
                     'S_label'=>'Somnolencia',
                         'width' => '100%',
                     'S_order'=>(++$count),
-                    'default'=>(($valorations)?$valorations:null),])
+                    'default'=>($valorations)?
+                        $valorations->where('section','valoration_pediatric_valoration_sleepy'):
+                        []
+                        ])
     </div>
      <div class="col-lg-4">
     	@include('clinical_histories.valoration_row',[
-                    'name'=>'valoration_pediatric_valoration',
+                    'name'=>'valoration_pediatric_valoration_coodrination',
                     'S_label'=>'Problemas de coordinación, deglución o respiración',
                         'width' => '100%',
                     'S_order'=>(++$count),
-                    'default'=>(($valorations)?$valorations:null),])
+                    'default'=>($valorations)?
+                        $valorations->where('section','valoration_pediatric_valoration_coodrination'):
+                        []
+                        ])
     </div>
     <div class="col-lg-12">
     	@include('clinical_histories.valoration_row',[
-                    'name'=>'valoration_pediatric_valoration',
+                    'name'=>'valoration_pediatric_valoration_cause_consultation',
                     'S_label'=>'Motivo de consulta por parte de los padres',
                         'width' => '100%',
                     'rows'=>'2',
                     'textarea'=>true,
                     'S_order'=>(++$count),
-                    'default'=>(($valorations)?$valorations:null),])
+                    'default'=>($valorations)?
+                        $valorations->where('section','valoration_pediatric_valoration_cause_consultation'):
+                        []
+                        ])
     </div>
     <div class="col-lg-12">
     		<h4>Exploración de reflejos</h4>
@@ -372,7 +395,7 @@ $motricidad = [
     				</div>
     			</div>
     		</div>
-    		
+
     </div>
     @foreach($reflejos as $reflejo)
 	    <div class="col-lg-12">
@@ -380,18 +403,15 @@ $motricidad = [
 	    </div>
 	    @foreach($reflejo['parametros'] as $param)
 		    <div class="col-lg-4">
-		    	@include('clinical_histories.valoration_row_options_nordic',[
-		                        'name'=>'valoration_pediatric_valoration',
-		                        'S_label'=>$param,
-		                        'width' => '100',
-		                        'radio_options'=>[
-		                            'type'=>'radio','uno','dos','tres',
-		                        ],
-		                        'S_order'=>(++$count),
-		                        'default'=>($valorations)?
-		                        $valorations->where('section','valoration_pediatric_valoration'):
-		                        []
-		                        ])
+					@include('clinical_histories.valoration_row_options_nordic',[
+						'name'=>'valoration_pediatric_valoration_'. str_replace(' ','_', strtolower($param)),
+						'S_label'=>$param,
+						'radio_options'=>['presente','regular','ausente'],
+						'S_order'=>(++$count),
+						'default'=>($valorations)?
+						$valorations->where('section','valoration_pediatric_valoration_'.str_replace(' ','_', strtolower($param))):
+						[]
+					])
 		    </div>
 	    @endforeach
     @endforeach
@@ -405,15 +425,13 @@ $motricidad = [
     	    @foreach($motricidad['parametros'] as $param)
     		    <div class="col-lg-4">
     		    	@include('clinical_histories.valoration_row_options_nordic',[
-    		                        'name'=>'valoration_pediatric_valoration',
+    		                        'name'=>'valoration_pediatric_valoration_' . str_replace(' ','_',(strtolower($param))),
     		                        'S_label'=>$param,
     		                        'width' => '100',
-    		                        'radio_options'=>[
-    		                            'type'=>'radio','uno','dos','tres',
-    		                        ],
+    		                        'radio_options'=>['presente','regular','ausente'],
     		                        'S_order'=>(++$count),
     		                        'default'=>($valorations)?
-    		                        $valorations->where('section','valoration_pediatric_valoration'):
+    		                        $valorations->where('section','valoration_pediatric_valoration_' . str_replace(' ','_',(strtolower($param)))):
     		                        []
     		                        ])
     		    </div>
@@ -426,28 +444,35 @@ $motricidad = [
     </div>
     <div class="col-lg-12">
         @include('clinical_histories.valoration_row',[
-        'name'=>'valoration_deportive_observations',
+        'name'=>'valoration_pediatric_valoration_observations',
         'S_label'=>'observaciones',
         'label_show' => false,
         'S_order'=>(++$count),
-        'default'=>(($valorations)?$valorations:null),])    
+        'default'=>(!empty($valorations)?$valorations:null),])
     </div>
     <div class="col-lg-12">
         <strong>Puntaje</strong>
     </div>
     <div class="col-lg-12">
         @include('clinical_histories.valoration_row',[
-        'name'=>'valoration_deportive_observations',
+        'name'=>'valoration_pediatric_valoration_observations',
         'S_label'=>'puntaje',
         'label_show' => false,
         'S_order'=>(++$count),
-        'default'=>(($valorations)?$valorations:null),])    
+        'default'=>(!empty($valorations)?$valorations:null),])
     </div>
+		<div class="col-lg-12">
+			{{Form::submit('Aceptar',['class'=>'btn btn-primary'])}}
+			<a href="{{route('pacientes.index')}}" class="btn btn-light">Atras</a>
+		</div>
 </div>
 </div>
 
 </div>
 
 
-</div>    
+{{Form::hidden('patient_id',$patient_id)}}
+{{Form::close()}}
+
+</div>
 @endsection

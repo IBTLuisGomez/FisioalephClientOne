@@ -26,7 +26,15 @@
 			{{-- Hay default, tenemos que buscar que index es y darlo como true --}}
 				@php
 					$already_created=false;
-					$default=$default->first();
+					$default = $default->where('name', $S_label)->where('section', $name)->first();
+					if(empty($default)){
+						$default = \App\Valoration::first();
+						$default->json_values = "0";
+					}
+					if ($default->name == 'III/Reposo' && 'valoration_laboral_elbow_first_line' == $name) {
+						// dd($default);
+					}
+					// $default=$default->first();
 				@endphp
 				@if($default->name==$S_label && $default->section==$name)
 					@php

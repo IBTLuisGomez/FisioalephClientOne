@@ -56,7 +56,7 @@
 		</div>
 			@endif
 		<div class="row">
-			<a class="btn btn-primary" href="{{route('pacientes.create')}}">Añadir Paciente</a>
+			<a class="btn btn-primary" href="{{route('pacientes.create', ['is_laboral' => true])}}">Añadir Empleado</a>
 		</div>
 		<div class="row">
 			<div class="col-lg-12">
@@ -64,7 +64,7 @@
 					@foreach($collection as $model)
 						<tr>
 							<td>
-								<strong><a href="{{route('pacientes.edit',[$model->id])}}">{{$model->full_name}}</a></strong>
+								<strong><a href="{{route('pacientes.edit',[$model->id, 'is_laboral' => true])}}">{{$model->full_name}}</a></strong>
 								<br>
 								<a class='btn btn-sm btn-secondary' href= "{{route('historia.create.choose', ['stop_extend'=>false, 'patient_id' => $model->id, 'id_clinical_history'=>11])}}">Evaluar este paciente</a>
 								<br>

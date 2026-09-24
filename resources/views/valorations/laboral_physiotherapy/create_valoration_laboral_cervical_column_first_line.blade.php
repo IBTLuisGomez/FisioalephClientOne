@@ -10,7 +10,7 @@
 							'S_order'=>(++$count),
 							'label_width'=>"100%",
 							'default'=>($valorations)?
-							$valorations->where('section','valoration_laboral_column'):
+							$valorations->where('section','valoration_laboral_column_first_distribution'):
 							[]
 							])
 				</div>
@@ -23,7 +23,7 @@
 							'S_order'=>(++$count),
 							'label_width'=>"100%",
 							'default'=>($valorations)?
-							$valorations->where('section','valoration_laboral_column'):
+							$valorations->where('section','valoration_laboral_column_first_weakness'):
 							[]
 							])
 				</div>
@@ -118,13 +118,13 @@
 				<div class="col-xl-12">
 					@include('clinical_histories.valoration_row_options_nordic',			[
 							'name'=>'valoration_laboral_column_first_motor_neuropathy',
-							'S_label'=>'Neuropatiá motora y sensitiva sin atrofia',
+							'S_label'=>'Neuropatía motora y sensitiva sin atrofia',
 							'show_label'=>true,
 							'radio_options'=>['Sí','No'],
 							'S_order'=>(++$count),
 							'label_width'=>"100%",
 							'default'=>($valorations)?
-							$valorations->where('section','valoration_laboral_column'):
+							$valorations->where('section','valoration_laboral_column_first_motor_neuropathy'):
 							[]
 							])
 				</div>

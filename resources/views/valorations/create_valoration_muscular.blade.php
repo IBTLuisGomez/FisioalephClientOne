@@ -1,4 +1,6 @@
-@extends('layouts.basic')
+@if (empty($client_view))
+  @extends('layouts.basic')
+@endif
 @section('content')
 {{Form::model($model,['route'=>['historia.store',$patient_id]])}}
 @if($model)
@@ -22,7 +24,7 @@
 	            overflow-x: hidden;
 	            /* add padding to account for vertical scrollbar */
 	            padding-right: 20px;
-	        } 
+	        }
 	input[type=radio] {
 	    border: 0px !important;
 	    width: 20px !important;
@@ -54,7 +56,7 @@
 			    $(this).autocomplete("search");
 			});
 		});
-		
+
 	});
 </script>
 @endpush
@@ -68,10 +70,22 @@
 			@endif
 		</div>
 	</div>
-	@include('reports.row_print_report')
+	@include('reports.row_print_report', ['show_created_at' => true, 'hideImage' => true])
 	<div class=row>
 		<div class="col-xl-12">
 			<h2><strong>VALORACIÓN MUSCULAR</strong></h2>
+		</div>
+	</div>
+	<div class="row no_print">
+		<div class="col-lg-12">
+			<ul>
+				<li>0 =	El músculo se contrae, parálisis completa.</li>
+				<li>1 =	El músculo se contrae pero no hay movimiento. La contracción puede visualizarse o palparse, pero no hay movimiento.</li>
+				<li>2 =	El músculo se contrae y efectúa todo el movimiento, pero sin resistencia, no puede vencer la gravedad (se prueba la articulación en su plano horizontal).</li>
+				<li>3 =	El músculo puede efectuar el movimiento en contra de la gravedad como única resistencia.</li>
+				<li>4 =	El músculo se contrae y efectúa el movimiento completo, en toda su amplitud, en contra de la gravedad y en contra de la resistencia manual moderada.</li>
+				<li>5 =	El músculo se contrae y efectúa el movimiento en toda su amplitud en contra de la gravedad y contra una resistencia manual máxima.</li>
+			</ul>
 		</div>
 	</div>
 	{{Form::hidden('patient_id',$patient_id)}}

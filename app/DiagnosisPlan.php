@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class DiagnosisPlan extends Model
+class DiagnosisPlan extends FourPModel
 {
+    use SoftDeletes;
     protected $guarded = ['id'];
 
     public function outside_resources(){

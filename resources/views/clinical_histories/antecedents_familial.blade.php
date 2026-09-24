@@ -1,6 +1,6 @@
 <div class="row">
 			<div class="col-xl-12">
-				<h4><strong>ANTECEDENTES FAMILIARES</strong></h4>
+				<h4><strong>Antecedentes familiares</strong></h4>
 			</div>
 		</div>
 		<div class="row">

@@ -11,6 +11,7 @@ class Valoration extends Model
 {
 	use SoftDeletes;
     protected $guarded = ['id'];
+    protected $dates = ['updated_at', 'created_at'];
 
     public function getJsonValuesAttribute($value){
         if (Str::startsWith($value,'{') || Str::startsWith($value,'[')) {
@@ -26,5 +27,8 @@ class Valoration extends Model
     }
     public function user(){
     	return $this->belongsTo('App\User');
+    }
+    public function clinical_history(){
+    	return $this->belongsTo('App\ClinicalHistory');
     }
 }

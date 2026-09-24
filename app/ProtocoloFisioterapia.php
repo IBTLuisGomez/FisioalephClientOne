@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ProtocoloFisioterapia extends Model
+class ProtocoloFisioterapia extends FourPModel
 {
     use SoftDeletes;
     protected $guarded = ['id'];
@@ -46,5 +46,9 @@ class ProtocoloFisioterapia extends Model
 
     public function anato_physiology_glosary_item(){
     	return $this->belongsTo('App\AnatoPhysiologyGlosaryItem', 'anato_physiology_glosary_item_id');
+    }
+
+    public function getParsedUpdatedAtAttribute(){
+        return date('Y/m/d', strtotime($this->updated_at));
     }
 }

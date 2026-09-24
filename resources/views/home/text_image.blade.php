@@ -79,15 +79,15 @@
 					<br/>
 				</p>
 		<img style="float:left; margin-right: 20px; height: 20vw; width: 20vw;" class="home_image" src="images/contactanos_t_center.jpeg"/>
-		<h4 style="font-weight: bold">Plaza T-Center</h4>
+		<h4 style="font-weight: bold">Plaza Paseo Sendas</h4>
 		<p>
-			Juan Gil Preciado #8905, Local 4, Tesistán. CP: 45200, Plaza T-Center
+			Avenida Guadalajara 3523. Local 8, Fraccionamiento Sendas Residencial, CP.45134, Zapopan Jalisco.
 		</p>
 		<p>
 					<strong>
-						Celular (Whatsapp):
+					Celular (Whatsapp):
 					</strong>
-					3324074211
+					(33) 2407-4211
 					<br/>
 				</p>
 	</div>

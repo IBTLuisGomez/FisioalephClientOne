@@ -48,8 +48,45 @@ class JobAnalysisController extends CRUDController
      */
     public function create()
     {
-        return view('valorations.create_job_analysis')->
-            with('valorations', [])
+        $workspaceId = request()->input('workspaceId');
+        $workspace = \App\Workspace::with('laboral_company')->find($workspaceId);
+        $workspace->laboral_company = $workspace->laboral_company;
+        $patients = \App\Patient::where('is_laboral', true)->get()->map(function ($patient) {
+            return [
+                "id" => $patient->id,
+                "full_name" => $patient->full_name,
+                "name" => $patient->name,
+                "surname" => $patient->surname,
+                "second_surname" => $patient->second_surname,
+                "birth_date" => $patient->birth_date,
+                "sex" => $patient->sex,
+            ];
+        });
+        return view('valorations.create_job_analysis')
+            ->with('workspace', $workspace)
+            ->with('valorations', [])
+            ->with('patients', $patients)
             ->with('useVue', true);
+    }
+
+    public function store(Request $request)
+    {
+        $workspaceId = request()->input('workspace_id');
+        $patientToCreate = request()->input('patient');
+        $workspace = \App\Workspace::with('laboral_company')->find($workspaceId);
+        $sex = $request->input('sex');
+        $patientToCreate['is_laboral'] = true;
+        $patientToCreate['birth_date'] = request()->input('birth_date', '1900-01-01');
+        $patient = \App\Patient::create($patientToCreate);
+        $jobAnalysis = \App\JobAnalysis::create([
+            'patient_id' => $patient->id,
+            'workspace_id' => $workspace->id,
+            'department' => $request->input('department'),
+            'work' => $request->input('work'),
+            'asignation' => $request->input('asignation'),
+            'equipment' => $request->input('equipment'),
+            'work_description' => $request->input('work_description'),
+        ]);
+        return response()->json('Éxito', 200);
     }
 }

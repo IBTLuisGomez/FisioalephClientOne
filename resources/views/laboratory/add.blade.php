@@ -1,4 +1,6 @@
-@extends('layouts.basic')
+@if (empty($client_view))
+  @extends('layouts.basic')
+@endif
 @push('javascript')
 @if(!empty($stop_extend))
 <script type="text/javascript">
@@ -12,6 +14,7 @@
 	<script type="text/javascript">
 		$(()=>{
 			changeH4Names();
+            $("#sendByWhatsappDiv").append(sendByWhatsapp);
 		});
 		function changeH4Names(){
 			$('h4[no_count=0]').each(function(key, val){
@@ -21,10 +24,27 @@
 				$(val).prepend((key+1)+'. ');
 			});
 		}
+
+    const sendByWhatsapp = $('<a></a>', {
+            html: 'Mandar por Whatsapp',
+            href: '#',
+            class: "btn btn-primary no_print",
+        }).click(function (event) {
+            const a = $(event.target);
+            sendLabByWhatsapp();
+    });
+
+    function sendLabByWhatsapp() {
+        let phone = '{{ $patient->telephone }}'
+        if (!phone)
+		    phone = prompt('Ingresa el numero de telefono a 10 dígitos');
+		const text = "¡Hola!, Nos comunicamos de parte de RecuperaT. Adjunto la siguiente orden de laboratorio:";
+		window.open("https://web.whatsapp.com/send?phone=52" + phone + "&text=" + text);
+	}
 	</script>
 @endif
 @stack('javascript')
-<script src="https://malsup.github.com/jquery.form.js"></script> 
+<script src="https://malsup.github.com/jquery.form.js"></script>
 <script type="text/javascript">
 	$(function(){
 		$("#product_img").change(readURL);
@@ -108,7 +128,7 @@
 	<div class="container note_container">
 		@if(empty($stop_extend))
 			<div class="row">
-					@include('reports.row_print_report', ['hide_header' => true, 'only_true_checkbox' => true])
+					@include('reports.row_print_report', ['only_true_checkbox' => true, 'hideImage' => true])
 			</div>
 		@endif
 		@if (!empty($previous))
@@ -152,11 +172,19 @@
 		@if(empty($value['type']))
 			@continue
 		@endif
+        <div class="row">
+            <div class="col-lg-12" id="sendByWhatsappDiv">
+            </div>
+        </div>
 		<div class="row mb-3">
 				@if($value['type'] == 'separator')
 					<div class="col-lg-12 mt-1">
 						<{{$value['tag']}} no_count = {{!empty($value['no_count'])? 1 : 0}}>{{$value['label']}}</{{$value['tag']}}>
 					</div>
+				@elseif($value['type'] == 'hr')
+                    <div class="col-lg-12 mt-1">
+                        <hr>
+                    </div>
 				@elseif($value['type'] == 'file')
 					<div class="col-lg-12 mt-1">
 						<div><label for="">{{$value['label']}}</label></div>
@@ -240,7 +268,7 @@
 							{{Form::label($value['key'],$value['label'])}}
 						@endif
 						@php $type=$value['type'] @endphp
-						<textarea name="{{$value['key']}}" class="form-control" rows="{{!empty($value['rows'])?$value['rows']:1}}">{{!empty($O_model)?$O_model->$this_attribute:''}}</textarea>
+						<textarea name="{{$value['key']}}" class="form-control {{!empty($value['no_print_if_empty']) ? 'no-print-if-empty' : ''}}" rows="{{!empty($value['rows'])?$value['rows']:1}}">{{!empty($laboratory)?$laboratory->$this_attribute:''}}</textarea>
 					</div>
 				@elseif($value['type'] == 'div')
 					<div class="col-lg-12" id = "{{$value['key']}}">
@@ -251,7 +279,7 @@
 							{{Form::label($value['key'],$value['label'])}}
 						@endif
 						@php $type=$value['type'] @endphp
-						{{Form::text($value['key'],!empty($value['default'])? $value['default'] : null ,array_merge(['class'=>'form-control'],!empty($value['attributes']) ? $value['attributes'] : []))}}	
+						{{Form::text($value['key'],!empty($value['default'])? $value['default'] : null ,array_merge(['class'=>'form-control'],!empty($value['attributes']) ? $value['attributes'] : []))}}
 					</div>
 				@endif
 		</div>
@@ -259,7 +287,7 @@
 		@if (!empty($laboratory))
 			<div class="col-lg-12 text-right print_only">
 				______________________________________________ <br>
-				{{$laboratory->user->name}} (CP: {{$laboratory->user->license}})
+				{{$patient->responsible->name}} (CP: {{$patient->responsible->license}})
 			</div>
 		@endif
 		@if(empty($laboratory))

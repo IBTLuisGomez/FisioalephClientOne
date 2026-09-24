@@ -117,10 +117,11 @@
             
           </div>
           <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>Plaza T-Center</h3>
+            <h3>Plaza Paseo Sendas</h3>
             <p>
-              Blvd. Valle imperial # 260 -18, cruza con Avenida Antiguo Camino a Copalita y Calle Las Torres, planta alta, Colonia La Periquera, C.P 45134, Zapopan Jalisco <br>
-              <strong>Teléfono (Whatsapp):</strong> +52 (33) 2351-7843<br>
+              Avenida Guadalajara 3523. Local 8, Fraccionamiento Sendas Residencial, CP.45134, Zapopan Jalisco.
+              <strong>Teléfono (Local):</strong> +52 (33) 3803-4475<br>
+              <strong>Teléfono (Whatsapp):</strong> +52 (33) 2407-4211<br>
             </p>
           </div>
 

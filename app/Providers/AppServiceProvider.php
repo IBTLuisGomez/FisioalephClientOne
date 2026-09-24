@@ -49,8 +49,12 @@ class AppServiceProvider extends ServiceProvider
         }
         });
         if(\App::environment()=="production"){
-            \URL::forceRootUrl('https://www.recuperatfisioterapia.com');
-            \URL::forceScheme('https');
+            \URL::forceRootUrl(config('app.url'));
+
+    	if (str_contains(config('app.url'), 'https://')) {
+        	\URL::forceScheme('https');
+	    }
+
         }
         view()->share('SESSION_products', \Session::get("IDs_cart_products"));
         if(Schema::hasTable('product_categories')){

@@ -10,7 +10,7 @@
 							'S_order'=>(++$count),
 							'label_width'=>"100%",
 							'default'=>($valorations)?
-							$valorations->where('section','valoration_laboral_cervical_column'):
+							$valorations->where('section','valoration_laboral_cervical_column_axial'):
 							[]
 							])
 				</div>
@@ -112,20 +112,20 @@
 							'S_order'=>(++$count),
 							'label_width'=>"100%",
 							'default'=>($valorations)?
-							$valorations->where('section','valoration_laboral_cervical_column'):
+							$valorations->where('section','valoration_laboral_cervical_column_pain_limitation'):
 							[]
 							])
 				</div>
 				<div class="col-xl-12">
 					@include('clinical_histories.valoration_row_options_nordic',			[
 							'name'=>'valoration_laboral_cervical_column_nothing',
-							'S_label'=>'',
+							'S_label'=>'Rigidez',
 							'show_label'=>true,
 							'radio_options'=>['Sí','No'],
 							'S_order'=>(++$count),
 							'label_width'=>"100%",
 							'default'=>($valorations)?
-							$valorations->where('section','valoration_laboral_cervical_column_second_line'):
+							$valorations->where('section','valoration_laboral_cervical_column_nothing'):
 							[]
 							])
 				</div>

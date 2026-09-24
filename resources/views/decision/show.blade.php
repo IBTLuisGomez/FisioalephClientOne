@@ -1,4 +1,6 @@
-@extends('layouts.basic')
+@if (empty($client_view))
+  @extends('layouts.basic')
+@endif
 @section('content')
     <style>
         table,
@@ -13,6 +15,6 @@
         }
     </style>
     <div id="app">
-        <decision-component :hpp-id = {{$hppId}} :decision="{{$decision}}"></decision-component>
+        <decision-component :hpp-id = {{$hppId}} :decision="{{$decision}}" :has-user={{Auth::id() ? 'true' : 'false'}}></decision-component>
     </div>
 @endsection

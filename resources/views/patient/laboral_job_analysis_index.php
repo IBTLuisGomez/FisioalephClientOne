@@ -52,7 +52,7 @@
 		</div>
 			@endif
 		<div class="row">
-			<a class="btn btn-primary" href="{{route('pacientes.create')}}">Añadir Paciente</a>
+			<a class="btn btn-primary" href="{{route('pacientes.create')}}">Añadir puesto</a>
 		</div>
 		<div class="row">
 			<div class="col-lg-12">

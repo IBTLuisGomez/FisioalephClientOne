@@ -31,6 +31,7 @@
 		@if($model)
 			{{ method_field('PATCH') }}
 		@endif
+        {{Form::hidden('route_to_go', 'pacientes.index')}}
 		<div class="row">
 			<div class="col-lg-4">
 				{{Form::label('name','Nombre(s)')}}
@@ -48,7 +49,7 @@
 		<div class="row">
 			<div class="col-lg-2">
 				{{Form::label('sex','Sexo')}}
-				{{Form::select('sex',[0=>'masculino',1=>'femenino'],0,['class'=>'form-control'])}}
+				{{Form::select('sex',[0=>'masculino',1=>'femenino'],!empty($model) ? $model->sex : 0 ,['class'=>'form-control'])}}
 			</div>
 			<div class="col-lg-4">
 				{{Form::label('occupation','Ocupación')}}
@@ -73,12 +74,17 @@
 							@foreach($states as $state)
 								<option value="{{$state->id}}" {{($state->id==$model->birth_state_id)?'selected':''}}>{{$state->name}}</option>
 							@endforeach
+                        @else
+                            <option value="33" selected>Seleccione un estado</option>
+                            @foreach($states as $state)
+                                <option value="{{$state->id}}">{{$state->name}}</option>
+                            @endforeach
 						@endif
-						@else
-						<option value="33" selected>Seleccione un estado</option>
-						@foreach($states as $state)
-						<option value="{{$state->id}}">{{$state->name}}</option>
-						@endforeach
+					@else
+                        <option value="33" selected>Seleccione un estado</option>
+                        @foreach($states as $state)
+                            <option value="{{$state->id}}">{{$state->name}}</option>
+                        @endforeach
 					@endif
 				</select>
 			</div>
@@ -92,12 +98,16 @@
 				{{Form::label('address','Calle y número:')}}
 				{{Form::text('address',null,['class'=>'form-control'])}}
 			</div>
-			<div class="col-lg-12">
+			<div class="col-lg-6">
 				{{Form::label('responsible_id','Responsable')}}
-				{{Form::select('responsible_id',$responsibleIdOptions, 
+				{{Form::select('responsible_id',$responsibleIdOptions,
 					!empty($model) ? $model->responsible_id : Auth::user()->id
 				,['class'=>'form-control'])}}
 			</div>
+            <div class="col-lg-6">
+                {{Form::label('email','Correo electrónico')}}
+				{{Form::text('email',null,['class'=>'form-control'])}}
+            </div>
 		</div>
 		<br/>
 		<div class="row">

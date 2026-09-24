@@ -138,20 +138,21 @@ src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
 			<div class="row">
 				<div class="col-lg-12">
 					@csrf
-					<label for="patient">Nombre del paciente</label>
+					<label for="patient">Nombre del paciente*</label>
 					<input type="text" name="appoinment_patient_name" id="patient" class="form-control" placeholder="Nombre Completo">
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-lg-12">
-					<label for="telephone">Teléfono de contacto</label>
+					<label for="telephone">Teléfono de contacto*</label>
 					<input type="tel" name="telephone" id="telephone" class="form-control" placeholder="ej. 3339554543">
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-lg-12">
-					<label for="clinic_id">Centro</label>
+					<label for="clinic_id">Centro*</label>
 					<select id='clinic_id' name="clinic_id" class="form-control">
+						<option value="0">Selecciona un centro</option>
 						@foreach($clinics as $clinic)
 							<option value = '{{$clinic->id}}'>{{$clinic->name}}</option>
 						@endforeach;
@@ -160,7 +161,7 @@ src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
 			</div>
 			<div class="row">
 				<div class="col-lg-12">
-					<label>Fecha y Hora</label>
+					<label>Fecha y Hora*</label>
 				</div>
 				<div class="col-lg-5">
 					<input type="date" id="date" name="appoinment_date" class="form-control"/>

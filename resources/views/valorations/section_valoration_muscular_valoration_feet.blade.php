@@ -1,4 +1,6 @@
-@extends('layouts.basic')
+@if (empty($client_view))
+  @extends('layouts.basic')
+@endif
 @section('content')
 {{Form::model($model,['route'=>['historia.store',$patient_id]])}}
 @if($model)
@@ -11,7 +13,7 @@
 	            overflow-y: auto;
 	            overflow-x: hidden;
 	            padding-right: 20px;
-	        } 
+	        }
 	input[type=radio], input[type=checkbox] {
 	    border: 0px !important;
 	    width: 20px !important;
@@ -43,7 +45,7 @@
 			    $(this).autocomplete("search");
 			});
 		});
-		
+
 	});
 </script>
 @endpush
@@ -95,6 +97,18 @@
 						[]
 						])
 		</div>
+        <div class="col-xl-6">
+            @include('clinical_histories.valoration_row_options_nordic',			[
+                        'name'=>'valoration_laboral_feet_pain_limitation',
+                        'S_label'=>'Dolor + limitación',
+                        'radio_options'=>['Sí','No'],
+                        'S_order'=>(++$count),
+                        'checkbox'=>null,
+                        'default'=>($valorations)?
+                        $valorations->where('section','valoration_laboral_feet_pain_limitation'):
+                        []
+                        ])
+        </div>
 		<div class="col-xl-4">
 			@include('clinical_histories.valoration_row',			[
 						'name'=>'valoration_laboral_feet_evolution_time',
@@ -102,16 +116,6 @@
 						'S_order'=>(++$count),
 						'default'=>($valorations)?
 						$valorations->where('section','valoration_laboral_feet_evolution_time'):
-						[]
-						])
-		</div>
-		<div class="col-xl-4">
-			@include('clinical_histories.valoration_row',			[
-						'name'=>'valoration_laboral_feet_prension',
-						'S_label'=>'Dinamometría de prensión',
-						'S_order'=>(++$count),
-						'default'=>($valorations)?
-						$valorations->where('section','valoration_laboral_feet_prension'):
 						[]
 						])
 		</div>
@@ -181,6 +185,56 @@
 						'S_order'=>(++$count),
 						'default'=>($valorations)?$valorations->where('section','valoration_laboral_feet_godette'):[]])
 				</div>
+                {{--Inicia: falta csv--}}
+                <div class="col-xl-12">
+					@include('clinical_histories.valoration_row_options_nordic',
+					[
+						'name'=>'valoration_laboral_feet_pain_retro_foot',
+						'S_label'=>'Dolor en retro/medio pie','radio_options'=>['Sí','No'],
+						'S_order'=>(++$count),
+						'default'=>($valorations)?$valorations->where('section','valoration_laboral_feet_pain_retro_foot'):[]])
+				</div>
+                <div class="col-xl-12">
+					@include('clinical_histories.valoration_row_options_nordic',
+					[
+						'name'=>'valoration_laboral_feet_pain_morning',
+						'S_label'=>'Dolor matutino','radio_options'=>['Sí','No'],
+						'S_order'=>(++$count),
+						'default'=>($valorations)?$valorations->where('section','valoration_laboral_feet_pain_morning'):[]])
+				</div>
+                <div class="col-xl-12">
+					@include('clinical_histories.valoration_row_options_nordic',
+					[
+						'name'=>'valoration_laboral_feet_elongation',
+						'S_label'=>'Aumento de tono/elongación fascia','radio_options'=>['Sí','No'],
+						'S_order'=>(++$count),
+						'default'=>($valorations)?$valorations->where('section','valoration_laboral_feet_elongation'):[]])
+				</div>
+                <div class="col-xl-12">
+					@include('clinical_histories.valoration_row_options_nordic',
+					[
+						'name'=>'valoration_laboral_feet_flat_foot',
+						'S_label'=>'Pie plano','radio_options'=>['Sí','No'],
+						'S_order'=>(++$count),
+						'default'=>($valorations)?$valorations->where('section','valoration_laboral_feet_elongation'):[]])
+				</div>
+                <div class="col-xl-12">
+					@include('clinical_histories.valoration_row_options_nordic',
+					[
+						'name'=>'valoration_laboral_feet_silfverskiold',
+						'S_label'=>'Silfverskiold','radio_options'=>['Sí','No'],
+						'S_order'=>(++$count),
+						'default'=>($valorations)?$valorations->where('section','valoration_laboral_feet_silfverskiold'):[]])
+				</div>
+                <div class="col-xl-12">
+					@include('clinical_histories.valoration_row_options_nordic',
+					[
+						'name'=>'valoration_laboral_feet_punctual_pain',
+						'S_label'=>'Dolor puntual','radio_options'=>['Sí','No'],
+						'S_order'=>(++$count),
+						'default'=>($valorations)?$valorations->where('section','valoration_laboral_feet_silfverskiold'):[]])
+				</div>
+                {{--Termina: falta csv--}}
 			</div>
 		</div>
 		<div class="col-xl-4">
@@ -196,6 +250,7 @@
 					'S_order'=>(++$count),
 					'default'=>($valorations)?$valorations->where('section','valoration_laboral_feet_only_pain'):[]])
 				</div>
+                {{--Inicia: falta csv--}}
 				<div class="col-xl-12">
 					@include('clinical_histories.valoration_row_options_nordic',
 					[
@@ -204,6 +259,7 @@
 					'S_order'=>(++$count),
 					'default'=>($valorations)?$valorations->where('section','valoration_laboral_feet_pain_edema'):[]])
 				</div>
+                {{--Termina: falta csv--}}
 			</div>
 		</div>
 	</div>
@@ -361,28 +417,28 @@
 			'name'=>'valoration_laboral_feet_contusions',
 			'S_label'=>'Golpes, contusiones con objetos, superficies u otras personas',
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-xl-6">
 			@include('clinical_histories.valoration_row',[
 			'name'=>'valoration_laboral_feet_postures_forced',
 			'S_label'=>'Posturas forzadas y prolongadas',
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-xl-12">
 			@include('clinical_histories.valoration_row',[
 			'name'=>'valoration_laboral_feet_laboral_hygene',
 			'S_label'=>'Medidas de higiene laboral',
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 		<div class="col-xl-12">
 			@include('clinical_histories.valoration_row',[
 			'name'=>'valoration_laboral_feet_treatmen_protocol',
 			'S_label'=>'Protocolo de tratamiento',
 			'S_order'=>(++$count),
-			'default'=>(($valorations)?$valorations:null),])
+			'default'=>(!empty($valorations)?$valorations:null),])
 		</div>
 	</div>
 	<div class="row">

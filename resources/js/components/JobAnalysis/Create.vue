@@ -6,36 +6,61 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-6">
-        <input type=text class="form-control" placeholder="Empresa" v-model="jobValoration.valoration_job_analysis_empresa[0].json_values" outlined/>
+      <div class="col-12">
+        <h3>Datos del trabajador</h3>
       </div>
       <div class="col-lg-6">
-        <input type=text class="form-control" placeholder="Puesto de trabajo" outlined/>
+        <input type=text class="form-control" v-model="jobValoration.patient.name" placeholder="Nombre del trabajador" outlined/>
       </div>
       <div class="col-lg-6">
-        <input type=text class="form-control" placeholder="Paciente" outlined/>
+        <input type=text class="form-control" v-model="jobValoration.patient.surname" placeholder="Apellido del trabajador" outlined/>
       </div>
       <div class="col-lg-6">
-        <input type=text class="form-control" placeholder="Departamento" outlined/>
+        <input type=text class="form-control" v-model="jobValoration.patient.second_surname" placeholder="Segundo apellido del trabajador" outlined/>
       </div>
       <div class="col-lg-6">
-        <input type=text class="form-control" placeholder="Tarea" outlined/>
+        <input type=date class="form-control" v-model="jobValoration.patient.birth_date" placeholder="Fecha de nacimiento" outlined/>
       </div>
       <div class="col-lg-6">
-        <input type=text class="form-control" placeholder="Emplazamiento" outlined/>
+        <select type=text class="form-control" v-model="jobValoration.patient.sex">
+          <option value='' selected>Sexo</option>
+          <option value="0">Hombre</option>
+          <option value="1">Mujer</option>
+          <option value="2">Otro</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <h3>Datos de la empresa</h3>
       </div>
       <div class="col-lg-6">
-        <textarea type=text class="form-control" placeholder="Maquinaria/Equipo"></textarea>
+        <input type=text class="form-control" placeholder="Empresa" :value="workspace.laboral_company.name" disabled outlined/>
       </div>
       <div class="col-lg-6">
-        <textarea type=text class="form-control" placeholder="Descripción de la tarea, fases de trabajo (1,2,3...)"></textarea>
+        <input type=text class="form-control" placeholder="Puesto de trabajo" disabled :value="workspace.name" outlined/>
       </div>
       <div class="col-lg-6">
-        <label>Imagen del lugar de trabajo</label>
+        <input type=text class="form-control" v-model="department" placeholder="Departamento" outlined/>
+      </div>
+      <div class="col-lg-6">
+        <input type=text class="form-control" v-model="work" placeholder="Tarea" outlined/>
+      </div>
+      <div class="col-lg-6">
+        <input type=text class="form-control" v-model="asignation" placeholder="Asignación" outlined/>
+      </div>
+      <div class="col-lg-6">
+        <textarea type=text class="form-control" v-model="equipment" placeholder="Maquinaria/Equipo"></textarea>
+      </div>
+      <div class="col-lg-6">
+        <textarea type=text class="form-control" v-model="work_description" placeholder="Descripción de la tarea, fases de trabajo (1,2,3...)"></textarea>
+      </div>
+      <div class="col-lg-6">
+        <label>Fotografía del puesto de trabajo</label>
         <input type="file" placeholder="Hola" />
       </div>
       <div class="col-lg-6">
-        <label>Dibujo del lugar del trabajo</label>
+        <label>Dibujo del puesto de trabajo</label>
         <input type="file" placeholder="Hola" />
       </div>
     </div>
@@ -47,35 +72,35 @@
         <table>
           <tr>
             <td><label>Area horizontal</label></td>
-            <td class="pl-2"><input type=checkbox class="form-control"/></td>
+            <input type=checkbox />
           </tr>
           <tr>
             <td><label>Altura de trabajo</label></td>
-            <td class="pl-2"><input type=checkbox class="form-control"/></td>
+            <input type=checkbox />
           </tr>
           <tr>
             <td><label>Vista</label></td>
-            <td class="pl-2"><input type=checkbox class="form-control"/></td>
+            <input type=checkbox />
           </tr>
           <tr>
             <td><label>Espacio piernas</label></td>
-            <td class="pl-2"><input type=checkbox class="form-control"/></td>
+            <input type=checkbox />
           </tr>
           <tr>
             <td><label>Asientos</label></td>
-            <td class="pl-2"><input type=checkbox class="form-control"/></td>
+            <input type=checkbox />
           </tr>
           <tr>
             <td><label>Herramientas</label></td>
-            <td class="pl-2"><input type=checkbox class="form-control"/></td>
+            <input type=checkbox />
           </tr>
           <tr>
             <td><label>Otros equpos</label></td>
-            <td class="pl-2"><input type=checkbox class="form-control"/></td>
+            <input type=checkbox />
           </tr>
         </table>
       </div>
-      <div class="col-lg-6">
+      <div class="col-lg-12">
         <div class="row">
           <div class="col-lg-12">
             <textarea class="form-control" id="" placeholder="Observaciones"></textarea>
@@ -298,18 +323,29 @@
 import axios from 'axios';
 import ENV from '../../env';
 export default {
+  mounted() {
+    this.jobValoration.workspace_id = this.workspace.id
+    console.log(this.workspace)
+  },
   methods: {
     sendEvaluation() {
       console.log('hola')
-      axios.post(ENV.urlApiBase + '/job_analysis/create', this.jobValoration).then(res => {
-        console.log(res)
+      axios.post(ENV.urlApiBase + '/job_analysis', this.jobValoration).then(res => {
+        alert('Tu evaluación ha sido realizada')
       })
     }
   },
+  props: ['workspace'],
   data () {
     return {
       jobValoration: {
-        patient_id: 1,
+        workspace_id: null,
+        patient: {
+          name: null,
+          surname: null,
+          second_surname: null,
+          sex: ''
+        },
         valoration_job_analysis_empresa: [
           {
             name: 'empresa',

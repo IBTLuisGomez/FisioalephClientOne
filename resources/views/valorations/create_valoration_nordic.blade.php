@@ -57,24 +57,31 @@
 			@endif
 		</div>
 	</div>
-	@include('reports.row_print_report')
+	@include('reports.row_print_report', ['laboralHeader' => true])
 	<div class=row>
 		<div class="col-xl-12">
 			<h2><strong>Valoración Nórdico</strong></h2>
 		</div>
 		<div class="col-xl-12">
-			<text>El siguiente es un cuestionario estandarizado para la detección y análisis de síntomas músculo esquelético, aplicable en el contexto de estudios ergonómicos o de salud ocupacional con el fin de detectar la existencia de síntomas iniciales, que todavía no han constituido enfermedad o no han llevado aún a consultar al médico. <br/>
-			Su valor radica en que nos da información que permite estimar el nivel de riesgos de manera proactiva y nos permite una actuación precoz. <br/>
-			Las preguntas son de elección múltiple y puede ser aplicado en unas de dos formas. Una es en forma auto- administrado, es decir, es contestado por la propia persona encuestada por sí sola, sin la presencia de un encuestador. La otra forma es ser aplicado por un encuestador, como parte de una entrevista.<br/>
-			El cuestionario a usar es el llamado Cuestionario Nórdico de Kuorinka1 .Las preguntas se concentran en la mayoría de los síntomas que- con frecuencia- se detectan en diferentes actividades económicas.<br/>
-			La fiabilidad de los cuestionarios se ha demostrado aceptable. Algunas características específicas de los esfuerzos realizados en el trabajo se muestran en la frecuencia de las respuestas a los cuestionarios.
+			<text>
+				<p>
+					Este cuestionario sirve para recopilar información sobre dolor, fatiga o disconfort en distintas zonas corporales. 
+				</p>
+				<p>
+					Toda la información aquí recopilada será usada para fines de la investigación de posibles factores que causan fatiga en el trabajo.
+				</p>
+				<p>
+					Los objetivos que se buscan son dos:
+				</p>
+				<ul>
+					<li>Mejorar las condiciones en que se realizan las tareas, a fin de alcanzar un mayor bienestar para las personas, y</li>
+					<li>Mejorar los procedimientos de trabajo, para hacerlos más fáciles y productivos.</li>
+				</ul>
+					Este cuestionario se basa en el Cuestionario Nórdico de Kuorinka, su propósito es detectar la existencia de síntomas iniciales que todavía no se han constituido como una enfermedad, ayuda para recopilar información sobre dolor, fatiga o molestias corporales.
 			</text>
 		</div>
-		<div class="col-xl-12 text-center">
-			<img src="/images/nordico_zonas.png" class="img-fluid" style="height: 50vh;">
-		</div>
 	</div>
-
+	<br>
 	{{Form::hidden('patient_id',$patient_id)}}
 	@include('valorations.nordic_valoration_sections.tendons_muscle_symptoms')
 	<div class="row">

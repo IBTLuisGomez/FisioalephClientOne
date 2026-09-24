@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 use App\Offer;
 use App\Parametrization;
 
@@ -27,11 +27,13 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $clientView = $request->input('client_view', false);
-        if ($clientView) {
+        if ($clientView && !Auth::user()) {
+            $request->session()->put('client_view', $clientView);
             return view('client.login');
         }
         else {
             return view('layouts.medilab_parts.content')
+            ->with('client_view',1)
             ->with('offers',Offer::all())
             ->with('home_content',Parametrization::where('parameter', 'home_content')->first());
         }

@@ -258,7 +258,7 @@ Califica postura del trabajador en cuanto a restricciones, posiciones incomodas 
             'description' => 'Evaluación',
             'total_label' => 'label_first_total',
         ])
-            
+
         </div>
 
         <div class="row">
@@ -266,7 +266,7 @@ Califica postura del trabajador en cuanto a restricciones, posiciones incomodas 
                 <h3>Estimación del nivel de riesgo</h3>
             </div>
             <div class="col-lg-12">
-                <ul>
+                <ol type="a">
                     <li>
                     Utilizar el tiempo que sea necesario para observar la actividad. Asegurar que lo observado sea representativo del procedimiento normal de trabajo.
                     </li>
@@ -285,18 +285,21 @@ Califica postura del trabajador en cuanto a restricciones, posiciones incomodas 
                     <li>
                     Clasificar el nivel de riesgo de acuerdo con la Tabla siguiente:
                     </li>
-                </ul>
+                    <li>Considerar que las bandas de color indican cuáles elementos de la actividad son los que requieren mayor atención.</li>
+                    <li>Proceder a evaluar como lo señalan los numerales según corresponda a la actividad identificada.</li>
+                    <li>Estimar el nivel de riesgo de conformidad con los numerales según corresponda.</li>
+                </ol>
             </div>
-        </div>  
+        </div>
 
         <h3>Evaluación del riesgo de actividades que impliquen empuje o arrastre de cargas sin uso de equipo auxiliar</h3>
         <p>Identificar la actividad. Si se realizan dos o más actividades (por ejemplo, rodando y girando sobre su base), realice una evaluación para cada tipo de actividad.</p>
         @include('valorations.create_valoration_weight_lifting_row_colors',[
                     'options'=>[
-                        ['label'=>'Bajo', 'class'=>'color-value', 'color'=>'g','pts'=>0],
-                        ['label'=>'Medio', 'class'=>'color-value', 'color'=>'y','pts'=>2],
-                        ['label'=>'Alto', 'class'=>'color-value', 'color'=>'r','pts'=>4], 
-                        ['label'=>'Muy Alto', 'class'=>'color-value', 'color'=>'p','pts'=>8]
+                        ['label'=>'Bajo', 'class'=>'color-value', 'color'=>'g','pts'=>0, 'explanation'=>'Menos de 400 kg'],
+                        ['label'=>'Medio', 'class'=>'color-value', 'color'=>'y','pts'=>2, 'explanation'=>'De 400 kg a 600 kg'],
+                        ['label'=>'Alto', 'class'=>'color-value', 'color'=>'r','pts'=>4, 'explanation'=>'De 600 kg a 1000 kg'],
+                        ['label'=>'Muy Alto', 'class'=>'color-value', 'color'=>'p', 'pts'=>8, 'explanation'=>'Mas de 1000 kg']
                     ],
                     'show_label'=>true,
                     'name'=>'valoration_labolar_physiotherapy',
@@ -306,10 +309,10 @@ Califica postura del trabajador en cuanto a restricciones, posiciones incomodas 
         )
         @include('valorations.create_valoration_weight_lifting_row_colors',[
             'options'=>[
-                ['label'=>'Bajo', 'class'=>'color-value', 'color'=>'g','pts'=>0],
-                ['label'=>'Medio', 'class'=>'color-value', 'color'=>'y','pts'=>2],
-                ['label'=>'Alto', 'class'=>'color-value', 'color'=>'r','pts'=>4], 
-                ['label'=>'Muy Alto', 'class'=>'color-value', 'color'=>'p','pts'=>8]
+                ['label'=>'Bajo', 'class'=>'color-value', 'color'=>'g','pts'=>0,'explanation'=>'Menos de 80 kg'],
+                ['label'=>'Medio', 'class'=>'color-value', 'color'=>'y','pts'=>2,'explanation'=>'De 80kg a 120 kg'],
+                ['label'=>'Alto', 'class'=>'color-value', 'color'=>'r','pts'=>4,'explanation'=>'De 120 kg a 150 kg'],
+                ['label'=>'Muy Alto', 'class'=>'color-value', 'color'=>'p','pts'=>8,'explanation'=>'Mas de 150kg'],
             ],
             'show_label'=>true,
             'name'=>'valoration_labolar_physiotherapy',
@@ -319,10 +322,10 @@ Califica postura del trabajador en cuanto a restricciones, posiciones incomodas 
         )
         @include('valorations.create_valoration_weight_lifting_row_colors',[
             'options'=>[
-                ['label'=>'Bajo', 'class'=>'color-value', 'color'=>'g','pts'=>0],
-                ['label'=>'Medio', 'class'=>'color-value', 'color'=>'y','pts'=>2],
-                ['label'=>'Alto', 'class'=>'color-value', 'color'=>'r','pts'=>4], 
-                ['label'=>'Muy Alto', 'class'=>'color-value', 'color'=>'p','pts'=>8]
+                ['label'=>'Bajo', 'class'=>'color-value', 'color'=>'g','pts'=>0, 'explanation'=>'Menos de 25 kg'],
+                ['label'=>'Medio', 'class'=>'color-value', 'color'=>'y','pts'=>2, 'explanation'=>'De 25 kg a 50 kg'],
+                ['label'=>'Alto', 'class'=>'color-value', 'color'=>'r','pts'=>4, 'explanation'=>'De 50 a 80 kg'],
+                ['label'=>'Muy Alto', 'class'=>'color-value', 'color'=>'p','pts'=>8, 'explanation'=>'Mas de 80kg'],
             ],
             'show_label'=>true,
             'name'=>'valoration_labolar_physiotherapy',
@@ -384,7 +387,7 @@ Califica postura del trabajador en cuanto a restricciones, posiciones incomodas 
             <div class="col-md-4 text-center">
                 <img src="/images/valoraciones/fisioterapia_laboral_cargas/fl_cargas_img13.png" alt="image13">
             </div>
-        
+
             @include('valorations.create_valoration_weight_lifting_row_colors',[
                 'options'=>[
                     ['label'=>'Buena', 'class'=>'color-value second_total', 'color'=>'g','pts'=>0],
@@ -398,7 +401,7 @@ Califica postura del trabajador en cuanto a restricciones, posiciones incomodas 
                 ]
             )
         </div>
-        
+
         <div class="row">
             <div class="col-lg-12 text-center label_second_total">
                 <h3>24. Patrón de trabajo</h3>
@@ -575,7 +578,7 @@ Califica postura del trabajador en cuanto a restricciones, posiciones incomodas 
                     <li>Dos o más factores presentes</li>
                 </ul>
             </div>
-        
+
         @include('valorations.create_valoration_weight_lifting_row_colors',[
             'options'=>[
                 ['label'=>'Buena', 'class'=>'color-value', 'color'=>'g','pts'=>0],
@@ -638,7 +641,7 @@ Califica postura del trabajador en cuanto a restricciones, posiciones incomodas 
                     <li>La carga excede la capacidad nominal del equipo (peso máximo recomendado por el fabricante)</li>
                 </ul>
             </div>
-        
+
             @include('valorations.create_valoration_weight_lifting_row_colors',[
                 'options'=>[
                     ['label'=>'Bajo', 'class'=>'color-value', 'color'=>'g','pts'=>0],
@@ -1042,7 +1045,7 @@ Califica postura del trabajador en cuanto a restricciones, posiciones incomodas 
             'count'=>$count++,
             'S_label'=>'41. Otros factores',
             ]
-        )   
+        )
         </div>
 
         @include('valorations.section_total_load', [

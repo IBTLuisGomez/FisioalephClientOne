@@ -6,6 +6,7 @@
 			if($("#mySidepanel").attr("opened") == 'true'){
 				closeNav();
 			}else{
+                console.log('opening')
 				openNav();
 			}
 		});
@@ -36,7 +37,7 @@
 									href: '/diagnosis_plan/'+clinic_diagnosis.id,
 									html:clinic_diagnosis.name,
 									target:'_blank'
-								}),  
+								}),
 							});
 							ul.append(liItem)
 						});
@@ -55,7 +56,7 @@
 		if($(A_cie10_risk_factors).length >0){
 			$(A_cie10_risk_factors).each(function(key, risk_factor){
 				ul.append($('<li>',{
-								html:risk_factor.name,  
+								html:risk_factor.name,
 							}))
 			});
 			let h = $("<h4>",{html:'Factores de Riesgo'});
@@ -83,7 +84,7 @@
 		});
 	}
 
-	
+
 </script>
 @endpush
 @push('css')
@@ -96,10 +97,10 @@
 	  z-index: 1; /* Stay on top */
 	  top: 0;
 	  left: 0px;
-	  background-color: #FFF; 
-	  border-style: solid; 
-	  border-width: -2px; 
-	  border-color: rgba(28, 115, 52,100); 
+	  background-color: #FFF;
+	  border-style: solid;
+	  border-width: -2px;
+	  border-color: rgba(28, 115, 52,100);
 	  overflow-x: hidden; /* Disable horizontal scroll */
 	  padding: 60px 0px 0px 0px; /* Place content 60px from the top */
 	  transition: 0.5s; /* 0.5 second transition effect to slide in the sidepanel */
@@ -139,15 +140,15 @@
 
 	/* Style the button that is used to open the sidepanel */
 	.openbtn {
-	  font-size: 20px;
+	  font-size: 10px;
 	  position: fixed;
 	  z-index: 1;
 	  right: 20px;
 	  bottom:10px;
 	  cursor: pointer;
-	  background-color: rgba(28, 115, 52,100);
+	  background-color: rgb(105 120 249);
 	  color: white;
-	  padding: 10px 15px;
+	  padding: 5px 10px;
 	  border: none;
 	}
 	.float{
@@ -190,4 +191,4 @@
   </div>
 </div>
 
-<button type="button" class="openbtn">VerProtocolos</button>
+<button type="button" class="openbtn">Ver Protocolos</button>

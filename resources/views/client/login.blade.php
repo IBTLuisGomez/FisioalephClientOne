@@ -32,13 +32,13 @@
         <div class="offset-lg-3 col-lg-6 text-center">
           <div class="row">
             <div class="col-12">
-              <input type="text" class="form-control" placeholder="Usuario / email">
+              <input type="text" name="email" class="form-control" placeholder="Usuario / email">
             </div>
           </div>
           <br>
           <div class="row">
             <div class="col-12">
-              <input type="password" class="form-control" placeholder="Contraseña">
+              <input type="password" name="password" class="form-control" placeholder="Contraseña">
             </div>
           </div>
           <br>

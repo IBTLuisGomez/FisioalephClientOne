@@ -3,7 +3,7 @@ $count=0;
 @endphp
 <div class="row">
 	<div class="col-xl-12">
-		<h4><strong>VALORACIÓN DE PARES CRANEALES</strong></h4>
+		<h4><strong>Valoración de Pares Craneales</strong></h4>
 	</div>
 </div>
 
@@ -18,17 +18,17 @@ $count=0;
 <br/>
 Incluye las manifestaciones: Ptosis, ojo desviado hacia fuera y abajo, el ojo no se mueve ni hacia dentro ni hacia arriba ',
 'S_order'=>(++$count),
-'default'=>(($valorations)?$valorations:null),])
-</div>		
+'default'=>(!empty($valorations)?$valorations:null),])
+</div>
 <div class="col-xl-4">
 @include('clinical_histories.valoration_row_cranial_nerve',[
 'name'=>'valoration_cranial_nerves_motor',
 'S_label'=>'IV par',
 'S_info'=>'Afecta el músculo: Oblicuo mayor.
-<br/> 
+<br/>
 Incluye las manifestaciones: El ojo no se mueve hacia bajo.',
 'S_order'=>(++$count),
-'default'=>(($valorations)?$valorations:null),])
+'default'=>(!empty($valorations)?$valorations:null),])
 </div>
 <div class="col-xl-4">
 @include('clinical_histories.valoration_row_cranial_nerve',[
@@ -39,7 +39,7 @@ Incluye las manifestaciones: El ojo no se mueve hacia bajo.',
 Incluye las manifestaciones: Trastorno de la masticación
 Desviación de la boca hacia el lado del nervio lesionado ',
 'S_order'=>(++$count),
-'default'=>(($valorations)?$valorations:null),])
+'default'=>(!empty($valorations)?$valorations:null),])
 </div>
 <div class="col-xl-4">
 @include('clinical_histories.valoration_row_cranial_nerve',[
@@ -50,7 +50,7 @@ Incluye las manifestaciones: Estrabismo convergente (ojo desviado hacia dentro)
 <br/>
 El ojo no se mueve hacia fuera',
 'S_order'=>(++$count),
-'default'=>(($valorations)?$valorations:null),])
+'default'=>(!empty($valorations)?$valorations:null),])
 </div>
 <div class="col-xl-4">
 @include('clinical_histories.valoration_row_cranial_nerve',[
@@ -64,7 +64,7 @@ Signo de bell
 <br/>
 Espasmo hemifacial',
 'S_order'=>(++$count),
-'default'=>(($valorations)?$valorations:null),])
+'default'=>(!empty($valorations)?$valorations:null),])
 </div>
 <div class="col-xl-4">
 @include('clinical_histories.valoration_row_cranial_nerve',[
@@ -73,7 +73,7 @@ Espasmo hemifacial',
 <br/>
 Incluye las manifestaciones: disfagia',
 'S_order'=>(++$count),
-'default'=>(($valorations)?$valorations:null),])
+'default'=>(!empty($valorations)?$valorations:null),])
 </div>
 <div class="col-xl-4">
 @include('clinical_histories.valoration_row_cranial_nerve',[
@@ -82,7 +82,7 @@ Incluye las manifestaciones: disfagia',
 <br/>
 Incluye las manifestaciones: Desviación de la uvula, hacia el lado sano, disfagia, disartria',
 'S_order'=>(++$count),
-'default'=>(($valorations)?$valorations:null),])
+'default'=>(!empty($valorations)?$valorations:null),])
 </div>
 <div class="col-xl-4">
 @include('clinical_histories.valoration_row_cranial_nerve',[
@@ -91,7 +91,7 @@ Incluye las manifestaciones: Desviación de la uvula, hacia el lado sano, disfag
 <br/>
 Incluye las manifestaciones: Incapacidad para girar la cabeza y elevar el hombro',
 'S_order'=>(++$count),
-'default'=>(($valorations)?$valorations:null),])
+'default'=>(!empty($valorations)?$valorations:null),])
 </div>
 <div class="col-xl-4">
 @include('clinical_histories.valoration_row_cranial_nerve',[
@@ -100,7 +100,7 @@ Incluye las manifestaciones: Incapacidad para girar la cabeza y elevar el hombro
 <br/>
 Incluye las manifestaciones: Desviación de la lengua hacia el lado del nervio lesionado',
 'S_order'=>(++$count),
-'default'=>(($valorations)?$valorations:null),])
+'default'=>(!empty($valorations)?$valorations:null),])
 </div>
 </div>
 
@@ -114,7 +114,7 @@ Incluye las manifestaciones: Desviación de la lengua hacia el lado del nervio l
 'S_label'=>'I par',
 'S_info'=>'Sistema sensorial: Olfato',
 'S_order'=>(++$count),
-'default'=>(($valorations)?$valorations:null),])
+'default'=>(!empty($valorations)?$valorations:null),])
 </div>
 <div class="col-xl-4">
 @include('clinical_histories.valoration_row_cranial_nerve',[
@@ -122,7 +122,7 @@ Incluye las manifestaciones: Desviación de la lengua hacia el lado del nervio l
 'S_label'=>'II par',
 'S_info'=>'Sistema sensorial: Vista',
 'S_order'=>(++$count),
-'default'=>(($valorations)?$valorations:null),])
+'default'=>(!empty($valorations)?$valorations:null),])
 </div>
 <div class="col-xl-4">
 @include('clinical_histories.valoration_row_cranial_nerve',[
@@ -130,7 +130,7 @@ Incluye las manifestaciones: Desviación de la lengua hacia el lado del nervio l
 'S_label'=>'V par',
 'S_info'=>'Sensibilidad: Cara',
 'S_order'=>(++$count),
-'default'=>(($valorations)?$valorations:null),])
+'default'=>(!empty($valorations)?$valorations:null),])
 </div>
 <div class="col-xl-4">
 @include('clinical_histories.valoration_row_cranial_nerve',[
@@ -140,7 +140,7 @@ Incluye las manifestaciones: Desviación de la lengua hacia el lado del nervio l
 <br/>
 Gusto (dos tercios anteriores de la lengua)',
 'S_order'=>(++$count),
-'default'=>(($valorations)?$valorations:null),])
+'default'=>(!empty($valorations)?$valorations:null),])
 </div>
 <div class="col-xl-4">
 @include('clinical_histories.valoration_row_cranial_nerve',[
@@ -148,7 +148,7 @@ Gusto (dos tercios anteriores de la lengua)',
 'S_label'=>'VIII par',
 'S_info'=>'Sistema sensorial: Oído',
 'S_order'=>(++$count),
-'default'=>(($valorations)?$valorations:null),])
+'default'=>(!empty($valorations)?$valorations:null),])
 </div>
 <div class="col-xl-4">
 @include('clinical_histories.valoration_row_cranial_nerve',[
@@ -156,7 +156,7 @@ Gusto (dos tercios anteriores de la lengua)',
 	'S_label'=>'IX par',
 	'S_info'=>'Sistema sensorial: Gusto (tercio posterior de la lengua)',
 	'S_order'=>(++$count),
-	'default'=>(($valorations)?$valorations:null),])
+	'default'=>(!empty($valorations)?$valorations:null),])
 </div>
 <div class="col-xl-4">
 	@include('clinical_histories.valoration_row_cranial_nerve',[
@@ -164,6 +164,6 @@ Gusto (dos tercios anteriores de la lengua)',
 		'S_label'=>'X par',
 		'S_info'=>'Sensibilidad: Conducto auditivo externo.',
 		'S_order'=>(++$count),
-		'default'=>(($valorations)?$valorations:null),])
+		'default'=>(!empty($valorations)?$valorations:null),])
 	</div>
 </div>

@@ -1,3 +1,4 @@
+recuperat_image
 /node_modules
 /public/hot
 /public/storage
@@ -13,3 +14,20 @@ npm-debug.log
 yarn-error.log
 sftp-config.json
 run/var
+/*.png
+/*.jpg
+/*.jpeg
+public/app.js
+.env.prod
+/database/backups
+public/js/app*.js
+.DS_Store
+ThrivingUsersBakcup.json
+
+# Local database dumps and generated artifacts
+*.sql
+dump.rdb
+resources/dspace/tmp_csvs/
+storage/images/
+.phpdoc/
+/public/files/atlas.pdf

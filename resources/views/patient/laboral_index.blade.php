@@ -199,6 +199,7 @@
             <div class="col-lg-5">
                 {{Form::open(['url'=>action('PatientController@index'),'method'=>'GET'])}}
                     {{Form::text('search',null,['placeholder'=>'Nombre del paciente','class'=>'form-control','style'=>'display:inline; width:80%;'])}}
+                    {{Form::text('laboral', null ,['type'=>'hidden'])}}
                     <button type="submit" class="btn btn-primary" style="display: inline;"><span><i class="fas fa-search"></i></span></input>
                 {{Form::close()}}
             </div>
