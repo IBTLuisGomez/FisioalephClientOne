@@ -58,6 +58,10 @@
   integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <!-- Template Main CSS File -->
   <link href="/medilab/assets/css/style.css" rel="stylesheet">
+  @if(Auth::user() && !Session::get('client_view'))
+    <!-- Panel interno: hoja de estilos del rediseño (solo aplica después de iniciar sesión) -->
+    <link href="/medilab/assets/css/panel-sidebar.css" rel="stylesheet">
+  @endif
   <!-- =======================================================
   * Template Name: Medilab - v2.0.0
   * Template URL: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/
@@ -93,79 +97,200 @@
   <script src="/js/print.min.js"></script>
 </head>
 
-<body style="overflow: auto; min-height:100vh">
+<body style="overflow: auto; min-height:100vh" class="{{ (Auth::user() && !Session::get('client_view')) ? 'panel-authenticated' : '' }}">
   {{-- @dd(Auth::user()->permissions) --}}
   <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MSX7Z5V"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
   <!-- ======= Top Bar ======= -->
-  @if(!Session::get('client_view'))
-  <div id="topbar" class="d-none d-md-inline d-lg-flex align-items-center mt-2">
+  {{-- La barra de contacto/redes sociales es contenido de mercadeo público; se oculta en el panel interno tras iniciar sesión --}}
+  @if(!Session::get('client_view') && !Auth::user())
+  <div id="topbar" class="d-none d-md-inline d-lg-flex align-items-center">
     <div class="container d-flex">
       <div class="contact-info mr-auto">
-        {{-- <i class="icofont-envelope"></i> <a href="mailto:contact@example.com">contact@example.com</a> --}}
-        <div>
-          <i class="">Recuperat Valle Imperial</i>
-          Boulevard Valle imperial # 260 -18. Colonia Valle Imperial. C.P 45140, Zapopan, Jalisco.
-          <i class="icofont-whatsapp"></i> (33) 2351-7843
-          <i class="icofont-phone"></i> (33) 9688-6699
-        </div>
-        <div>
-          <i class="">Plaza Paseo Sendas</i>
-          Avenida Guadalajara 3523.  Local 8, Fraccionamiento Sendas Residencial. C.P 45140, Zapopan, Jalisco.
-          <i class="icofont-whatsapp"></i> (33) 2407-4211
-          <i class="icofont-phone"></i> (33) 3803-4475
-        </div>
-        {{-- <div>
-          <i class="">Recuperat T Center</i>
-          Juan Gil Preciado #8905, local 4, Plaza T-Center. C.P 45200, Tesistán, Jalisco
-          <i class="icofont-whatsapp"></i> (33) 3803-4475
-          <i class="icofont-phone"></i> (33) 3803-4475
-        </div> --}}
+        <a href="#footer"><i class="icofont-google-map"></i> Sucursales: Valle Imperial | Plaza Sendas</a>
       </div>
       <div class="social-links">
-        <a href="https://www.youtube.com/channel/UCeAc7ypqE35wJ-vQgO9M-tQ/" class="twitter"><i class="icofont-youtube"></i></a>
-        <a href="https://www.facebook.com/profile.php?id=100079561466852" class="facebook"><i class="icofont-facebook"></i></a>
-        <a href="https://www.instagram.com/recuperatfisioterapia/" class="instagram"><i class="icofont-instagram"></i></a>
-        {{-- <a href="#" class="skype"><i class="icofont-skype"></i></a> --}}
-        {{-- <a href="#" class="linkedin"><i class="icofont-linkedin"></i></i></a> --}}
+        <a href="https://www.youtube.com/channel/UCeAc7ypqE35wJ-vQgO9M-tQ/" class="twitter" target="_blank"><i class="icofont-youtube"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=100079561466852" class="facebook" target="_blank"><i class="icofont-facebook"></i></a>
+        <a href="https://www.instagram.com/recuperatfisioterapia/" class="instagram" target="_blank"><i class="icofont-instagram"></i></a>
       </div>
     </div>
   </div>
-  <div id="topbar" class="d-inline d-md-none align-items-center mt-2">
-    <div class="container">
-      <div class="row contact-info ml-1">
-        {{-- <i class="icofont-envelope"></i> <a href="mailto:contact@example.com">contact@example.com</a> --}}
-        <div>
-          <i class="">Recuperat Valle Imperial</i>
-          Boulevard Valle imperial # 260 -18. Colonia Valle Imperial. C.P 45140, Zapopan, Jalisco.
-          <i class="icofont-whatsapp"></i> (33) 2351-7843
-          <i class="icofont-phone"></i> (33) 9688-6699
-        </div>
-        <div>
-          <i class="">Plaza Paseo Sendas</i>
-          Avenida Guadalajara 3523.  Local 8, Fraccionamiento Sendas Residencial. C.P 45140, Zapopan, Jalisco.
-          <i class="icofont-whatsapp"></i> (33) 2407 4211
-          <i class="icofont-phone"></i> (33) 3803 4475
-        </div>
-        {{-- <div>
-          <i class="">Recuperat T Center</i>
-          Juan Gil Preciado #8905, local 4, Plaza T-Center. C.P 45200, Tesistán, Jalisco
-          <i class="icofont-whatsapp"></i> (33) 3803-4475
-          <i class="icofont-phone"></i> (33) 3803-4475
-        </div> --}}
+  <div id="topbar" class="d-inline d-md-none align-items-center">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div class="contact-info">
+        <a href="#footer"><i class="icofont-google-map"></i> Sucursales</a>
       </div>
-      {{-- <div class="social-links">
-        <a href="https://www.youtube.com/channel/UCeAc7ypqE35wJ-vQgO9M-tQ/" class="twitter"><i class="icofont-youtube"></i></a>
-        <a href="https://www.facebook.com/profile.php?id=100079561466852" class="facebook"><i class="icofont-facebook"></i></a>
-        <a href="https://www.instagram.com/explore/locations/2231465163776299/recupera-t-fisioterapia-rehabilitacion/" class="instagram"><i class="icofont-instagram"></i></a> --}}
-        {{-- <a href="#" class="skype"><i class="icofont-skype"></i></a> --}}
-        {{-- <a href="#" class="linkedin"><i class="icofont-linkedin"></i></i></a> --}}
-      {{-- </div> --}}
+      <div class="social-links">
+        <a href="https://www.youtube.com/channel/UCeAc7ypqE35wJ-vQgO9M-tQ/" class="twitter" target="_blank"><i class="icofont-youtube"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=100079561466852" class="facebook" target="_blank"><i class="icofont-facebook"></i></a>
+        <a href="https://www.instagram.com/recuperatfisioterapia/" class="instagram" target="_blank"><i class="icofont-instagram"></i></a>
+      </div>
     </div>
   </div>
   @endif
+  @if(Auth::user() && !Session::get('client_view'))
+    {{-- ============================================================
+         Panel interno (rediseño UX/UI): topbar + sidebar
+         Sustituye únicamente la navegación visual del sistema tras
+         iniciar sesión. Todas las rutas, permisos (Auth::user()->admin /
+         ->permissions->where(...)) y roles se conservan tal cual estaban
+         en el menú original, solo se reorganizan en un menú lateral.
+    ============================================================ --}}
+    <header id="app-topbar" class="app-topbar">
+      <button type="button" id="app-sidebar-toggle" class="app-topbar-icon-btn" aria-label="Abrir menú" aria-controls="app-sidebar" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+      </button>
+      <a href="/" class="app-topbar-brand">
+        <img src="/medilab/assets/img/logo.png" alt="Fisioaleph">
+      </a>
+      <button type="button" id="app-search-toggle" class="app-topbar-search-btn" aria-label="Búsqueda documental" aria-controls="app-search-panel" aria-expanded="false">
+        <i class="fas fa-search"></i> <span class="d-none d-md-inline">Búsqueda documental</span>
+      </button>
+      <div class="app-topbar-user dropdown">
+        <button type="button" class="app-topbar-user-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span class="app-topbar-user-avatar"><i class="fas fa-user-circle"></i></span>
+          <span class="app-topbar-user-name d-none d-md-inline">{{Auth::user()->name}}</span>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" href="{{route('appoinments.create')}}"><i class="fas fa-calendar-check fa-fw"></i> Agenda ya</a>
+          <div class="dropdown-divider"></div>
+          <form action="{{url('/logout')}}" id="form_logout" method="post" class="d-none">
+            @csrf
+          </form>
+          <a id="a_logout" class="dropdown-item" href="#" style="cursor: pointer;"><i class="fas fa-sign-out-alt fa-fw"></i> Cerrar sesión</a>
+        </div>
+      </div>
+    </header>
+
+    <div id="app-search-panel" class="app-search-panel">
+      <div class="app-search-panel-inner">
+        {{Form::open(['url'=>action('GlobalSearchController@index'), 'method'=>'GET', 'class' => 'form-row align-items-center'])}}
+          <div class="col-12 col-md">{{Form::text('keywords', null, ['placeholder' => 'Búsqueda libre', 'class' => 'form-control mb-2'])}}</div>
+          <div class="col-12 col-md">{{Form::text('search_title', null, ['placeholder' => 'Título', 'class' => 'form-control mb-2'])}}</div>
+          <div class="col-12 col-md">{{Form::text('search_author', null, ['placeholder' => 'Autor', 'class' => 'form-control mb-2'])}}</div>
+          <div class="col-12 col-md">{{Form::text('search_subject', null, ['placeholder' => 'Materia', 'class' => 'form-control mb-2'])}}</div>
+          <div class="col-12 col-md-auto">
+            <button type="submit" class="btn btn-mod-primary mb-2"><i class="fas fa-search"></i> Buscar</button>
+          </div>
+        {{Form::close()}}
+      </div>
+    </div>
+
+    <aside id="app-sidebar" class="app-sidebar">
+      <nav class="app-sidebar-nav">
+        <ul class="app-nav-list">
+
+          <li class="app-nav-group">
+            <a class="app-nav-link app-nav-toggle" href="#" data-toggle="collapse" data-target="#nav-fisioterapia"><i class="fas fa-stethoscope fa-fw"></i> <span>Fisioterapia</span> <i class="fas fa-chevron-down app-nav-caret"></i></a>
+            <ul class="collapse show app-nav-sublist" id="nav-fisioterapia">
+              @if(Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'medical_office.see')->count())
+                <li><a href="{{route('pacientes.index')}}">Consulta</a></li>
+              @endif
+              @if(Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapy_protocols.see')->count())
+                <li><a href="{{route('protocolos_fisioterapia.index')}}">Protocolos</a></li>
+              @endif
+              @if(Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'diagnosis_plans.see')->count())
+                <li><a href="{{route('diagnosis_plan.index')}}">Pruebas y medidas funcionales</a></li>
+              @endif
+              @if(Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'terapeutic_plans.see')->count())
+                <li><a href="{{route('terapeutic_plan.index')}}">Planes Terapéuticos</a></li>
+              @endif
+              @if(Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'home_fisiotherapy_program.see')->count())
+                <li><a href="{{route('home_physiotherapy_program.index')}}">Programas Fisioterapéuticos en Casa</a></li>
+              @endif
+            </ul>
+          </li>
+
+          <li class="app-nav-group">
+            <a class="app-nav-link app-nav-toggle" href="#" data-toggle="collapse" data-target="#nav-fuentes"><i class="fas fa-book-medical fa-fw"></i> <span>Fuentes de consulta</span> <i class="fas fa-chevron-down app-nav-caret"></i></a>
+            <ul class="collapse app-nav-sublist" id="nav-fuentes">
+              <li><a href="{{route('cie10.index')}}">Catálogo CIE10</a></li>
+              <li><a href="{{route('cie9_mc.index')}}">Catálogo CIE9-CM</a></li>
+              <li><a href="/cif21">CIF-21</a></li>
+              <li><a href="/atlas">Atlas de anatomía</a></li>
+              <li><a href="{{route('keywords.index')}}">Glosario de fisioterapia</a></li>
+              <li><a href="{{route('anato_physiology_glosary_item.index')}}">Diccionario de anatomía y fisiología</a></li>
+              <li><a href="{{route('excercise_divisions.index')}}">Categorías de ejercicio</a></li>
+            </ul>
+          </li>
+
+          <li class="app-nav-item">
+            <a class="app-nav-link" href="https://moodle.fisioaleph.com/" target="_blank"><i class="fas fa-graduation-cap fa-fw"></i> <span>Cursos</span></a>
+          </li>
+
+          <li class="app-nav-group">
+            <a class="app-nav-link app-nav-toggle" href="#" data-toggle="collapse" data-target="#nav-laboral"><i class="fas fa-briefcase-medical fa-fw"></i> <span>Fisioterapia Laboral</span> <i class="fas fa-chevron-down app-nav-caret"></i></a>
+            <ul class="collapse app-nav-sublist" id="nav-laboral">
+              @if(Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapy_protocols.see')->count())
+                <li><a href="{{route('protocolos_fisioterapia.index')}}">Protocolos</a></li>
+              @endif
+              @if(Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'laboralPhysiotherapyLMGProtocols.see')->count())
+                <li><a href="{{route('diagnosis_plan.index')}}">Pruebas y medidas funcionales</a></li>
+              @endif
+              @if(Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'physiotherapy_protocols.see')->count())
+                <li><a href="{{route('protocolos_fisioterapia_lmg.index')}}">Planes de tratamiento</a></li>
+              @endif
+              @if(Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'home_fisiotherapy_program.see')->count())
+                <li><a href="{{route('home_physiotherapy_program.index')}}">Programas fisioterapéuticos laborales</a></li>
+              @endif
+              @if(Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'laboral_companies.see')->count())
+                <li><a href="{{route('laboral_company.index')}}">Empresas</a></li>
+              @endif
+              @if(Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'laboral_companies.see')->count())
+                <li><a href="{{route('workspaces.index')}}">Puestos</a></li>
+              @endif
+              @if(Auth::user()->rol->id == 1)
+                <li><a href="{{route('employees.index', ['laboral' => 3])}}">Empleados</a></li>
+              @endif
+              @if(Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'laboralPhysiotherapyNorse.see')->count())
+                <li><a href="{{route('pacientes.index', ['laboral' => 5])}}">Evaluación Nórdico</a></li>
+              @endif
+              @if(Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'laboralPhysiotherapyEvaluations.see')->count())
+                <li><a href="{{route('pacientes.index', ['laboral' => 2])}}">Evaluaciones específicas</a></li>
+              @endif
+              @if(Auth::user()->rol->id == 1 || Auth::user()->permissions->where('name', 'laboralPhysiotherapyLoads.see')->count())
+                <li><a href="{{route('pacientes.index', ['laboral' => 11])}}">Manual de Cargas</a></li>
+              @endif
+            </ul>
+          </li>
+
+          @if(Auth::user()->admin || Auth::user()->permissions->where('name', 'administation_menu.see')->count() > 0)
+          <li class="app-nav-group">
+            <a class="app-nav-link app-nav-toggle" href="#" data-toggle="collapse" data-target="#nav-admin"><i class="fas fa-cogs fa-fw"></i> <span>Administración</span> <i class="fas fa-chevron-down app-nav-caret"></i></a>
+            <ul class="collapse app-nav-sublist" id="nav-admin">
+              @if(Auth::user()->admin)<li><a href="{{route('users.index')}}">Perfil de Usuarios</a></li>@endif
+              @if(Auth::user()->admin)<li><a href="{{route('information.index')}}">Preguntas</a></li>@endif
+              @if(Auth::user()->admin)<li><a href="{{route('orders.index')}}">Órdenes</a></li>@endif
+              @if(Auth::user()->admin)<li><a href="{{route('ofertas.index')}}">Promociones</a></li>@endif
+              @if(Auth::user()->admin)<li><a href="{{action('ProductController@index', ['unclassified'=>true])}}">(Tienda) Productos sin categoría</a></li>@endif
+              @if(Auth::user()->admin)<li><a href="{{action('AppoinmentController@index')}}">Citas agendadas</a></li>@endif
+              @if(Auth::user()->admin)<li><a href="{{route('clinics.index')}}">Centros</a></li>@endif
+              @if(Auth::user()->admin)<li><a href="{{route('product_categories.index')}}">Categorias de Productos y Servicios</a></li>@endif
+              @if(Auth::user()->admin || Auth::user()->permissions->where('name', 'dspace_metadata.see'))<li><a href="{{route('dspace_metadata.create')}}">Carga de metadatos (DSpace)</a></li>@endif
+              @if(Auth::user()->admin || Auth::user()->permissions->where('name', 'our_library_files.see'))<li><a href="{{route('our_library.create')}}">Carga de archivos (Biblioteca Digital Fisioaleph)</a></li>@endif
+              @if(Auth::user()->admin || Auth::user()->permissions->where('name', 'our_library_metadata.see'))<li><a href="{{route('our_library.massive.create')}}">Carga de metadatos (Biblioteca Digital Fisioaleph)</a></li>@endif
+              @if(Auth::user()->admin)<li><a target="_blank" href="http://recuperatfisioterapia.com:8007/">Wiki</a></li>@endif
+            </ul>
+          </li>
+          @endif
+
+          <li class="app-nav-group">
+            <a class="app-nav-link app-nav-toggle" href="#" data-toggle="collapse" data-target="#nav-publico"><i class="fas fa-globe fa-fw"></i> <span>Sitio público</span> <i class="fas fa-chevron-down app-nav-caret"></i></a>
+            <ul class="collapse app-nav-sublist" id="nav-publico">
+              <li><a href="http://138.197.105.143:8080/xmlui/handle/123456789/3" target="_blank">Biblioteca digital</a></li>
+              <li><a href="{{route('contacto.index')}}">Contacto</a></li>
+              <li><a href="/">Conócenos</a></li>
+            </ul>
+          </li>
+
+        </ul>
+      </nav>
+    </aside>
+    <div id="app-sidebar-overlay" class="app-sidebar-overlay"></div>
+  @else
   <!-- ======= Header ======= -->
   <header id="header" style="{{Session::get("client_view") ? "background-color: rgba(255, 255, 255, 0);" : ""}}">
     <div class="d-flex {{!Session::get('client_view') ? "container align-items-center flex-wrap" : ''}}">
@@ -187,17 +312,6 @@
           <li> <a href="http://138.197.105.143:8080/xmlui/handle/123456789/3">Biblioteca digital</a></li>
           <li><a href="{{route('contacto.index')}}">Contacto</a></li>
           <li class="active"><a href="/">Conócenos</a></li>
-          <li><a href="{{route('companies')}}">Fisioterapia Laboral</a></li>
-          <li><a href="{{route('tienda.index')}}">Tienda en linea</a></li>
-          <li><a href="{{action('OfferController@indexForClients')}}">Promociones</a></li>
-          <li><a href="{{action('ServicesController@index')}}">Servicios</a></li>
-          <li class="nav-item">
-            <a href="/checkout" class="nav-link">
-            <i class="fa fa-shopping-cart"></i><div style="display: inline;" id="div_cart_size">({{sizeof((
-      (session()->get("IDs_cart_products")) ? session()->get("IDs_cart_products") : []
-      ))}})</div>
-            </a>
-          </li>
           @if(!Auth::user())
           <li>
             <a href="{{action('HomeController@index')}}" class="nav-link" data-toggle="modal" data-target="#loginmodal">Iniciar Sesión</a>
@@ -402,6 +516,7 @@
       @endif
     </div>
   </header><!-- End Header -->
+  @endif
   <!-- Modal -->
   <div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -433,9 +548,12 @@
       </div>
     </div>
   </div>
+  @if(Auth::user() && !Session::get('client_view'))<main id="app-content" class="app-content">@endif
     @yield('content', '')
+  @if(Auth::user() && !Session::get('client_view'))</main>@endif
   <!-- ======= Footer ======= -->
-    @if(Auth::user())
+    {{-- Para el panel interno, la búsqueda documental ya se relocalizó al topbar/sidebar --}}
+    @if(Auth::user() && Session::get('client_view'))
     <div class="row">
         <hr>
         <div class="col-lg-12 ml-4">
@@ -462,25 +580,21 @@
         @if(empty($no_data_footer))
         <div class="row">
 
-          <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>Centro Valle Imperial</h3>
+          <div class="col-lg-6 col-md-6 footer-contact">
+            <h3>Recuperat Valle Imperial</h3>
             <p>
-              Blvd. Valle imperial # 260 -18, cruza con Avenida Antiguo Camino a Copalita y Calle Las Torres, planta alta, Colonia La Periquera, C.P 45134, Zapopan Jalisco <br>
-              <strong>Teléfono Fijo:</strong> (33) 9688-6699<br>
+              Boulevard Valle imperial # 260 -18. Colonia Valle Imperial. C.P 45140, Zapopan, Jalisco.<br>
               <strong>Teléfono (Whatsapp):</strong> (33) 2351-7843<br>
+              <strong>Teléfono:</strong> (33) 9688-6699<br>
             </p>
           </div>
-          <div class="col-lg-3 col-md-6 footer-contact">
 
-          </div>
-          <div class="col-lg-3 col-md-6 footer-contact">
-          </div>
-          <div class="col-lg-3 col-md-6 footer-contact">
+          <div class="col-lg-6 col-md-6 footer-contact">
             <h3>Plaza Paseo Sendas</h3>
             <p>
-              Avenida Guadalajara 3523. Local 8, Fraccionamiento Sendas Residencial, CP.45134, Zapopan Jalisco.<br>
-              <strong>Teléfono (Whatsapp):</strong> +52 (33) 2407-4211<br>
+              Avenida Guadalajara 3523. Local 8, Fraccionamiento Sendas Residencial. C.P 45140, Zapopan, Jalisco.<br>
               <strong>Teléfono (Whatsapp):</strong> (33) 2407-4211<br>
+              <strong>Teléfono:</strong> (33) 3803-4475<br>
             </p>
           </div>
 
@@ -500,7 +614,6 @@
           <!-- You can delete the links only if you purchased the pro version. -->
           <!-- Licensing information: https://bootstrapmade.com/license/ -->
           <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/ -->
-          Implementada por Dr. Luis Ruelas
         </div>
       </div>
       <div class="social-links text-center text-md-right pt-3 pt-md-0">
@@ -541,6 +654,25 @@
         event.preventDefault();
         $("#form_logout").submit();
       });
+
+      // Panel interno (rediseño UX/UI): apertura/cierre del sidebar y del buscador
+      if ($("#app-sidebar").length) {
+        $("#app-sidebar-toggle").on('click', function () {
+          $("body").toggleClass("app-sidebar-open");
+          $(this).attr('aria-expanded', $("body").hasClass("app-sidebar-open"));
+        });
+        $("#app-sidebar-overlay").on('click', function () {
+          $("body").removeClass("app-sidebar-open");
+          $("#app-sidebar-toggle").attr('aria-expanded', false);
+        });
+        $("#app-search-toggle").on('click', function () {
+          $("#app-search-panel").toggleClass("app-search-panel-open");
+          $(this).attr('aria-expanded', $("#app-search-panel").hasClass("app-search-panel-open"));
+        });
+        $(".app-nav-toggle").on('click', function (event) {
+          event.preventDefault();
+        });
+      }
     });
     $(window).unbind('keydown');
     // $(window).keydown(function(event){
