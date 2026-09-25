@@ -26,6 +26,10 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        if (Auth::user() && !session()->get('client_view')) {
+            return redirect()->route('home');
+        }
+
         $clientView = $request->input('client_view', false);
         if ($clientView && !Auth::user()) {
             $request->session()->put('client_view', $clientView);
@@ -37,6 +41,11 @@ class HomeController extends Controller
             ->with('offers',Offer::all())
             ->with('home_content',Parametrization::where('parameter', 'home_content')->first());
         }
+    }
+
+    public function dashboard()
+    {
+        return view('dashboard');
     }
 
     public function index2()

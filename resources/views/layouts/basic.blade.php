@@ -143,7 +143,7 @@
       <button type="button" id="app-sidebar-toggle" class="app-topbar-icon-btn" aria-label="Abrir menú" aria-controls="app-sidebar" aria-expanded="false">
         <i class="fas fa-bars"></i>
       </button>
-      <a href="/" class="app-topbar-brand">
+      <a href="{{ route('home') }}" class="app-topbar-brand">
         <img src="/medilab/assets/img/logo.png" alt="Fisioaleph">
       </a>
       <button type="button" id="app-search-toggle" class="app-topbar-search-btn" aria-label="Búsqueda documental" aria-controls="app-search-panel" aria-expanded="false">
@@ -259,7 +259,7 @@
 
           @if(Auth::user()->admin || Auth::user()->permissions->where('name', 'administation_menu.see')->count() > 0)
           <li class="app-nav-group">
-            <a class="app-nav-link app-nav-toggle" href="#" data-toggle="collapse" data-target="#nav-admin"><i class="fas fa-cogs fa-fw"></i> <span>Administración</span> <i class="fas fa-chevron-down app-nav-caret"></i></a>
+            <a class="app-nav-link app-nav-toggle" href="#" data-toggle="collapse" data-target="#nav-admin"><i class="fas fa-cogs fa-fw"></i> <span>Configuraciones</span> <i class="fas fa-chevron-down app-nav-caret"></i></a>
             <ul class="collapse app-nav-sublist" id="nav-admin">
               @if(Auth::user()->admin)<li><a href="{{route('users.index')}}">Perfil de Usuarios</a></li>@endif
               @if(Auth::user()->admin)<li><a href="{{route('information.index')}}">Preguntas</a></li>@endif
@@ -322,7 +322,7 @@
           <li>
           @if(Auth::user())
           @if(Auth::user()->admin || Auth::user()->permissions->where('name', 'administation_menu.see')->count() > 0)
-        <li class="drop-down"><a href="">Administración</a>
+        <li class="drop-down"><a href="">Configuraciones</a>
         <ul>
         @if(Auth::user()->admin)<li><a href="{{route('users.index')}}">Perfil de Usuarios</a></li>@endif
         @if(Auth::user()->admin)<li><a href="{{route('information.index')}}">Preguntas</a></li>@endif

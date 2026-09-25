@@ -163,7 +163,7 @@
             <li>
             @if(Auth::user())
                 @if(Auth::user()->admin)
-                <li class="drop-down"><a href="">Administración</a>
+                <li class="drop-down"><a href="">Configuraciones</a>
                 <ul>
                     <li><a href="{{route('users.index')}}">Perfil de Usuarios</a></li>
                     <li><a href="{{route('information.index')}}">Preguntas</a></li>

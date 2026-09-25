@@ -1,6 +1,13 @@
 FROM php:7.2-apache
 
-RUN apt-get update && apt-get install -y pkg-config patch
+RUN sed -i \
+    -e 's/deb.debian.org\/debian/archive.debian.org\/debian/g' \
+    -e 's/security.debian.org\/debian-security/archive.debian.org\/debian-security/g' \
+    -e '/buster-updates/d' \
+    /etc/apt/sources.list && \
+    apt-get -o Acquire::Check-Valid-Until=false update && \
+    apt-get install -y --no-install-recommends pkg-config patch
+RUN apt-get install -y --no-install-recommends libjpeg-dev libfreetype6-dev
 ADD https://git.archlinux.org/svntogit/packages.git/plain/trunk/freetype.patch?h=packages/php /tmp/freetype.patch
 RUN docker-php-source extract; \
   cd /usr/src/php; \
@@ -38,7 +45,7 @@ RUN a2enmod rewrite headers
 # 4. start with base php config, then add extensions
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
-RUN docker-php-ext-install \
+RUN docker-php-ext-install -j$(nproc) \
     bz2 \
     intl \
     iconv \

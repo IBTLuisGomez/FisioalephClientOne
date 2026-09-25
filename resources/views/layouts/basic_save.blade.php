@@ -159,7 +159,7 @@
             <li>
             @if(Auth::user())
                 @if(Auth::user()->admin)
-                <li class="drop-down"><a href="">Administración</a>
+                <li class="drop-down"><a href="">Configuraciones</a>
                 <ul>
                     <li><a href="{{route('users.index')}}">Perfil de Usuarios</a></li>
                     <li><a href="{{route('information.index')}}">Preguntas</a></li>
@@ -417,7 +417,6 @@
           <!-- You can delete the links only if you purchased the pro version. -->
           <!-- Licensing information: https://bootstrapmade.com/license/ -->
           <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/ -->
-          Implementada por Dr. Luis Ruelas
         </div>
       </div>
       <div class="social-links text-center text-md-right pt-3 pt-md-0">

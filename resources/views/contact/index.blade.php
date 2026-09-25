@@ -29,7 +29,7 @@
 				<a class="btn btn-sm appointment-btn" style="text-decoration: none; color:white;" href="{{route('information.create')}}">Pide información</a>
 				<h4 style="font-weight: bold">Valle Imperial</h4>
 				<p>
-					Blvd. Valle imperial # 260 -18, cruza con Avenida Antiguo Camino a Copalita y Calle Las Torres, planta alta, Colonia La Periquera, C.P 45134, Zapopan Jalisco.
+					Boulevard Valle imperial # 260 -18. Colonia Valle Imperial. C.P 45140, Zapopan, Jalisco.
 				</p>
 				<p>
 					<strong>
@@ -48,7 +48,7 @@
 					<img style="float:left; margin-right: 20px; height: 20vw; width: 20vw;" class="home_image" src="images/contactanos_sendas.jpg"/>
 					<h4 style="font-weight: bold">Plaza Paseo Sendas</h4>
 					<p>
-						Avenida Guadalajara 3523.  Local 8, Fraccionamiento Sendas Residencial, CP.45134, Zapopan Jalisco.
+						Avenida Guadalajara 3523. Local 8, Fraccionamiento Sendas Residencial. C.P 45140, Zapopan, Jalisco.
 					</p>
 					<p>
 						<strong>

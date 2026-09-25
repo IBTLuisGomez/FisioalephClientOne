@@ -209,7 +209,7 @@ Route::get('empresas', 'CompaniesController@index')->name('companies');
 //middleware admin
 Route::resource('ofertas', 'OfferController')->middleware('web', 'is_admin')->middleware('logged_in');
 Route::get('/test', 'TestController@index')->name('test');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@dashboard')->middleware('auth')->name('home');
 Route::get('/home/edit', 'HomeController@edit')->name('home.edit');
 Route::get('/globalSearch/{id}', 'GlobalSearchController@show')->name('globalSearch.show');
 Route::get('/globalSearch', 'GlobalSearchController@index')->name('globalSearch');
