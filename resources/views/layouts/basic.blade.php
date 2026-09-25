@@ -277,6 +277,12 @@
           </li>
           @endif
 
+          @if(Auth::user()->admin || Auth::user()->permissions->where('name', 'clinica_menu.see')->count() > 0)
+          <li class="app-nav-group">
+            <a class="app-nav-link" href="#" data-toggle="modal" data-target="#clinicaModal"><i class="fas fa-clinic-medical fa-fw"></i> <span>Clínica</span></a>
+          </li>
+          @endif
+
           <li class="app-nav-group">
             <a class="app-nav-link app-nav-toggle" href="#" data-toggle="collapse" data-target="#nav-publico"><i class="fas fa-globe fa-fw"></i> <span>Sitio público</span> <i class="fas fa-chevron-down app-nav-caret"></i></a>
             <ul class="collapse app-nav-sublist" id="nav-publico">
@@ -340,6 +346,9 @@
         </ul>
         </li>
       @endif
+          @if(Auth::user()->admin || Auth::user()->permissions->where('name', 'clinica_menu.see')->count() > 0)
+          <li><a href="#" data-toggle="modal" data-target="#clinicaModal">Clínica</a></li>
+          @endif
           <li class="drop-down"><a href="#">Fisioterapia</a>
           <ul>
             <li class="nav-item nav-right">
@@ -714,6 +723,34 @@
         }
     @endif
   </style>
+
+  @if(Auth::user() && (Auth::user()->admin || Auth::user()->permissions->where('name', 'clinica_menu.see')->count() > 0))
+  <div class="modal fade" id="clinicaModal" tabindex="-1" role="dialog" aria-labelledby="clinicaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document" style="max-width: 95vw;">
+      <div class="modal-content" style="height: 90vh;">
+        <div class="modal-header py-2">
+          <h5 class="modal-title" id="clinicaModalLabel">Clínica</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body p-0">
+          <iframe id="clinicaModalIframe" src="about:blank" data-src="https://fisioalep.com/#admin" style="width:100%; height:100%; border:0;" title="Panel Clínica"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Carga el iframe solo al abrir el modal (evita cargar la clínica en cada vista) y lo descarga al cerrar
+    $('#clinicaModal').on('show.bs.modal', function () {
+      var iframe = document.getElementById('clinicaModalIframe');
+      if (iframe.src === 'about:blank') { iframe.src = iframe.getAttribute('data-src'); }
+    });
+    $('#clinicaModal').on('hidden.bs.modal', function () {
+      document.getElementById('clinicaModalIframe').src = 'about:blank';
+    });
+  </script>
+  @endif
 </body>
 
 </html>

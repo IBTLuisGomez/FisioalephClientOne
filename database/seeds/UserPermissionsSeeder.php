@@ -40,6 +40,10 @@ class UserPermissionsSeeder extends Seeder
             'name' => 'our_library_metadata.create',
             'description' => 'Administración/Crear Carga de metadatos (Fisioaleph)',
         ]);
+        DB::table('permissions')->insert([
+            'name' => 'clinica_menu.see',
+            'description' => 'Administración/Ver pestaña Clínica (FisioalephDocker)',
+        ]);
         // // Usuarios
         // DB::table('permissions')->insert([
         //     'name' => 'users.see',
