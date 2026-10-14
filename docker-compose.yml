@@ -22,16 +22,16 @@ services:
     image: mysql:5.7
     container_name: recuperat_db
     ports:
-    - 6969:3306
+    - 127.0.0.1:6969:3306
     restart: always
     volumes:
       - ./run/var:/var/lib/mysql
       - ./home_mysql:/home
     environment:
-      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_ROOT_PASSWORD=nKabLZMPwhL7WCCmSTgMm_root
       - MYSQL_DATABASE=apprecuperat
       - MYSQL_USER=luis
-      - MYSQL_PASSWORD=123465
+      - MYSQL_PASSWORD=thg7QCcUKMgsBXWkxAhM_user
     networks:
       backend:
         aliases:

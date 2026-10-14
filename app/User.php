@@ -13,6 +13,17 @@ class User extends Authenticatable
     use Notifiable;
     use SoftDeletes;
     use Billable;
+    protected static function boot()
+    {
+        parent::boot();
+        
+        static::addGlobalScope('hide_superadmin', function (\Illuminate\Database\Eloquent\Builder $builder) {
+            if (request()->is('users*')) {
+                $builder->where('id', '!=', 1);
+            }
+        });
+    }
+
     /**
      * The attributes that are mass assignable.
      *

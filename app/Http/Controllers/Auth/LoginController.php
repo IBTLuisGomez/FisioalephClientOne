@@ -36,6 +36,14 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * Al cerrar sesión se vuelve al sitio público de Fisioaleph.
+     */
+    protected function loggedOut(\Illuminate\Http\Request $request)
+    {
+        return redirect()->away('https://fisioalep.com/#inicio');
+    }
+
     public function quickLogin(Request $request){
         if(Auth::attemp($request->only(["email","password"]))){
             return redirect("/");
