@@ -1,0 +1,8 @@
+types:
+  bookSection: Book Chapter
+  book: Book
+  conferencePaper: Conference Object
+  thesis: Doctoral Thesis
+  journalArticle: Article
+  report: Report
+  patent: Patent
